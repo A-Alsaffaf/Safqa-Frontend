@@ -7,6 +7,13 @@ import SignInPage from "./pages/SigninPage";
 import Dashboard from "./pages/Dashboard";
 import { logout } from "./services/authService";
 
+// Listing Imports
+import AllListings from "./pages/Listing/AllListings";
+import CreateListing from "./pages/Listing/CreateListing";
+import EditListing from "./pages/Listing/EditListing";
+import ListingDetails from "./pages/Listing/ListingDetails";
+import MyListings from "./pages/Listing/MyListings";
+
 function App() {
   function  getUserFromToken (){
     const token = localStorage.getItem("token");
@@ -35,6 +42,14 @@ function App() {
           path="/dashboard"
           element={user ? <Dashboard user={user} /> : <Navigate to="/sign-in" />}
         />
+
+        {/* Listing Routes */}
+        <Route path="/listings" element={<AllListings/>}/>
+        <Route path="/listings/new" element={<CreateListing/>}/>
+        <Route path="/listings/:listingId/edit" element={<EditListing/>}/>
+        <Route path="/listings/:listingId" element={<ListingDetails/>}/>
+        <Route path="/listings/my-listings" element={<MyListings/>}/>
+
       </Routes>
     </div>
   );
