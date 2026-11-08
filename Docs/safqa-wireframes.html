@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Safqa wireframes</title>
+<style>
+:root{--bg:#0C2A24;--panel:#163a33;--panel2:#1f4d43;--line:#2a5a50;--text:#EAE2B7;--muted:#c9c4a3;--accent:#F77F00;--urgent:#D62828;--price:#FCBF49;--btn:#0C2A24}
+*{box-sizing:border-box;margin:0}
+body{background:#06140f;font-family:system-ui,sans-serif;color:var(--text);display:flex;min-height:100vh}
+aside{width:210px;flex:none;padding:18px 14px;border-right:1px solid var(--line);background:#081f1a}
+.brand{font-size:18px;font-weight:700;color:var(--accent)}
+.sub{font-size:12px;color:var(--muted);margin-bottom:8px}
+aside h4{font-size:11px;letter-spacing:.08em;color:var(--muted);margin:16px 0 6px}
+aside button{display:block;width:100%;text-align:left;background:none;border:none;color:var(--text);padding:6px 8px;border-radius:6px;font-size:13px;cursor:pointer;margin-bottom:2px}
+aside button:hover{background:var(--panel)}
+aside button.on{background:var(--accent);color:var(--btn);font-weight:600}
+main{flex:1;padding:18px;min-width:0}
+.bar{display:flex;gap:10px;align-items:center;margin-bottom:10px;font-size:12px;color:var(--muted)}
+.get{background:var(--panel);padding:3px 8px;border-radius:6px;color:var(--text)}
+.frame{width:100%;max-width:1000px;aspect-ratio:16/9;background:var(--bg);border:1px solid var(--line);border-radius:12px;overflow:auto;display:flex;flex-direction:column}
+.nav{display:flex;align-items:center;gap:16px;padding:10px 16px;border-bottom:1px solid var(--line);font-size:13px;flex:none;flex-wrap:nowrap}
+.logo{color:var(--accent);font-weight:700;font-size:16px;cursor:pointer}
+.nav a{color:var(--muted);cursor:pointer;padding:4px 2px}
+.nav a.on{color:var(--text);border-bottom:2px solid var(--accent)}
+.srch{flex:1;max-width:300px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:5px 12px;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden}
+.pg{padding:16px;display:flex;flex-direction:column;gap:12px;flex:1}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.ph{background:var(--panel2);border-radius:8px}
+.grid{display:grid;gap:10px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1}
+.col{display:flex;flex-direction:column;gap:10px;min-width:0}
+.row{display:flex;gap:8px;align-items:center}
+.wrap{flex-wrap:wrap}
+.between{justify-content:space-between}
+.big{font-size:18px;font-weight:600}
+.t{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m{color:var(--muted);font-size:12px}
+.p{color:var(--price);font-weight:600}
+.tag{font-size:11px;padding:2px 8px;border-radius:6px;background:var(--panel2);display:inline-block;align-self:flex-start}
+.cd{font-size:11px;padding:2px 8px;border-radius:6px;background:var(--urgent);color:#fff;align-self:flex-start}
+.chip{font-size:12px;padding:4px 12px;border:1px solid var(--line);border-radius:14px}
+.clk{cursor:pointer}
+.clk:hover{border-color:var(--accent)}
+.inp{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);width:100%}
+.lbl{font-size:11px;color:var(--muted)}
+.full{width:100%}
+button.btp{background:var(--accent);color:var(--btn);border:none;border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer;font-size:13px}
+button.bto{background:transparent;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13px}
+button.bto:hover,button.btp:hover{filter:brightness(1.1)}
+.rw{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
+.rw:last-child{border:none}
+.dot{width:14px;height:14px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);flex:none}
+.dot.on{background:var(--accent);border-color:var(--accent)}
+.step{display:flex;align-items:center;gap:8px;font-size:13px}
+.urg{color:#fff;background:var(--urgent)}
+</style>
+</head>
+<body>
+<aside>
+  <div class="brand">Safqa</div>
+  <div class="sub">wireframe set</div>
+  <div id="side"></div>
+</aside>
+<main>
+  <div class="bar"><span>wireframes.html</span><span class="get">GET</span><span id="path"></span></div>
+  <div class="frame">
+    <div id="nav"></div>
+    <div id="page" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+  </div>
+</main>
+
+<script>
+const G=[
+ ['STOREFRONT',[['home','Home'],['browse','Browse']]],
+ ['LISTINGS',[['fixed','Fixed price listing'],['auction','Auction listing'],['create','Create listing']]],
+ ['ACCOUNT',[['login','Log in / Sign up'],['account','My account'],['orders','Order status']]],
+ ['ADMIN',[['admin','Reports queue']]]
+];
+const LIST=[
+ {t:'Dell Latitude 5490',p:185,type:'fixed',cond:'Used'},
+ {t:'Canon EOS 700D kit',p:96,type:'auction',cond:'Used'},
+ {t:'Sony WH-1000XM3',p:72,type:'auction',cond:'Used'},
+ {t:'Nintendo Switch OLED',p:210,type:'fixed',cond:'New'},
+ {t:'IKEA Malm desk',p:40,type:'fixed',cond:'Used'},
+ {t:'Mountain bike 27.5"',p:130,type:'auction',cond:'Used'},
+ {t:'Ergonomic office chair',p:55,type:'fixed',cond:'Used'}
+];
+const STEPS=['Pending','Paid','Shipped','Completed'];
+const S={page:'home',user:null,filter:'all',saved:false,ctype:'fixed',auth:'login',acct:'bids',
+ step:1,cur:96,nbids:7,hist:[['@b***7','BD 96','2h ago'],['@h***2','BD 90','5h ago']],msg:'',
+ rep:{'#R-1042':'open','#R-1041':'open','#R-1039':'open'}};
+
+const b=(label,on,fn)=>`<button class="${on?'btp':'bto'}" onclick="${fn}">${label}</button>`;
+const card=x=>`<div class="card clk" onclick="go('${x.type}')"><div class="ph" style="height:74px"></div><div class="t">${x.t}</div><div class="p">BD ${x.p}</div><span class="tag">${x.type==='auction'?'Auction':'Fixed'} · ${x.cond}</span></div>`;
+
+const P={
+home(){return `<div class="pg">
+ <div class="card row between"><div><div class="big">Fixed deals & live auctions</div><div class="m">Used goods, sold in Bahrain</div></div>${b('Browse listings',1,"go('browse')")}</div>
+ <div class="row wrap">${['Electronics','Furniture','Vehicles','Fashion','Sports','Books'].map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+ <div class="row between"><b>Ending soon</b><span class="m">View all ›</span></div>
+ <div class="grid g3">${LIST.filter(x=>x.type==='auction').map(card).join('')}</div>
+ <div class="row between"><b>Fixed price picks</b><span class="m">View all ›</span></div>
+ <div class="grid g4">${LIST.filter(x=>x.type==='fixed').map(card).join('')}</div>
+</div>`},
+
+browse(){const f=S.filter,items=LIST.filter(x=>f==='all'||x.type===f);return `<div class="pg">
+ <div class="split" style="grid-template-columns:200px 1fr">
+  <div class="card"><div class="t">Type</div>
+   <div class="col" style="gap:6px">${b('All',f==='all',"setFilter('all')")}${b('Fixed price',f==='fixed',"setFilter('fixed')")}${b('Auction',f==='auction',"setFilter('auction')")}</div>
+   <div class="t" style="margin-top:8px">Condition</div><div class="m">☑ New &nbsp;☑ Used &nbsp;☐ Damaged</div>
+   <div class="t" style="margin-top:8px">Category</div><div class="m">Electronics · Furniture</div>
+  </div>
+  <div class="col">
+   <div class="row between"><span>${items.length} listings</span>${b('Sort: Ending soon ▾',0,'')}</div>
+   <div class="grid g3">${items.map(card).join('')}</div>
+   <div class="row" style="justify-content:center">${b('‹',0,'')}${b('1',1,'')}${b('2',0,'')}${b('3',0,'')}${b('›',0,'')}</div>
+  </div>
+ </div></div>`},
+
+fixed(){return `<div class="pg"><div class="split">
+ <div class="col"><div class="ph" style="height:190px"></div>
+  <div class="row">${[1,2,3,4].map(i=>`<div class="ph" style="width:60px;height:42px;${i===1?'border:1px solid var(--accent)':''}"></div>`).join('')}</div>
+  <div class="card"><div class="t">Description</div><div class="ph" style="height:6px"></div><div class="ph" style="height:6px;width:80%"></div><div class="ph" style="height:6px;width:55%"></div></div>
+ </div>
+ <div class="col">
+  <div class="card">
+   <div class="row"><span class="tag">Fixed price</span><span class="tag">Used</span><span class="tag">Active</span></div>
+   <div class="big">Dell Latitude 5490 · 16GB · 512GB SSD</div>
+   <div class="m">Sold by @salma_k · 4.8★ · 32 sales</div>
+   <div class="m" style="margin-top:6px">Buy it now</div>
+   <div class="p" style="font-size:28px">BD 185</div>
+   <button class="btp full" onclick="go('orders')">Buy now</button>
+   <button class="bto full" onclick="S.saved=!S.saved;render()">${S.saved?'Saved ✓':'Add to watchlist'}</button>
+  </div>
+  <div class="card row between"><span>@noor.designs · 4.9★</span><span class="m">Message ›</span></div>
+ </div></div></div>`},
+
+auction(){return `<div class="pg"><div class="split">
+ <div class="col"><div class="ph" style="height:190px"></div>
+  <div class="row">${[1,2,3,4].map(i=>`<div class="ph" style="width:60px;height:42px;${i===1?'border:1px solid var(--accent)':''}"></div>`).join('')}</div>
+  <div class="card"><div class="t">Description</div><div class="ph" style="height:6px"></div><div class="ph" style="height:6px;width:80%"></div><div class="ph" style="height:6px;width:55%"></div></div>
+  <div class="card"><div class="t">Bid history</div>${S.hist.map(h=>`<div class="rw"><span class="m">${h[0]}</span><span>${h[1]} · ${h[2]}</span></div>`).join('')}</div>
+ </div>
+ <div class="col">
+  <div class="card">
+   <div class="row"><span class="tag">Auction</span><span class="tag">Used</span><span class="tag">Active</span></div>
+   <div class="big">Canon EOS 700D kit with 18-55mm lens</div>
+   <div class="row between"><span class="m">Ends in</span><span class="m">Sat 14 Nov, 18:00</span></div>
+   <span class="cd" style="font-size:13px">01d 06h 12m</span>
+   <div class="row" style="gap:20px"><div><div class="m">Current bid</div><div class="p" style="font-size:22px">BD ${S.cur}</div></div><div><div class="m">Bids</div><div style="font-size:20px">${S.nbids}</div></div></div>
+   <div class="m">Minimum next bid: BD ${S.cur+5}</div>
+   <div class="row"><input id="bidin" class="inp" placeholder="Your max bid"><button class="btp" onclick="placeBid()">Place bid</button></div>
+   <div class="row">${[5,10,25].map(n=>`<span class="chip clk" onclick="quick(${n})">+${n}</span>`).join('')}</div>
+   <div class="m" style="color:var(--price)">${S.msg}</div>
+  </div>
+  <div class="card row between"><span>@noor.designs · 4.9★</span><span class="m">Message ›</span></div>
+ </div></div></div>`},
+
+create(){const t=S.ctype;return `<div class="pg"><div class="split">
+ <div class="col">
+  <div><div class="lbl">Title</div><input class="inp" value="Dell Latitude 5490 · 16GB"></div>
+  <div class="row" style="gap:10px"><div style="flex:1"><div class="lbl">Category</div><input class="inp" value="Laptops"></div><div style="flex:1"><div class="lbl">Condition</div><input class="inp" value="New / Used / Damaged"></div></div>
+  <div><div class="lbl">Description</div><div class="inp" style="height:60px"></div></div>
+  <div class="ph" style="height:60px;background:var(--bg);border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px">+ Drag up to 8 photos</div>
+ </div>
+ <div class="col">
+  <div class="lbl">Listing type</div>
+  <div class="row">${b('Fixed price',t==='fixed',"setType('fixed')")}${b('Auction',t==='auction',"setType('auction')")}</div>
+  ${t==='fixed'?`<div><div class="lbl">Price (BD)</div><input class="inp" value="185"></div><div><div class="lbl">Buy-now price (optional)</div><input class="inp" placeholder="—"></div>`
+   :`<div><div class="lbl">Starting bid (BD)</div><input class="inp" value="60"></div><div><div class="lbl">Starts at</div><input class="inp" value="Fri 13 Nov, 09:00"></div><div><div class="lbl">Ends at</div><input class="inp" value="Sat 14 Nov, 18:00"></div>`}
+  <button class="btp full" onclick="go('browse')">Publish</button>
+ </div></div></div>`},
+
+login(){const r=S.auth==='register';return `<div class="pg" style="align-items:center;justify-content:center">
+ <div class="card" style="width:340px;gap:10px">
+  <div class="row">${b('Log in',!r,"setAuth('login')")}${b('Register',r,"setAuth('register')")}</div>
+  <div><div class="lbl">Username${r?'':' or email'}</div><input class="inp" value="salma_k"></div>
+  ${r?`<div><div class="lbl">Email</div><input class="inp" value="salma@example.com"></div>`:''}
+  <div><div class="lbl">Password</div><input class="inp" type="password" value="password"></div>
+  <button class="btp full" onclick="login()">Continue</button>
+  <div class="m" style="text-align:center">Forgot password?</div>
+ </div></div>`},
+
+account(){const a=S.acct;let body='';
+ if(a==='bids')body=`<div class="card"><div class="rw"><div><div class="t">Canon EOS 700D kit</div><div class="m">Ends 14 Nov · My max BD 101</div></div><span class="tag" style="background:var(--accent);color:var(--btn)">Winning</span></div><div class="rw"><div><div class="t">Sony WH-1000XM3</div><div class="m">Ends 13 Nov · My max BD 75</div></div><span class="cd">Outbid</span></div></div>`;
+ if(a==='watch')body=`<div class="grid g3">${LIST.slice(4,7).map(card).join('')}</div>`;
+ if(a==='listings')body=`<div class="card"><div class="rw"><div><div class="t">Dell Latitude 5490</div><div class="m">Fixed · Active</div></div>${b('Edit',0,'')}</div><div class="rw"><div><div class="t">Canon EOS 700D kit</div><div class="m">Auction · ends 14 Nov</div></div>${b('Edit',0,'')}</div></div>`;
+ return `<div class="pg"><div class="row">${b('My bids',a==='bids',"setAcct('bids')")}${b('Watchlist',a==='watch',"setAcct('watch')")}${b('My listings',a==='listings',"setAcct('listings')")}</div>${body}</div>`},
+
+orders(){const s=S.step;return `<div class="pg"><div class="split">
+ <div class="col">
+  <div class="card"><div class="row"><div class="ph" style="width:60px;height:44px"></div><div><div class="t">Dell Latitude 5490</div><div class="m">Sold by @salma_k · Order #O-2208</div></div></div>
+   <div class="rw"><span class="m">Final price</span><span class="p">BD 178</span></div><div class="rw"><span class="m">Buyer</span><span>@yousef.m</span></div></div>
+  <div class="card">${STEPS.map((x,i)=>`<div class="step"><span class="dot ${i<s?'on':''}"></span>${x}</div>`).join('')}</div>
+ </div>
+ <div class="col">
+  <div class="card"><div class="t">Next step</div><div class="m">${s<4?'Move the order to '+STEPS[s]+' once it reaches that stage.':'Order completed.'}</div>
+   <button class="btp full" onclick="advance()" ${s>=4?'disabled style="opacity:.5"':''}>${s<4?'Advance to '+STEPS[s]:'Completed'}</button></div>
+  <div class="card"><div class="t">Recent orders</div><div class="rw"><span class="m">#O-2208 · ${STEPS[s-1]}</span><span class="p">BD 178</span></div><div class="rw"><span class="m">#O-2191 · Completed</span><span class="p">BD 64</span></div></div>
+ </div></div></div>`},
+
+admin(){const R=[['#R-1042','Auction · "iPhone 11 cracked"','misleading photos','@hassan22'],['#R-1041','Fixed · "Replica watch"','counterfeit','@noor.designs'],['#R-1039','Fixed · "Office chair"','wrong category','@yousef.m']];
+ return `<div class="pg"><div class="row"><span class="tag">Admin</span><span class="m">Reports queue</span></div>
+ <div class="card">${R.map(r=>`<div class="rw"><div><div class="t">${r[0]} · ${r[1]}</div><div class="m">Reason: ${r[2]} · by ${r[3]}</div></div><div class="row"><span class="tag">${S.rep[r[0]]}</span>${b('Review',0,`setRep('${r[0]}','reviewed')`)}${b('Dismiss',0,`setRep('${r[0]}','dismissed')`)}</div></div>`).join('')}</div>
+ </div>`}
+};
+
+function navHTML(){
+ const links=[['home','Home'],['browse','Browse'],['create','Sell']];
+ return `<div class="nav"><span class="logo" onclick="go('home')">Safqa</span>${links.map(([id,l])=>`<a class="${S.page===id?'on':''}" onclick="go('${id}')">${l}</a>`).join('')}<div class="srch">Search laptops, furniture, cars…</div>${S.user?`<button class="bto" onclick="go('account')">${S.user}</button>`:`<button class="btp" onclick="go('login')">Log in</button>`}</div>`;
+}
+function render(){
+ document.getElementById('side').innerHTML=G.map(([h,items])=>`<h4>${h}</h4>`+items.map(([id,l])=>`<button class="${S.page===id?'on':''}" onclick="go('${id}')">${l}</button>`).join('')).join('');
+ document.getElementById('nav').innerHTML=navHTML();
+ document.getElementById('page').innerHTML=P[S.page]();
+ document.getElementById('path').textContent='/'+S.page;
+}
+function go(p){S.page=p;S.msg='';location.hash=p;render();}
+function setFilter(f){S.filter=f;render();}
+function setType(t){S.ctype=t;render();}
+function setAuth(a){S.auth=a;render();}
+function setAcct(a){S.acct=a;render();}
+function setRep(id,v){S.rep[id]=v;render();}
+function advance(){if(S.step<4){S.step++;render();}}
+function login(){S.user='@salma_k';go('account');}
+function quick(n){document.getElementById('bidin').value=S.cur+n;}
+function placeBid(){
+ const v=parseFloat(document.getElementById('bidin').value);
+ if(!(v>S.cur)){S.msg='Bid must be above BD '+S.cur;}
+ else{S.cur=v;S.nbids++;S.hist.unshift(['@you','BD '+v,'just now']);S.msg='Bid placed ✓';}
+ render();
+}
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(P[h]&&h!==S.page){S.page=h;render();}});
+const start=location.hash.slice(1);if(P[start])S.page=start;
+render();
+</script>
+</body>
+</html>
