@@ -8,8 +8,8 @@ function CreateListing() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    type: "fixed",        // "fixed" or "auction"
-    condition: "used",    // "new", "used", or "damaged"
+    type: "Fixed",        // "fixed" or "auction"
+    condition: "Used",    // "new", "used", or "damaged"
     price: "",            // fixed price only
     buyNowPrice: "",      // optional, auction only
     startingBid: "",      // auction only
