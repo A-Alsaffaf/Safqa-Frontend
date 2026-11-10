@@ -1,10 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from "react-router";
-import {createListing} from "../../services/listingService"
+import {createListing, getListingEnums} from "../../services/listingService"
 
 function CreateListing() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [enums, setEnums] = useState({ type: [], condition: [] });
+
+  useEffect(() => {
+    getListingEnums()
+      .then(setEnums)
+      .catch((err) => console.log(err));
+  }, []);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -52,11 +59,19 @@ function CreateListing() {
         <br />
 
         <label htmlFor="listingType">Type: </label>
-        <input type="text" id="listingType" name="type" onChange={handleChange} value={type} />
+        <select id="listingType" name="type" onChange={handleChange} value={type}>
+          {enums.type.map((value) => (
+            <option key={value} value={value}>{value}</option>
+          ))}
+        </select>
         <br />
 
         <label htmlFor="listingCondition">Condition: </label>
-        <input type="text" id="listingCondition" name="condition" onChange={handleChange} value={condition} />
+        <select id="listingCondition" name="condition" onChange={handleChange} value={condition}>
+          {enums.condition.map((value) => (
+            <option key={value} value={value}>{value}</option>
+          ))}
+        </select>
         <br />
 
         <label htmlFor="listingPrice">Price: </label>
