@@ -1,9 +1,43 @@
-import React from 'react'
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { getListingById } from "../../services/listingService";
+import FixedPriceDetails from "../../components/listings/FixedPriceDetails";
 
 function ListingDetails() {
-  return (
-    <div>ListingDetails</div>
-  )
+  const { listingId } = useParams();
+  const [listing, setListing] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getListingById(listingId)
+      .then((data) => {
+        if (!cancelled) setListing(data || null);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err.message);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [listingId]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!listing) return <div>Listing not found</div>;
+
+  // The listing type is stored on the document as "Fixed" or "Auction"
+  if (listing.type?.toLowerCase() === "fixed") {
+    return <FixedPriceDetails listing={listing} />;
+  }
+
+  return <div>Auction details not built yet (type: {listing.type})</div>;
 }
 
-export default ListingDetails
+export default ListingDetails;
