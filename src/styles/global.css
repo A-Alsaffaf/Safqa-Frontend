@@ -1,0 +1,159 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.navbar__logo {
+  color: var(--accent);
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-inline: auto;
+}
+
+.navbar__link {
+  padding: 6px 2px;
+  border-bottom: 2px solid var(--panel);
+  color: var(--muted);
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.navbar__link:hover {
+  color: var(--text);
+}
+
+.navbar__link--active {
+  border-bottom-color: var(--accent);
+  color: var(--text);
+}
+
+.navbar__search {
+  flex: 0 1 320px;
+  min-width: 0;
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.navbar__search::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+.navbar__search:focus {
+  border-color: var(--accent);
+}
+
+.navbar__login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.navbar__login:hover {
+  background: var(--accent-hi);
+}
+
+.navbar__user {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 15px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.navbar__logout {
+  padding: 8px 6px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.navbar__logout:hover {
+  color: var(--text);
+}
+
+/* Below 640px: hide search, compact links row */
+@media (max-width: 639px) {
+  .navbar__inner {
+    gap: 10px;
+    min-height: 56px;
+  }
+
+  .navbar__logo {
+    font-size: 20px;
+  }
+
+  .navbar__links {
+    gap: 12px;
+  }
+
+  .navbar__link {
+    font-size: 14px;
+  }
+
+  .navbar__search {
+    display: none;
+  }
+
+  .navbar__login,
+  .navbar__user {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}

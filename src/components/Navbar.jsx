@@ -1,21 +1,64 @@
-import { Link } from 'react-router'
+import { NavLink, useLocation } from "react-router";
 
-function Navbar({ user, handleLogout }) {
+function Navbar({ user = null, handleLogout }) {
+  const { pathname } = useLocation();
+  const onSellPage = pathname === "/listings/new";
+
+  const linkClass = ({ isActive }) =>
+    isActive ? "navbar__link navbar__link--active" : "navbar__link";
+
+  // Browse matches every /listings/... path, so skip it on the Sell page.
+  const browseClass = ({ isActive }) =>
+    linkClass({ isActive: isActive && !onSellPage });
+
   return (
-    <nav>
-      <Link to='/'>Homepage</Link>
-      {user 
-      ? 
-      (<>
-        <Link to='/dashboard'>Dashboard</Link>
-      <button onClick={handleLogout}>Sign Out</button>
-      </>) : 
-      (<>
-        <Link to='/sign-up'>Sign Up</Link>
-        <Link to='/sign-in'>Sign In</Link>
-      </>)}
-    </nav>
-  )
+    <header className="navbar">
+      <div className="navbar__inner">
+        <NavLink to="/" className="navbar__logo">
+          Safqa
+        </NavLink>
+
+        <nav className="navbar__links" aria-label="Main">
+          <NavLink to="/" end className={linkClass}>
+            Home
+          </NavLink>
+          <NavLink to="/listings" className={browseClass}>
+            Browse
+          </NavLink>
+          <NavLink to="/listings/new" end className={linkClass}>
+            Sell
+          </NavLink>
+        </nav>
+
+        <input
+          type="search"
+          className="navbar__search"
+          placeholder="Search laptops, furniture, cars..."
+          aria-label="Search"
+        />
+
+        {user ? (
+          <>
+            <button type="button" className="navbar__user">
+              {user.username}
+            </button>
+            {/* Temporary until the user menu dropdown is designed */}
+            <button
+              type="button"
+              className="navbar__logout"
+              onClick={handleLogout}
+            >
+              Log out
+            </button>
+          </>
+        ) : (
+          <NavLink to="/sign-in" className="navbar__login">
+            Log in
+          </NavLink>
+        )}
+      </div>
+    </header>
+  );
 }
 
-export default Navbar
+export default Navbar;
