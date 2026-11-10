@@ -114,6 +114,20 @@ body {
   cursor: pointer;
 }
 
+.navbar__logout {
+  padding: 8px 6px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.navbar__logout:hover {
+  color: var(--text);
+}
+
 /* Below 640px: hide search, compact links row */
 @media (max-width: 639px) {
   .navbar__inner {

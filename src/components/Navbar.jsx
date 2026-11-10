@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router";
 
-function Navbar({ user = null }) {
+function Navbar({ user = null, handleLogout }) {
   const { pathname } = useLocation();
   const onSellPage = pathname === "/listings/new";
 
@@ -38,9 +38,19 @@ function Navbar({ user = null }) {
         />
 
         {user ? (
-          <button type="button" className="navbar__user">
-            {user.username}
-          </button>
+          <>
+            <button type="button" className="navbar__user">
+              {user.username}
+            </button>
+            {/* Temporary until the user menu dropdown is designed */}
+            <button
+              type="button"
+              className="navbar__logout"
+              onClick={handleLogout}
+            >
+              Log out
+            </button>
+          </>
         ) : (
           <NavLink to="/sign-in" className="navbar__login">
             Log in
