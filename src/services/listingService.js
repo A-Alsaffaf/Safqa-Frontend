@@ -10,6 +10,11 @@ export async function getListingById(listingId) {
     return response.data
 }
 
+export async function getListingEnums() {
+    const response = await api.get('/listings/enums')
+    return response.data
+}
+
 export async function getMyListings() {
     const response = await api.get('/listings/my-listings')
     return response.data
