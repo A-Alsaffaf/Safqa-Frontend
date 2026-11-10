@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from "react-router";
 import {createListing, getListingEnums} from "../../services/listingService"
+import {getCategories} from "../../services/categoryService"
+
+const MAX_CATEGORIES = 5
 
 function CreateListing() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [enums, setEnums] = useState({ type: [], condition: [] });
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     getListingEnums()
       .then(setEnums)
+      .catch((err) => console.log(err));
+
+    getCategories()
+      .then(setCategories)
       .catch((err) => console.log(err));
   }, []);
   const [formData, setFormData] = useState({
@@ -17,6 +25,7 @@ function CreateListing() {
     description: "",
     type: "Fixed",        // "fixed" or "auction"
     condition: "Used",    // "new", "used", or "damaged"
+    category: [],         // array of category ids, max 5
     price: "",            // fixed price only
     buyNowPrice: "",      // optional, auction only
     startingBid: "",      // auction only
@@ -30,6 +39,18 @@ function CreateListing() {
   function handleChange(event) {
     setError("");
     setFormData({ ...formData, [event.target.name]: event.target.value })
+  }
+
+  function handleCategoryChange(event) {
+    setError("");
+    const selected = Array.from(event.target.selectedOptions, (option) => option.value)
+
+    if (selected.length > MAX_CATEGORIES) {
+      setError(`You can select up to ${MAX_CATEGORIES} categories`);
+      return;
+    }
+
+    setFormData({ ...formData, category: selected })
   }
 
   async function handleSubmit(event){
@@ -70,6 +91,14 @@ function CreateListing() {
         <select id="listingCondition" name="condition" onChange={handleChange} value={condition}>
           {enums.condition.map((value) => (
             <option key={value} value={value}>{value}</option>
+          ))}
+        </select>
+        <br />
+
+        <label htmlFor="listingCategory">Categories (up to {MAX_CATEGORIES}): </label>
+        <select id="listingCategory" name="category" multiple onChange={handleCategoryChange} value={category}>
+          {categories.map((cat) => (
+            <option key={cat._id} value={cat._id}>{cat.name}</option>
           ))}
         </select>
         <br />
