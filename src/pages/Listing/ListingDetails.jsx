@@ -29,6 +29,12 @@ function ListingDetails() {
     };
   }, [listingId]);
 
+  // Reload the listing without showing the loading state (keeps the bid form mounted)
+  async function refreshListing() {
+    const data = await getListingById(listingId);
+    setListing(data || null);
+  }
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!listing) return <div>Listing not found</div>;
@@ -39,7 +45,7 @@ function ListingDetails() {
   }
 
   if (listing.type?.toLowerCase() === "auction") {
-    return <AuctionDetails listing={listing} />;
+    return <AuctionDetails listing={listing} onBidPlaced={refreshListing} />;
   }
 
   return <div>Unknown listing type: {listing.type}</div>;

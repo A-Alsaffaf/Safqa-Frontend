@@ -1,7 +1,7 @@
 import BidForm from "./BidForm";
 import CountDown from "../common/CountDown";
 
-function AuctionDetails({ listing }) {
+function AuctionDetails({ listing, onBidPlaced }) {
   const seller =
     typeof listing.seller === "object" && listing.seller !== null
       ? listing.seller.username
@@ -40,7 +40,7 @@ function AuctionDetails({ listing }) {
       <h3>Description</h3>
       <p>{listing.description}</p>
 
-      <BidForm />
+      <BidForm listing={listing} onBidPlaced={onBidPlaced} />
       <button>Buy now</button>
       <button>Add to watchlist</button>
     </div>
