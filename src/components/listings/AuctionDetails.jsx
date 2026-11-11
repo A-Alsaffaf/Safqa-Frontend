@@ -49,7 +49,7 @@ function AuctionDetails({ listing, onBidPlaced }) {
       <p>Ends at: {formatDate(listing.endsAt)}</p>
       <p>Seller: {seller}</p>
 
-      <CountDown />
+      <CountDown startsAt={listing.startsAt} endsAt={listing.endsAt} onEnd={onBidPlaced} />
 
       <h3>Description</h3>
       <p>{listing.description}</p>
