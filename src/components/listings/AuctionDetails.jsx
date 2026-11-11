@@ -1,6 +1,20 @@
 import BidForm from "./BidForm";
 import CountDown from "../common/CountDown";
 
+// e.g. "12 Nov 2026, 9:00 am" in the viewer's local time
+function formatDate(value) {
+  if (!value) return "Not set";
+
+  return new Date(value).toLocaleString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
 function AuctionDetails({ listing, onBidPlaced }) {
   const seller =
     typeof listing.seller === "object" && listing.seller !== null
@@ -31,8 +45,8 @@ function AuctionDetails({ listing, onBidPlaced }) {
       <p>Current bid: BD {listing.currentBid ?? "No bids yet"}</p>
       <p>Current bidder: {currentBidder ?? "None"}</p>
       {listing.buyNowPrice ? <p>Buy now: BD {listing.buyNowPrice}</p> : null}
-      <p>Starts at: {listing.startsAt}</p>
-      <p>Ends at: {listing.endsAt}</p>
+      <p>Starts at: {formatDate(listing.startsAt)}</p>
+      <p>Ends at: {formatDate(listing.endsAt)}</p>
       <p>Seller: {seller}</p>
 
       <CountDown />
