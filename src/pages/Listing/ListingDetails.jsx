@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getListingById } from "../../services/listingService";
 import FixedPriceDetails from "../../components/listings/FixedPriceDetails";
+import AuctionDetails from "../../components/listings/AuctionDetails";
 
 function ListingDetails() {
   const { listingId } = useParams();
@@ -37,7 +38,11 @@ function ListingDetails() {
     return <FixedPriceDetails listing={listing} />;
   }
 
-  return <div>Auction details not built yet (type: {listing.type})</div>;
+  if (listing.type?.toLowerCase() === "auction") {
+    return <AuctionDetails listing={listing} />;
+  }
+
+  return <div>Unknown listing type: {listing.type}</div>;
 }
 
 export default ListingDetails;

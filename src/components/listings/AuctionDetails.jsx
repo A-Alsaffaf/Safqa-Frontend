@@ -1,0 +1,50 @@
+import BidForm from "./BidForm";
+import CountDown from "../common/CountDown";
+
+function AuctionDetails({ listing }) {
+  const seller =
+    typeof listing.seller === "object" && listing.seller !== null
+      ? listing.seller.username
+      : listing.seller;
+
+  const currentBidder =
+    typeof listing.currentBidder === "object" && listing.currentBidder !== null
+      ? listing.currentBidder.username
+      : listing.currentBidder;
+
+  return (
+    <div>
+      <h2>{listing.title}</h2>
+
+      <div>
+        {listing.images?.length
+          ? listing.images.map((src, i) => (
+              <img key={i} src={src} alt={`${listing.title} ${i + 1}`} width={120} />
+            ))
+          : "No images"}
+      </div>
+
+      <p>Type: {listing.type}</p>
+      <p>Condition: {listing.condition}</p>
+      <p>Status: {listing.status}</p>
+      <p>Starting bid: BD {listing.startingBid}</p>
+      <p>Current bid: BD {listing.currentBid ?? "No bids yet"}</p>
+      <p>Current bidder: {currentBidder ?? "None"}</p>
+      {listing.buyNowPrice ? <p>Buy now: BD {listing.buyNowPrice}</p> : null}
+      <p>Starts at: {listing.startsAt}</p>
+      <p>Ends at: {listing.endsAt}</p>
+      <p>Seller: {seller}</p>
+
+      <CountDown />
+
+      <h3>Description</h3>
+      <p>{listing.description}</p>
+
+      <BidForm />
+      <button>Buy now</button>
+      <button>Add to watchlist</button>
+    </div>
+  );
+}
+
+export default AuctionDetails;
