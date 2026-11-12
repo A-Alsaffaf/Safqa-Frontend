@@ -11,9 +11,18 @@ function ReportDetails() {
 
     async function getReport() {
 
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/reports/${id}`)
-        setReport(response.data)
+        const token = localStorage.getItem("token")
 
+        const response = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/admin/reports/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        )
+
+        setReport(response.data)
     }
 
     useEffect(() => {
