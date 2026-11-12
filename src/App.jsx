@@ -13,6 +13,8 @@ import CreateListing from "./pages/Listing/CreateListing";
 import EditListing from "./pages/Listing/EditListing";
 import ListingDetails from "./pages/Listing/ListingDetails";
 import MyListings from "./pages/Listing/MyListings";
+import ReportDetails from "./pages/Report/ReportDetails";
+import ReportForm from "./pages/Report/ReportForm";
 
 function App() {
   function  getUserFromToken (){
@@ -49,7 +51,7 @@ function App() {
         <Route path="/listings/:listingId/edit" element={<EditListing/>}/>
         <Route path="/listings/:listingId" element={<ListingDetails/>}/>
         <Route path="/listings/my-listings" element={<MyListings/>}/>
-
+<Route path="/reports/new" element={<ReportForm />} />
       </Routes>
     </div>
   );
