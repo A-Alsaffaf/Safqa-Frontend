@@ -15,7 +15,7 @@ function formatDate(value) {
   });
 }
 
-function AuctionDetails({ listing, onBidPlaced }) {
+function AuctionDetails({ listing, onBidPlaced, onAuctionEnd }) {
   const seller =
     typeof listing.seller === "object" && listing.seller !== null
       ? listing.seller.username
@@ -25,6 +25,13 @@ function AuctionDetails({ listing, onBidPlaced }) {
     typeof listing.currentBidder === "object" && listing.currentBidder !== null
       ? listing.currentBidder.username
       : listing.currentBidder;
+
+  const winner =
+    typeof listing.winner === "object" && listing.winner !== null
+      ? listing.winner.username
+      : listing.winner;
+
+  const isActive = listing.status === "Active";
 
   return (
     <div>
@@ -49,13 +56,18 @@ function AuctionDetails({ listing, onBidPlaced }) {
       <p>Ends at: {formatDate(listing.endsAt)}</p>
       <p>Seller: {seller}</p>
 
-      <CountDown startsAt={listing.startsAt} endsAt={listing.endsAt} onEnd={onBidPlaced} />
+      <CountDown startsAt={listing.startsAt} endsAt={listing.endsAt} onEnd={onAuctionEnd} />
 
       <h3>Description</h3>
       <p>{listing.description}</p>
 
-      <BidForm listing={listing} onBidPlaced={onBidPlaced} />
-      <button>Buy now</button>
+      {listing.status === "Sold" ? (
+        <p>Sold to {winner} for BD {listing.currentBid}</p>
+      ) : null}
+      {listing.status === "Closed" ? <p>Auction ended with no bids</p> : null}
+
+      {isActive ? <BidForm listing={listing} onBidPlaced={onBidPlaced} /> : null}
+      {isActive ? <button>Buy now</button> : null}
       <button>Add to watchlist</button>
     </div>
   );

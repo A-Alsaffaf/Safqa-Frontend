@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import { getListingById } from "../../services/listingService";
 import FixedPriceDetails from "../../components/listings/FixedPriceDetails";
@@ -9,6 +9,15 @@ function ListingDetails() {
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const isMounted = useRef(true);
+
+  // Lets the retry loop in handleAuctionEnd stop once the user leaves the page
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -35,6 +44,22 @@ function ListingDetails() {
     setListing(data || null);
   }
 
+  // Called when the countdown reaches zero. Reloading the listing makes the server close the auction.
+  // The device clock can be slightly ahead of the server's, so if the auction is still Active,
+  // try again every 5 seconds (up to 6 times) until the server has closed it.
+  async function handleAuctionEnd() {
+    for (let attempt = 0; attempt < 6; attempt++) {
+      const data = await getListingById(listingId);
+      if (!isMounted.current) return;
+
+      setListing(data || null);
+      if (!data || data.status !== "Active") return;
+
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      if (!isMounted.current) return;
+    }
+  }
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!listing) return <div>Listing not found</div>;
@@ -45,7 +70,13 @@ function ListingDetails() {
   }
 
   if (listing.type?.toLowerCase() === "auction") {
-    return <AuctionDetails listing={listing} onBidPlaced={refreshListing} />;
+    return (
+      <AuctionDetails
+        listing={listing}
+        onBidPlaced={refreshListing}
+        onAuctionEnd={handleAuctionEnd}
+      />
+    );
   }
 
   return <div>Unknown listing type: {listing.type}</div>;
