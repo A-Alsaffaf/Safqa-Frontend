@@ -5,6 +5,15 @@ import {getCategories} from "../../services/categoryService"
 
 const MAX_CATEGORIES = 5
 
+// The fields that only belong to one listing type
+const TYPE_FIELDS_RESET = {
+  price: "",
+  buyNowPrice: "",
+  startingBid: "",
+  startsAt: "",
+  endsAt: "",
+}
+
 function CreateListing() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -36,9 +45,20 @@ function CreateListing() {
 
   const { title, description, type, condition, category, price, buyNowPrice, startingBid, startsAt, endsAt } = formData
 
+  // Which set of fields to show
+  const isAuction = type === "Auction"
+
   function handleChange(event) {
     setError("");
-    setFormData({ ...formData, [event.target.name]: event.target.value })
+    const { name, value } = event.target
+
+    // Switching the type clears the other type's fields so old values are not submitted
+    if (name === "type") {
+      setFormData({ ...formData, type: value, ...TYPE_FIELDS_RESET })
+      return
+    }
+
+    setFormData({ ...formData, [name]: value })
   }
 
   function handleCategoryChange(event) {
@@ -55,12 +75,31 @@ function CreateListing() {
 
   async function handleSubmit(event){
       event.preventDefault();
+      // Send only the fields that belong to the chosen type
+      const newListing = {
+        title,
+        description,
+        type,
+        condition,
+        category,
+        images: formData.images,
+      }
+
+      if (isAuction) {
+        newListing.startingBid = startingBid
+        if (buyNowPrice) newListing.buyNowPrice = buyNowPrice
+        if (startsAt) newListing.startsAt = startsAt
+        newListing.endsAt = endsAt
+      } else {
+        newListing.price = price
+      }
+
       try {
-        await createListing(formData);
+        await createListing(newListing);
         navigate('/listings')
       } catch (err) {
         console.log(err);
-        setError(err.response.data.message);
+        setError(err.response?.data?.message || err.message);
       }
     }
 
@@ -103,25 +142,31 @@ function CreateListing() {
         </select>
         <br />
 
-        <label htmlFor="listingPrice">Price: </label>
-        <input type="number" id="listingPrice" name="price" onChange={handleChange} value={price} />
-        <br />
+        {isAuction ? (
+          <>
+            <label htmlFor="startingBid">Starting Bid Price: </label>
+            <input type="number" id="startingBid" name="startingBid" min="1" required onChange={handleChange} value={startingBid} />
+            <br />
 
-        <label htmlFor="buyNowPrice">Buy Now Price: </label>
-        <input type="number" id="buyNowPrice" name="buyNowPrice" onChange={handleChange} value={buyNowPrice} />
-        <br />
+            <label htmlFor="buyNowPrice">Buy Now Price (optional): </label>
+            <input type="number" id="buyNowPrice" name="buyNowPrice" min="1" onChange={handleChange} value={buyNowPrice} />
+            <br />
 
-        <label htmlFor="startingBid">Starting Bid Price: </label>
-        <input type="number" id="startingBid" name="startingBid" onChange={handleChange} value={startingBid} />
-        <br />
+            <label htmlFor="startsAt">Starts at (optional, blank starts now): </label>
+            <input type="datetime-local" id="startsAt" name="startsAt" onChange={handleChange} value={startsAt} />
+            <br />
 
-        <label htmlFor="startsAt">Starts at: </label>
-        <input type="datetime-local" id="startsAt" name="startsAt" onChange={handleChange} value={startsAt} />
-        <br />
-
-        <label htmlFor="endsAt">Ends at: </label>
-        <input type="datetime-local" id="endsAt" name="endsAt" onChange={handleChange} value={endsAt} />
-        <br />
+            <label htmlFor="endsAt">Ends at: </label>
+            <input type="datetime-local" id="endsAt" name="endsAt" required onChange={handleChange} value={endsAt} />
+            <br />
+          </>
+        ) : (
+          <>
+            <label htmlFor="listingPrice">Price: </label>
+            <input type="number" id="listingPrice" name="price" min="1" required onChange={handleChange} value={price} />
+            <br />
+          </>
+        )}
 
         <button>Submit Form</button>
       </form>
