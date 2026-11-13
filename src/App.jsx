@@ -14,6 +14,11 @@ import EditListing from "./pages/Listing/EditListing";
 import ListingDetails from "./pages/Listing/ListingDetails";
 import MyListings from "./pages/Listing/MyListings";
 
+
+//Order Imports
+import MyOrders from './pages/Orders/MyOrders'
+
+
 function App() {
   function  getUserFromToken (){
     const token = localStorage.getItem("token");
@@ -49,6 +54,10 @@ function App() {
         <Route path="/listings/:listingId/edit" element={<EditListing/>}/>
         <Route path="/listings/:listingId" element={<ListingDetails/>}/>
         <Route path="/listings/my-listings" element={<MyListings/>}/>
+
+
+        {/* Order Routes*/}
+        <Route path='/orders' element={<MyOrders />}/>
 
       </Routes>
     </div>
