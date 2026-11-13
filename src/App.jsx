@@ -18,6 +18,15 @@ import MyListings from "./pages/Listing/MyListings";
 //Order Imports
 import MyOrders from './pages/Orders/MyOrders'
 
+//Report Imports 
+import ReportForm from './pages/Report/ReportForm'
+import AllReports from "./pages/Report/AllReports";
+import ReportDetails from './pages/Report/ReportDetails'
+
+
+
+
+
 
 function App() {
   function  getUserFromToken (){
@@ -59,6 +68,14 @@ function App() {
         {/* Order Routes*/}
         <Route path='/orders' element={<MyOrders />}/>
 
+
+
+
+
+      {/* Report Routes  */}
+      <Route path="/reports/new" element={<ReportForm />} />
+<Route path="/admin/reports" element={<AllReports />} />
+<Route path="/admin/reports/:id" element={<ReportDetails />} />
       </Routes>
     </div>
   );
