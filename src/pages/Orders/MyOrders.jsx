@@ -40,13 +40,25 @@ function MyOrders() {
       <ul>
         {orders.map((order) => {
           let title = 'Item'
+          let categoryName = 'General'
+
           if (order.listing) {
             title = order.listing.title
+
+            if (order.listing.category) {
+              if (order.listing.category.name) {
+                categoryName = order.listing.category.name
+              } else {
+                categoryName = order.listing.category
+              }
+            }
           }
 
           return (
             <li key={order._id}>
               <h1>Listing: {title}</h1>
+
+              <p>Category: {categoryName}</p>
 
               <p>Price: ${order.finalPrice}</p>
 
@@ -54,7 +66,7 @@ function MyOrders() {
               <p>Seller: {order.seller.username}</p>
 
               <p>Buyer: {order.buyer.username}</p>
-              <Link to={`/orders/${order._id}`}>View Details</Link>
+              <Link to={'/orders/${order._id}'}>View Details</Link>
             </li>
           )
         })}
