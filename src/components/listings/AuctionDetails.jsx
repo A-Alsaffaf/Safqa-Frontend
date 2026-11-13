@@ -1,5 +1,6 @@
 import BidForm from "./BidForm";
 import BidHistory from "./BidHistory";
+import ReportButton from "./ReportButton";
 import CountDown from "../common/CountDown";
 
 // e.g. "12 Nov 2026, 9:00 am" in the viewer's local time
@@ -72,6 +73,8 @@ function AuctionDetails({ listing, onBidPlaced, onAuctionEnd }) {
 
       <BidHistory listingId={listing._id} currentBid={listing.currentBid} />
       <button>Add to watchlist</button>
+      <br />
+      <ReportButton listing={listing} />
     </div>
   );
 }

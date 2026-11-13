@@ -15,6 +15,9 @@ import ListingDetails from "./pages/Listing/ListingDetails";
 import MyListings from "./pages/Listing/MyListings";
 
 
+// Report Imports
+import ReportForm from "./pages/Report/ReportForm";
+
 //Order Imports
 import MyOrders from './pages/Orders/MyOrders'
 import OrderDetails from './pages/Orders/OrderDetails'
@@ -55,6 +58,9 @@ function App() {
         <Route path="/listings/:listingId" element={<ListingDetails/>}/>
         <Route path="/listings/my-listings" element={<MyListings/>}/>
 
+
+        {/* Report Routes (the form is a stub until it is built) */}
+        <Route path="/reports/new" element={<ReportForm />}/>
 
         {/* Order Routes*/}
         <Route path='/orders' element={<MyOrders />}/>

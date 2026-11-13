@@ -1,4 +1,5 @@
 import BuyNowBox from "./BuyNowBox";
+import ReportButton from "./ReportButton";
 
 function FixedPriceDetails({ listing, onPurchased }) {
   const seller =
@@ -30,6 +31,8 @@ function FixedPriceDetails({ listing, onPurchased }) {
 
       <BuyNowBox listing={listing} onPurchased={onPurchased} />
       <button>Add to watchlist</button>
+      <br />
+      <ReportButton listing={listing} />
     </div>
   );
 }
