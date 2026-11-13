@@ -17,7 +17,7 @@ import MyListings from "./pages/Listing/MyListings";
 
 //Order Imports
 import MyOrders from './pages/Orders/MyOrders'
-
+import OrderDetails from './pages/Orders/OrderDetails'
 
 function App() {
   function  getUserFromToken (){
@@ -58,6 +58,8 @@ function App() {
 
         {/* Order Routes*/}
         <Route path='/orders' element={<MyOrders />}/>
+        <Route path="/orders/:orderId" element={<OrderDetails />}/>
+
 
       </Routes>
     </div>
