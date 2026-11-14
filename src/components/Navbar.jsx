@@ -1,64 +1,74 @@
-import { NavLink, useLocation } from "react-router";
+import { NavLink, useLocation } from 'react-router'
 
 function Navbar({ user = null, handleLogout }) {
-  const { pathname } = useLocation();
-  const onSellPage = pathname === "/listings/new";
+  const { pathname } = useLocation()
+  const onSellPage = pathname === '/listings/new'
 
-  const linkClass = ({ isActive }) =>
-    isActive ? "navbar__link navbar__link--active" : "navbar__link";
+  const linkClass = ({ isActive }) => {
+    if (isActive) {
+      return 'navbar__link navbar__link--active'
+    }
+    return 'navbar__link'
+  }
 
-  // Browse matches every /listings/... path, so skip it on the Sell page.
-  const browseClass = ({ isActive }) =>
-    linkClass({ isActive: isActive && !onSellPage });
+  const browseClass = ({ isActive }) => {
+    const isBrowseActive = Boolean(isActive && !onSellPage)
+    return linkClass({ isActive: isBrowseActive })
+  }
 
   return (
-    <header className="navbar">
-      <div className="navbar__inner">
-        <NavLink to="/" className="navbar__logo">
+    <header className='navbar'>
+      <div className='navbar__inner'>
+        <NavLink to='/' className='navbar__logo'>
           Safqa
         </NavLink>
 
-        <nav className="navbar__links" aria-label="Main">
-          <NavLink to="/" end className={linkClass}>
+        <nav className='navbar__links' aria-label='Main'>
+          <NavLink to='/' end className={linkClass}>
             Home
           </NavLink>
-          <NavLink to="/listings" className={browseClass}>
+          <NavLink to='/listings' className={browseClass}>
             Browse
           </NavLink>
-          <NavLink to="/listings/new" end className={linkClass}>
+          <NavLink to='/listings/new' end className={linkClass}>
             Sell
           </NavLink>
+          {Boolean(user) && (
+            <NavLink to='/orders' className={linkClass}>
+              My Orders
+            </NavLink>
+          )}
         </nav>
 
         <input
-          type="search"
-          className="navbar__search"
-          placeholder="Search laptops, furniture, cars..."
-          aria-label="Search"
+          type='search'
+          className='navbar__search'
+          placeholder='Search laptops, furniture, cars...'
+          aria-label='Search'
         />
 
-        {user ? (
+        {Boolean(user) && (
           <>
-            <button type="button" className="navbar__user">
+            <button type='button' className='navbar__user'>
               {user.username}
             </button>
-            {/* Temporary until the user menu dropdown is designed */}
             <button
-              type="button"
-              className="navbar__logout"
+              type='button'
+              className='navbar__logout'
               onClick={handleLogout}
             >
               Log out
             </button>
           </>
-        ) : (
-          <NavLink to="/sign-in" className="navbar__login">
+        )}
+        {!user && (
+          <NavLink to='/sign-in' className='navbar__login'>
             Log in
           </NavLink>
         )}
       </div>
     </header>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar
