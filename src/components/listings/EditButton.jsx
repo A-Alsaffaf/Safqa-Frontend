@@ -1,15 +1,26 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from 'react-router'
 
 // Shown only to the seller of an Active listing. Opens the edit page.
 // `user` is the logged-in user passed down from App.jsx (null when logged out).
 function EditButton({ listing, user }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const sellerId = typeof listing.seller === "object" ? listing.seller?._id : listing.seller;
+  let sellerId = listing.seller
+  if (typeof listing.seller === 'object' && listing.seller) {
+    sellerId = listing.seller._id
+  }
 
-  if (!user || user._id !== sellerId || listing.status !== "Active") return null;
+  if (!user || user._id !== sellerId || listing.status !== 'Active') return null
 
-  return <button onClick={() => navigate(`/listings/${listing._id}/edit`)}>Edit listing</button>;
+  return (
+    <button
+      type='button'
+      className='btn-edit'
+      onClick={() => navigate(`/listings/${listing._id}/edit`)}
+    >
+      Edit listing
+    </button>
+  )
 }
 
-export default EditButton;
+export default EditButton

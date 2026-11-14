@@ -1,13 +1,46 @@
+/* ================================================================
+   Safqa — Design System Tokens
+   Palette derived from the Safqa wireframe v2 design specification.
+   ================================================================ */
+
 :root {
-    --bg: #0B1F4B;
-    --panel: #122C63;
-    --panel-2: #1B3D7A;
-    --border: #2E4F8F;
-    --text: #F5EFDC;
-    --muted: #B9C3DD;
-    --accent: #E0702A;
-    --accent-hi: #EA8440;
-    --price: #F0A060;
-    --wine: #7A1E2C;
-    --on-accent: #0B1F4B;
+  /* ---- Backgrounds ---- */
+  --bg: #0B1F4B;
+  --bg-deep: #081633;
+  --panel: #122C63;
+  --panel2: #1B3D7A;
+  --panel-2: #1B3D7A;
+
+  /* ---- Borders ---- */
+  --line: #2E4F8F;
+  --border: #2E4F8F;
+  --line-soft: rgba(46, 79, 143, 0.45);
+  --r: 12px;
+
+  /* ---- Text ---- */
+  --text: #F5EFDC;
+  --muted: #8E9FC0;
+  --text-mid: #B9C3DD;
+
+  /* ---- Accent ---- */
+  --accent: #E0702A;
+  --accent-hi: #EA8440;
+  --accent-glow: rgba(224, 112, 42, 0.15);
+  --ink: #0B1F4B;
+  --on-accent: #0B1F4B;
+
+  /* ---- Semantic ---- */
+  --price: #F0A060;
+  --urgent: #7A1E2C;
+  --wine: #7A1E2C;
+  --ok: #2F7D5B;
+  --focus: #FFD27A;
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 24px rgba(224, 112, 42, 0.12);
+
+  color-scheme: dark;
 }
