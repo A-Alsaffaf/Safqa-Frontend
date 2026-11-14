@@ -43,8 +43,14 @@ function OrderDetails() {
   if (!order) return <div>Order not found</div>
 
   let title = 'Item'
-  if (order.listing && order.listing.title) {
-    title = order.listing.title
+  let photoUrl = ''
+  if (order.listing) {
+    if (order.listing.title) {
+      title = order.listing.title
+    }
+    if (order.listing.images && order.listing.images.length > 0) {
+      photoUrl = order.listing.images[0]
+    }
   }
 
   let seller = 'Unknown'
@@ -65,9 +71,19 @@ function OrderDetails() {
     }
   }
 
+  let imageElement = null
+  if (photoUrl) {
+    imageElement = (
+      <div className='order-details-image'>
+        <img src={photoUrl} alt={title} />
+      </div>
+    )
+  }
+
   return (
     <div>
       <h1>Order Details</h1>
+      {imageElement}
       <h2>Listing: {title}</h2>
 
       <p>Price: ${order.finalPrice}</p>
