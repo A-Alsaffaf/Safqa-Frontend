@@ -8,7 +8,8 @@ function ReportButton({ listing }) {
   }
 
   function handleClick() {
-    navigate(`/reports/new?listingId=${listing._id}&targetType=${targetType}`)
+    // The route is /listings/:id/reports. ReportForm reads listingId and targetType from the query string.
+    navigate(`/listings/${listing._id}/reports?listingId=${listing._id}&targetType=${targetType}`)
   }
 
   return (
