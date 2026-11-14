@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { getReportById } from '../../services/reportService'
 import { useParams } from 'react-router'
 
 function ReportDetails() {
@@ -11,18 +11,9 @@ function ReportDetails() {
 
     async function getReport() {
 
-        const token = localStorage.getItem("token")
+        const report = await getReportById(id)
 
-        const response = await axios.get(
-            `${import.meta.env.VITE_BACKEND_URL}/admin/reports/${id}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        )
-
-        setReport(response.data)
+        setReport(report)
     }
 
     useEffect(() => {
