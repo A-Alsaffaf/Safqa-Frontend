@@ -52,8 +52,8 @@ function App() {
         {/* Listing Routes */}
         <Route path="/listings" element={<AllListings />} />
         <Route path="/listings/new" element={<CreateListing />} />
-        <Route path="/listings/:listingId/edit" element={<EditListing />} />
-        <Route path="/listings/:listingId" element={<ListingDetails />} />
+        <Route path="/listings/:listingId/edit" element={<EditListing user={user} />} />
+        <Route path="/listings/:listingId" element={<ListingDetails user={user} />} />
         <Route path="/listings/my-listings" element={<MyListings />} />
 
         {/* Report Routes */}
