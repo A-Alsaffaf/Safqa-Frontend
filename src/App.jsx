@@ -13,18 +13,25 @@ import CreateListing from "./pages/Listing/CreateListing";
 import EditListing from "./pages/Listing/EditListing";
 import ListingDetails from "./pages/Listing/ListingDetails";
 import MyListings from "./pages/Listing/MyListings";
-import ReportDetails from "./pages/Report/ReportDetails";
+
+
+// Report Imports
 import ReportForm from "./pages/Report/ReportForm";
+import ReportDetails from "./pages/Report/ReportDetails";
+
+
+// Order Imports
+import MyOrders from './pages/Orders/MyOrders'
+import OrderDetails from './pages/Orders/OrderDetails'
 
 function App() {
-  function  getUserFromToken (){
+  function getUserFromToken() {
     const token = localStorage.getItem("token");
 
     if (!token) return null;
 
     return JSON.parse(atob(token.split(".")[1]));
-  };
-
+  }
 
   const [user, setUser] = useState(getUserFromToken());
 
@@ -52,6 +59,19 @@ function App() {
         <Route path="/listings/:listingId" element={<ListingDetails/>}/>
         <Route path="/listings/my-listings" element={<MyListings/>}/>
 <Route path="/reports/new" element={<ReportForm />} />
+        <Route path="/listings" element={<AllListings />} />
+        <Route path="/listings/new" element={<CreateListing />} />
+        <Route path="/listings/:listingId/edit" element={<EditListing />} />
+        <Route path="/listings/:listingId" element={<ListingDetails />} />
+        <Route path="/listings/my-listings" element={<MyListings />} />
+
+        {/* Report Routes */}
+        <Route path="/reports/new" element={<ReportForm />} />
+
+        {/* Order Routes */}
+        <Route path="/orders" element={<MyOrders />} />
+        <Route path="/orders/:orderId" element={<OrderDetails />} />
+
       </Routes>
     </div>
   );

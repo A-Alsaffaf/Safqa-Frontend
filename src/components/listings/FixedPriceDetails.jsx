@@ -1,4 +1,7 @@
-function FixedPriceDetails({ listing }) {
+import BuyNowBox from "./BuyNowBox";
+import ReportButton from "./ReportButton";
+
+function FixedPriceDetails({ listing, onPurchased }) {
   const seller =
     typeof listing.seller === "object" && listing.seller !== null
       ? listing.seller.username
@@ -26,8 +29,10 @@ function FixedPriceDetails({ listing }) {
       <h3>Description</h3>
       <p>{listing.description}</p>
 
-      <button>Buy now</button>
+      <BuyNowBox listing={listing} onPurchased={onPurchased} />
       <button>Add to watchlist</button>
+      <br />
+      <ReportButton listing={listing} />
     </div>
   );
 }
