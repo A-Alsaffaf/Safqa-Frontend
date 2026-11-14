@@ -46,10 +46,10 @@ function MyOrders() {
             title = order.listing.title
 
             if (order.listing.category) {
-              if (order.listing.category.name) {
+              if (order.listing.category[0]) {
+                categoryName = order.listing.category[0].name
+              } else if (order.listing.category.name) {
                 categoryName = order.listing.category.name
-              } else {
-                categoryName = order.listing.category
               }
             }
           }
