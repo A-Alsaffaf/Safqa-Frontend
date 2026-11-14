@@ -1,7 +1,8 @@
 import BuyNowBox from "./BuyNowBox";
 import ReportButton from "./ReportButton";
+import EditButton from "./EditButton";
 
-function FixedPriceDetails({ listing, onPurchased }) {
+function FixedPriceDetails({ listing, user, onPurchased }) {
   const seller =
     typeof listing.seller === "object" && listing.seller !== null
       ? listing.seller.username
@@ -31,6 +32,7 @@ function FixedPriceDetails({ listing, onPurchased }) {
 
       <BuyNowBox listing={listing} onPurchased={onPurchased} />
       <button>Add to watchlist</button>
+      <EditButton listing={listing} user={user} />
       <br />
       <ReportButton listing={listing} />
     </div>
