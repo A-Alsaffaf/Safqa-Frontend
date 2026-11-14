@@ -85,9 +85,7 @@ function OrderDetails() {
           {STATUS_OPTIONS.map((opt) => (
             <option key={opt} value={opt}>
               {opt}
-              
             </option>
-
           ))}
         </select>
         <button type='submit'>Submit</button>
