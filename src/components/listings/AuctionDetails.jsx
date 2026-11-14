@@ -85,7 +85,6 @@ function AuctionDetails({ listing, user, onBidPlaced, onAuctionEnd }) {
       <div className='countdown-hero'>
         <span className='countdown-label'>AUCTION CLOSES IN</span>
         <div className='countdown-timer'>
-          <span className='timer-icon'>⏱</span>
           <CountDown
             startsAt={listing.startsAt}
             endsAt={listing.endsAt}

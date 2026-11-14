@@ -1,7 +1,7 @@
 /* ================================================================
-   Safqa â€” Global Stylesheet
+   Safqa --- Global Stylesheet
    Professional dark-navy marketplace theme.
-   ALL styling is CSS-only â€” zero JSX changes.
+   ALL styling is CSS-only --- zero JSX changes.
    ================================================================ */
 
 /* ---- Reset & Base ---- */
@@ -226,7 +226,7 @@ img { max-width: 100%; }
 }
 
 /* ================================================================
-   TYPOGRAPHY â€” Page Headings
+   TYPOGRAPHY --- Page Headings
    ================================================================ */
 h1 {
   font-size: 28px;
@@ -260,7 +260,7 @@ p {
 }
 
 /* ================================================================
-   FORMS â€” Sign-up, Sign-in, Create/Edit Listing, Report, Order Status
+   FORMS --- Sign-up, Sign-in, Create/Edit Listing, Report, Order Status
    ================================================================ */
 form {
   background: var(--panel);
@@ -359,7 +359,7 @@ form button:active {
 }
 
 /* ================================================================
-   SIGN-UP / SIGN-IN PAGES â€” Centered auth cards
+   SIGN-UP / SIGN-IN PAGES --- Centered auth cards
    Uses <main> as root wrapper
    ================================================================ */
 main {
@@ -439,11 +439,11 @@ main > form > div:last-child > button:nth-child(2):hover {
 }
 
 /* ================================================================
-   DASHBOARD PAGE â€” Simple welcome stub
+   DASHBOARD PAGE --- Simple welcome stub
    ================================================================ */
 
 /* ================================================================
-   MY ORDERS PAGE â€” Order card grid
+   MY ORDERS PAGE --- Order card grid
    ================================================================ */
 /* The <ul> containing order <li> items with links to /orders/:id */
 ul:has(li a[href^="/orders/"]) {
@@ -687,7 +687,7 @@ a[href="/orders"]:hover {
 }
 
 a[href="/orders"]::before {
-  content: "â†";
+  content: "\2190\00a0";
   font-size: 16px;
 }
 
@@ -810,7 +810,7 @@ a[href="/orders"]::before {
 }
 
 .listing-specs-accordion summary::after {
-  content: "â–¾";
+  content: "\25BE";
   font-size: 16px;
   transition: transform 0.25s ease;
   color: var(--accent);
@@ -923,7 +923,7 @@ a[href="/orders"]::before {
 }
 
 .countdown-hero p::before {
-  content: "â±";
+  content: "\23F1\00a0";
   font-size: 20px;
   color: var(--accent-hi);
 }
@@ -1113,7 +1113,7 @@ button.btn-watchlist:hover,
 }
 
 .btn-watchlist::before {
-  content: "â™¥";
+  content: "\2665\00a0";
   font-size: 16px;
   color: #A3E4C6;
 }
@@ -1157,7 +1157,7 @@ button.btn-report:hover,
 
 .btn-report::before,
 .listing-action-row button:not(.btn-watchlist):not(.btn-edit)::before {
-  content: "âš‘";
+  content: "\2691\00a0";
   font-size: 13px;
   color: #FFA8B2;
 }
@@ -1196,7 +1196,7 @@ button.btn-edit:hover,
 }
 
 .btn-edit::before {
-  content: "âœŽ";
+  content: "\270E\00a0";
   font-size: 14px;
   color: var(--accent);
 }
@@ -1270,8 +1270,8 @@ a[href="/listings"] {
   transition: color 0.2s ease;
 }
 
-a[href="/listings"]:hover { color: var(--accent); }
-a[href="/listings"]::before { content: "â†"; font-size: 16px; }
+
+
 
 /* Report link */
 a[href^="/reports/"] {
@@ -1294,7 +1294,7 @@ a[href^="/reports/"]:hover {
 }
 
 /* ================================================================
-   ALL LISTINGS PAGE â€” Grid of listing cards
+   ALL LISTINGS PAGE --- Grid of listing cards
    ================================================================ */
 /* Grid wrapper: the div inside AllListings > ListingGrid that holds cards */
 div:has(> div > a[href^="/listings/"]) {
@@ -1461,14 +1461,9 @@ div:has(> a[href="/listings"]) > a[href="/listings"] {
   transition: color 0.2s ease;
 }
 
-div:has(> a[href="/listings"]) > a[href="/listings"]:hover {
-  color: var(--accent);
-}
+div:has(> a[href="/listings"]) > 
 
-div:has(> a[href="/listings"]) > a[href="/listings"]::before {
-  content: "â†";
-  font-size: 16px;
-}
+div:has(> a[href="/listings"]) > 
 
 div:has(> a[href="/listings"]) > a[href^="/reports/"] {
   display: inline-flex;
@@ -1617,7 +1612,7 @@ button:disabled {
 }
 
 /* ================================================================
-   HOMEPAGE â€” Simple hero styling
+   HOMEPAGE --- Simple hero styling
    ================================================================ */
 div:has(> h1:only-child) {
   display: flex;
@@ -1708,7 +1703,7 @@ div:has(> h1:only-child) > h1 {
 }
 
 /* ================================================================
-   ANIMATIONS — Subtle entrance
+   ANIMATIONS - Subtle entrance
    ================================================================ */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
