@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import Navbar from "./components/Navbar";
 import SignupPage from "./pages/SignupPage";
@@ -15,8 +15,11 @@ import ListingDetails from "./pages/Listing/ListingDetails";
 import MyListings from "./pages/Listing/MyListings";
 
 
-//Order Imports
+
+// Order Imports
 import MyOrders from './pages/Orders/MyOrders'
+import OrderDetails from './pages/Orders/OrderDetails'
+
 
 //Report Imports 
 import ReportForm from './pages/Report/ReportForm'
@@ -27,16 +30,14 @@ import ReportDetails from './pages/Report/ReportDetails'
 
 
 
-
 function App() {
-  function  getUserFromToken (){
+  function getUserFromToken() {
     const token = localStorage.getItem("token");
 
     if (!token) return null;
 
     return JSON.parse(atob(token.split(".")[1]));
-  };
-
+  }
 
   const [user, setUser] = useState(getUserFromToken());
 
@@ -58,24 +59,22 @@ function App() {
         />
 
         {/* Listing Routes */}
-        <Route path="/listings" element={<AllListings/>}/>
-        <Route path="/listings/new" element={<CreateListing/>}/>
-        <Route path="/listings/:listingId/edit" element={<EditListing/>}/>
-        <Route path="/listings/:listingId" element={<ListingDetails/>}/>
-        <Route path="/listings/my-listings" element={<MyListings/>}/>
+        <Route path="/listings" element={<AllListings />} />
+        <Route path="/listings/new" element={<CreateListing />} />
+        <Route path="/listings/:listingId/edit" element={<EditListing />} />
+        <Route path="/listings/:listingId" element={<ListingDetails />} />
+        <Route path="/listings/my-listings" element={<MyListings />} />
 
-
-        {/* Order Routes*/}
-        <Route path='/orders' element={<MyOrders />}/>
-
-
-
-
+        {/* Order Routes */}
+        <Route path="/orders" element={<MyOrders />} />
+        <Route path="/orders/:orderId" element={<OrderDetails />} />
 
       {/* Report Routes  */}
-      <Route path="/reports/new" element={<ReportForm />} />
+<Route path="/reports/new" element={<ReportForm />} />
 <Route path="/admin/reports" element={<AllReports />} />
 <Route path="/admin/reports/:id" element={<ReportDetails />} />
+
+
       </Routes>
     </div>
   );

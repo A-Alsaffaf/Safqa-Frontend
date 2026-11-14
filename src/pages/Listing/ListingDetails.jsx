@@ -66,7 +66,7 @@ function ListingDetails() {
 
   // The listing type is stored on the document as "Fixed" or "Auction"
   if (listing.type?.toLowerCase() === "fixed") {
-    return <FixedPriceDetails listing={listing} />;
+    return <FixedPriceDetails listing={listing} onPurchased={refreshListing} />;
   }
 
   if (listing.type?.toLowerCase() === "auction") {

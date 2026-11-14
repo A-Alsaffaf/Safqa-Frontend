@@ -40,20 +40,47 @@ function MyOrders() {
       <ul>
         {orders.map((order) => {
           let title = 'Item'
+          let categoryName = ''
+
           if (order.listing) {
             title = order.listing.title
+
+            if (order.listing.category) {
+              if (order.listing.category[0]) {
+                categoryName = order.listing.category[0].name
+              } else if (order.listing.category.name) {
+                categoryName = order.listing.category.name
+              }
+            }
+          }
+
+          let sellerName = 'Unknown'
+          if (order.seller) {
+            sellerName = order.seller.username
+          }
+
+          let buyerName = 'Unknown'
+          if (order.buyer) {
+            buyerName = order.buyer.username
+          }
+
+          let categoryLine = null
+          if (categoryName) {
+            categoryLine = <p>Category: {categoryName}</p>
           }
 
           return (
             <li key={order._id}>
               <h1>Listing: {title}</h1>
 
+              {categoryLine}
+
               <p>Price: ${order.finalPrice}</p>
 
               <p>Status: {order.statues}</p>
-              <p>Seller: {order.seller.username}</p>
+              <p>Seller: {sellerName}</p>
 
-              <p>Buyer: {order.buyer.username}</p>
+              <p>Buyer: {buyerName}</p>
               <Link to={`/orders/${order._id}`}>View Details</Link>
             </li>
           )
