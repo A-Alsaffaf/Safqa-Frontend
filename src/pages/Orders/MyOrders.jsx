@@ -41,9 +41,14 @@ function MyOrders() {
         {orders.map((order) => {
           let title = 'Item'
           let categoryName = ''
+          let photoUrl = ''
 
           if (order.listing) {
             title = order.listing.title
+
+            if (order.listing.images && order.listing.images.length > 0) {
+              photoUrl = order.listing.images[0]
+            }
 
             if (order.listing.category) {
               if (order.listing.category[0]) {
@@ -69,19 +74,28 @@ function MyOrders() {
             categoryLine = <p>Category: {categoryName}</p>
           }
 
+          let imageTag = null
+          if (photoUrl) {
+            imageTag = <img src={photoUrl} alt={title} />
+          }
+
           return (
             <li key={order._id}>
-              <h1>Listing: {title}</h1>
-
-              {categoryLine}
-
-              <p>Price: ${order.finalPrice}</p>
-
-              <p>Status: {order.statues}</p>
-              <p>Seller: {sellerName}</p>
-
-              <p>Buyer: {buyerName}</p>
-              <Link to={`/orders/${order._id}`}>View Details</Link>
+              <Link to={`/orders/${order._id}`} className='order-card-link'>
+                <div className='order-card-image'>
+                  {imageTag}
+                  <div className='order-card-overlay'>
+                    <div className='order-card-info'>
+                      {categoryLine}
+                      <p>Price: ${order.finalPrice}</p>
+                      <p>Status: {order.statues}</p>
+                      <p>Seller: {sellerName}</p>
+                      <p>Buyer: {buyerName}</p>
+                    </div>
+                  </div>
+                </div>
+                <h1>Listing: {title}</h1>
+              </Link>
             </li>
           )
         })}

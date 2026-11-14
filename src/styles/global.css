@@ -1,7 +1,7 @@
 /* ================================================================
-   Safqa — Global Stylesheet
+   Safqa â€” Global Stylesheet
    Professional dark-navy marketplace theme.
-   ALL styling is CSS-only — zero JSX changes.
+   ALL styling is CSS-only â€” zero JSX changes.
    ================================================================ */
 
 /* ---- Reset & Base ---- */
@@ -226,7 +226,7 @@ img { max-width: 100%; }
 }
 
 /* ================================================================
-   TYPOGRAPHY — Page Headings
+   TYPOGRAPHY â€” Page Headings
    ================================================================ */
 h1 {
   font-size: 28px;
@@ -260,7 +260,7 @@ p {
 }
 
 /* ================================================================
-   FORMS — Sign-up, Sign-in, Create/Edit Listing, Report, Order Status
+   FORMS â€” Sign-up, Sign-in, Create/Edit Listing, Report, Order Status
    ================================================================ */
 form {
   background: var(--panel);
@@ -359,7 +359,7 @@ form button:active {
 }
 
 /* ================================================================
-   SIGN-UP / SIGN-IN PAGES — Centered auth cards
+   SIGN-UP / SIGN-IN PAGES â€” Centered auth cards
    Uses <main> as root wrapper
    ================================================================ */
 main {
@@ -439,14 +439,14 @@ main > form > div:last-child > button:nth-child(2):hover {
 }
 
 /* ================================================================
-   DASHBOARD PAGE — Simple welcome stub
+   DASHBOARD PAGE â€” Simple welcome stub
    ================================================================ */
 
 /* ================================================================
-   MY ORDERS PAGE — Order card grid
+   MY ORDERS PAGE â€” Order card grid
    ================================================================ */
 /* The <ul> containing order <li> items with links to /orders/:id */
-ul:has(> li > a[href^="/orders/"]) {
+ul:has(li a[href^="/orders/"]) {
   list-style: none;
   padding: 0;
   margin: 0 0 64px 0;
@@ -455,7 +455,7 @@ ul:has(> li > a[href^="/orders/"]) {
   gap: 20px;
 }
 
-li:has(> a[href^="/orders/"]) {
+li:has(a[href^="/orders/"]) {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--r);
@@ -464,60 +464,106 @@ li:has(> a[href^="/orders/"]) {
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.3s ease;
 }
 
-li:has(> a[href^="/orders/"]):hover {
+li:has(a[href^="/orders/"]):hover {
   border-color: var(--accent);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
-/* Order card header (the h1 "Listing: ...") */
-li:has(> a[href^="/orders/"]) > h1 {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text);
-  margin: 0;
-  padding: 18px 20px 12px 20px;
-  line-height: 1.35;
-  background: linear-gradient(180deg, rgba(27, 61, 122, 0.3) 0%, transparent 100%);
+.order-card-link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 }
 
-/* Data rows */
-li:has(> a[href^="/orders/"]) > p {
-  font-size: 14px;
+.order-card-image {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  background: var(--bg-deep);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.order-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+li:has(a[href^="/orders/"]):hover .order-card-image img {
+  transform: scale(1.06);
+  filter: brightness(0.55);
+}
+
+.order-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 31, 75, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 22px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+li:has(a[href^="/orders/"]):hover .order-card-overlay {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.order-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.order-card-info p {
+  font-size: 13.5px;
   color: var(--text-mid);
   margin: 0;
-  padding: 9px 20px;
+  padding: 7px 0;
   border-bottom: 1px solid var(--line-soft);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-li:has(> a[href^="/orders/"]) > p:last-of-type {
+.order-card-info p:last-child {
   border-bottom: none;
 }
 
-/* View Details button */
-li:has(> a[href^="/orders/"]) > a[href^="/orders/"] {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--accent), var(--accent-hi));
-  color: var(--ink);
+li:has(a[href^="/orders/"]) h1 {
+  font-size: 16px;
   font-weight: 700;
-  font-size: 14px;
-  padding: 13px 20px;
-  text-decoration: none;
-  transition: filter 0.2s ease;
-  letter-spacing: 0.02em;
-  margin-top: auto;
+  color: var(--text);
+  margin: 0;
+  padding: 18px 20px 16px 20px;
+  line-height: 1.35;
+  background: linear-gradient(180deg, rgba(27, 61, 122, 0.3) 0%, transparent 100%);
+  transition: color 0.2s ease;
 }
 
-li:has(> a[href^="/orders/"]) > a[href^="/orders/"]:hover {
-  filter: brightness(1.12);
+li:has(a[href^="/orders/"]):hover h1 {
+  color: var(--accent-hi);
 }
 
 /* ================================================================
@@ -541,6 +587,24 @@ div:has(> a[href="/orders"]) > h1 {
   margin: 0;
   padding: 24px 28px 16px 28px;
   background: linear-gradient(180deg, rgba(27, 61, 122, 0.35) 0%, transparent 100%);
+}
+
+.order-details-image {
+  width: 100%;
+  height: 260px;
+  background: var(--bg-deep);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.order-details-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 div:has(> a[href="/orders"]) > h2 {
@@ -623,7 +687,7 @@ a[href="/orders"]:hover {
 }
 
 a[href="/orders"]::before {
-  content: "←";
+  content: "â†";
   font-size: 16px;
 }
 
@@ -746,7 +810,7 @@ a[href="/orders"]::before {
 }
 
 .listing-specs-accordion summary::after {
-  content: "▾";
+  content: "â–¾";
   font-size: 16px;
   transition: transform 0.25s ease;
   color: var(--accent);
@@ -859,7 +923,7 @@ a[href="/orders"]::before {
 }
 
 .countdown-hero p::before {
-  content: "⏱";
+  content: "â±";
   font-size: 20px;
   color: var(--accent-hi);
 }
@@ -1049,7 +1113,7 @@ button.btn-watchlist:hover,
 }
 
 .btn-watchlist::before {
-  content: "♥";
+  content: "â™¥";
   font-size: 16px;
   color: #A3E4C6;
 }
@@ -1093,7 +1157,7 @@ button.btn-report:hover,
 
 .btn-report::before,
 .listing-action-row button:not(.btn-watchlist):not(.btn-edit)::before {
-  content: "⚑";
+  content: "âš‘";
   font-size: 13px;
   color: #FFA8B2;
 }
@@ -1132,7 +1196,7 @@ button.btn-edit:hover,
 }
 
 .btn-edit::before {
-  content: "✎";
+  content: "âœŽ";
   font-size: 14px;
   color: var(--accent);
 }
@@ -1207,7 +1271,7 @@ a[href="/listings"] {
 }
 
 a[href="/listings"]:hover { color: var(--accent); }
-a[href="/listings"]::before { content: "←"; font-size: 16px; }
+a[href="/listings"]::before { content: "â†"; font-size: 16px; }
 
 /* Report link */
 a[href^="/reports/"] {
@@ -1230,7 +1294,7 @@ a[href^="/reports/"]:hover {
 }
 
 /* ================================================================
-   ALL LISTINGS PAGE — Grid of listing cards
+   ALL LISTINGS PAGE â€” Grid of listing cards
    ================================================================ */
 /* Grid wrapper: the div inside AllListings > ListingGrid that holds cards */
 div:has(> div > a[href^="/listings/"]) {
@@ -1402,7 +1466,7 @@ div:has(> a[href="/listings"]) > a[href="/listings"]:hover {
 }
 
 div:has(> a[href="/listings"]) > a[href="/listings"]::before {
-  content: "←";
+  content: "â†";
   font-size: 16px;
 }
 
@@ -1553,7 +1617,7 @@ button:disabled {
 }
 
 /* ================================================================
-   HOMEPAGE — Simple hero styling
+   HOMEPAGE â€” Simple hero styling
    ================================================================ */
 div:has(> h1:only-child) {
   display: flex;
@@ -1608,7 +1672,7 @@ div:has(> h1:only-child) > h1 {
    RESPONSIVE TWEAKS
    ================================================================ */
 @media (max-width: 860px) {
-  ul:has(> li > a[href^="/orders/"]) {
+  ul:has(li a[href^="/orders/"]) {
     grid-template-columns: 1fr;
   }
 
@@ -1651,20 +1715,20 @@ div:has(> h1:only-child) > h1 {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-li:has(> a[href^="/orders/"]),
+li:has(a[href^="/orders/"]),
 div:has(> a[href^="/listings/"]) {
   animation: fadeUp 0.4s ease both;
 }
 
-li:has(> a[href^="/orders/"]):nth-child(2),
+li:has(a[href^="/orders/"]):nth-child(2),
 div:has(> a[href^="/listings/"]):nth-child(2) { animation-delay: 0.05s; }
-li:has(> a[href^="/orders/"]):nth-child(3),
+li:has(a[href^="/orders/"]):nth-child(3),
 div:has(> a[href^="/listings/"]):nth-child(3) { animation-delay: 0.1s; }
-li:has(> a[href^="/orders/"]):nth-child(4),
+li:has(a[href^="/orders/"]):nth-child(4),
 div:has(> a[href^="/listings/"]):nth-child(4) { animation-delay: 0.15s; }
-li:has(> a[href^="/orders/"]):nth-child(5),
+li:has(a[href^="/orders/"]):nth-child(5),
 div:has(> a[href^="/listings/"]):nth-child(5) { animation-delay: 0.2s; }
-li:has(> a[href^="/orders/"]):nth-child(6),
+li:has(a[href^="/orders/"]):nth-child(6),
 div:has(> a[href^="/listings/"]):nth-child(6) { animation-delay: 0.25s; }
 
 @media (prefers-reduced-motion: reduce) {
