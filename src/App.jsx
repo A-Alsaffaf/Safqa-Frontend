@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import Navbar from "./components/Navbar";
 import SignupPage from "./pages/SignupPage";
@@ -16,10 +17,11 @@ import MyListings from "./pages/Listing/MyListings";
 
 // Report Imports
 import ReportForm from "./pages/Report/ReportForm";
+import ReportDetails from "./pages/Report/ReportDetails";
 
 // Order Imports
-import MyOrders from './pages/Orders/MyOrders'
-import OrderDetails from './pages/Orders/OrderDetails'
+import MyOrders from "./pages/Orders/MyOrders";
+import OrderDetails from "./pages/Orders/OrderDetails";
 
 function App() {
   function getUserFromToken() {
@@ -40,6 +42,7 @@ function App() {
   return (
     <div>
       <Navbar user={user} handleLogout={handleLogout} />
+
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/sign-up" element={<SignupPage />} />
@@ -58,6 +61,7 @@ function App() {
 
         {/* Report Routes */}
         <Route path="/reports/new" element={<ReportForm />} />
+        <Route path="/admin/reports/:id" element={<ReportDetails />} />
 
         {/* Order Routes */}
         <Route path="/orders" element={<MyOrders />} />
