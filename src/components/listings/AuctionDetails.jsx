@@ -18,6 +18,8 @@ function formatDate(value) {
 }
 
 function AuctionDetails({ listing, user, onBidPlaced, onAuctionEnd }) {
+  if (!listing) return null
+
   let imagesContent = 'No images'
   if (listing.images) {
     if (listing.images.length > 0) {
@@ -37,7 +39,7 @@ function AuctionDetails({ listing, user, onBidPlaced, onAuctionEnd }) {
   }
 
   let currentBidText = 'No bids yet'
-  if (listing.currentBid) {
+  if (listing.currentBid != null) {
     currentBidText = `BD ${listing.currentBid}`
   }
 
@@ -50,17 +52,22 @@ function AuctionDetails({ listing, user, onBidPlaced, onAuctionEnd }) {
     }
   }
 
+  let winnerText = 'None'
+  if (listing.winner) {
+    if (typeof listing.winner === 'object') {
+      winnerText = listing.winner.username
+    } else {
+      winnerText = listing.winner
+    }
+  }
+
   let buyNowButton = null
   if (listing.status === 'Active') {
     if (listing.buyNowPrice) {
       buyNowButton = (
-        <BidForm
-          listingId={listing._id}
-          currentBid={listing.currentBid}
-          startingBid={listing.startingBid}
-          buyNowPrice={listing.buyNowPrice}
-          onBidPlaced={onBidPlaced}
-        />
+        <button type='button' className='btn-buy-now'>
+          Buy now for BD {listing.buyNowPrice}
+        </button>
       )
     }
   }
@@ -68,38 +75,48 @@ function AuctionDetails({ listing, user, onBidPlaced, onAuctionEnd }) {
   let bidFormElement = null
   if (listing.status === 'Active') {
     bidFormElement = (
-      <BidForm
-        listingId={listing._id}
-        currentBid={listing.currentBid}
-        startingBid={listing.startingBid}
-        onBidPlaced={onBidPlaced}
-      />
+      <BidForm listing={listing} onBidPlaced={onBidPlaced} />
     )
   }
 
   let countdownElement = null
   if (listing.status === 'Active') {
-    if (listing.endsAt) {
-      countdownElement = (
-        <div className='countdown-hero'>
-          <span className='countdown-label'>AUCTION CLOSES IN</span>
-          <div className='countdown-timer'>
-            <span className='timer-icon'>⏱</span>
-            <CountDown endsAt={listing.endsAt} onEnd={onAuctionEnd} />
-          </div>
+    countdownElement = (
+      <div className='countdown-hero'>
+        <span className='countdown-label'>AUCTION CLOSES IN</span>
+        <div className='countdown-timer'>
+          <span className='timer-icon'>⏱</span>
+          <CountDown
+            startsAt={listing.startsAt}
+            endsAt={listing.endsAt}
+            onEnd={onAuctionEnd}
+          />
         </div>
-      )
-    }
+      </div>
+    )
   }
 
   let soldNotice = null
   if (listing.status === 'Sold') {
-    soldNotice = <div className='status-banner ok'>Auction ended - Sold</div>
+    soldNotice = (
+      <div className='status-banner ok'>
+        Sold to {winnerText} for BD {listing.currentBid}
+      </div>
+    )
   }
 
   let closedNotice = null
   if (listing.status === 'Closed') {
-    closedNotice = <div className='status-banner muted'>Auction closed</div>
+    closedNotice = (
+      <div className='status-banner muted'>
+        Auction ended with no bids
+      </div>
+    )
+  }
+
+  let buyNowSpec = null
+  if (listing.buyNowPrice) {
+    buyNowSpec = <p>Buy now: BD {listing.buyNowPrice}</p>
   }
 
   return (
@@ -122,6 +139,7 @@ function AuctionDetails({ listing, user, onBidPlaced, onAuctionEnd }) {
             <p>Status: {listing.status}</p>
             <p>Starting bid: BD {listing.startingBid}</p>
             <p>Current bidder: {currentBidderText}</p>
+            {buyNowSpec}
             <p>Starts at: {formatDate(listing.startsAt)}</p>
             <p>Ends at: {formatDate(listing.endsAt)}</p>
             <p>Seller: {seller}</p>

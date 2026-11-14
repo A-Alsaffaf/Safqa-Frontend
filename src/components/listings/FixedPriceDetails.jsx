@@ -3,6 +3,8 @@ import ReportButton from './ReportButton'
 import EditButton from './EditButton'
 
 function FixedPriceDetails({ listing, user, onPurchased }) {
+  if (!listing) return null
+
   let imagesContent = 'No images'
   if (listing.images) {
     if (listing.images.length > 0) {
