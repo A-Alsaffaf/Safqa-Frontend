@@ -1,12 +1,12 @@
 
 import { useState } from 'react'
 import { useSearchParams } from 'react-router'
-import axios from 'axios'
+import { createReport } from '../../services/reportService'
+
 
 function ReportForm() {
-
+const [message, setMessage] = useState('')
     const [searchParams] = useSearchParams()
-
     const listingId = searchParams.get('listingId')
     const targetType = searchParams.get('targetType')
 
@@ -24,16 +24,12 @@ function ReportForm() {
 
     async function handleSubmit(event) {
         event.preventDefault()
-
-        await axios.post(
-            `${import.meta.env.VITE_BACK_END_SERVER_URL}/listings/${listingId}/reports`,
-            formData,
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            }
-        )
+if (!formData.reason.trim() || !formData.description.trim()) {
+    return
+}
+        await createReport(listingId, formData)
+        
+        setMessage('Report submitted successfully!')
     }
 
     return (
@@ -48,6 +44,7 @@ function ReportForm() {
                     name="reason"
                     value={formData.reason}
                     onChange={handleChange}
+                    required
                 />
 
                 <label>Description:</label>
@@ -55,9 +52,11 @@ function ReportForm() {
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
+                    required
                 />
 
                 <button type="submit">Submit Report</button>
+                <p>{message}</p>
             </form>
         </div>
     )

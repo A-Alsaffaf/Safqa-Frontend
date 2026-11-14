@@ -1,41 +1,26 @@
 
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router'
-import axios from 'axios'
+import { getAllReports, updateReportStatus } from '../../services/reportService'
 
 function AllReports() {
 
     const [reports, setReports] = useState([])
 
-    async function getAllReports() {
-        const response = await axios.get(
-            `${import.meta.env.VITE_BACK_END_SERVER_URL}/admin/reports`,
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            }
-        )
+    async function loadReports() {
+        const reports = await getAllReports()
 
-        setReports(response.data)
+        setReports(reports)
     }
 
     async function updateStatus(id, status) {
-        await axios.put(
-            `${import.meta.env.VITE_BACK_END_SERVER_URL}/admin/reports/${id}`,
-            { status: status },
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            }
-        )
+        await updateReportStatus(id, status)
 
-        getAllReports()
+        await loadReports()
     }
 
     useEffect(() => {
-        getAllReports()
+        loadReports()
     }, [])
 
     return (
