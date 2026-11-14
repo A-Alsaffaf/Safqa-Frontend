@@ -58,12 +58,6 @@ function App() {
         />
 
         {/* Listing Routes */}
-        <Route path="/listings" element={<AllListings/>}/>
-        <Route path="/listings/new" element={<CreateListing/>}/>
-        <Route path="/listings/:listingId/edit" element={<EditListing/>}/>
-        <Route path="/listings/:listingId" element={<ListingDetails/>}/>
-        <Route path="/listings/my-listings" element={<MyListings/>}/>
-<Route path="/reports/new" element={<ReportForm />} />
         <Route path="/listings" element={<AllListings />} />
         <Route path="/listings/new" element={<CreateListing />} />
         <Route path="/listings/:listingId/edit" element={<EditListing user={user} />} />
@@ -75,7 +69,7 @@ function App() {
         <Route path="/orders/:orderId" element={<OrderDetails />} />
 
         {/* Report Routes  */}
-        <Route path="listings/:id/reports" element={<ReportForm />} />
+        <Route path="/listings/:id/reports" element={<ReportForm />} />
         <Route path="/admin/reports" element={<AllReports />} />
         <Route path="/admin/reports/:id" element={<ReportDetails />} />
 
