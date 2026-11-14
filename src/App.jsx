@@ -14,10 +14,6 @@ import EditListing from "./pages/Listing/EditListing";
 import ListingDetails from "./pages/Listing/ListingDetails";
 import MyListings from "./pages/Listing/MyListings";
 
-// Report Imports
-import ReportForm from "./pages/Report/ReportForm";
-import ReportDetails from "./pages/Report/ReportDetails";
-
 
 // Order Imports
 import MyOrders from "./pages/Orders/MyOrders";
@@ -63,12 +59,6 @@ function App() {
         />
 
         {/* Listing Routes */}
-        <Route path="/listings" element={<AllListings/>}/>
-        <Route path="/listings/new" element={<CreateListing/>}/>
-        <Route path="/listings/:listingId/edit" element={<EditListing/>}/>
-        <Route path="/listings/:listingId" element={<ListingDetails/>}/>
-        <Route path="/listings/my-listings" element={<MyListings/>}/>
-<Route path="/reports/new" element={<ReportForm />} />
         <Route path="/listings" element={<AllListings />} />
         <Route path="/listings/new" element={<CreateListing />} />
         <Route path="/listings/:listingId/edit" element={<EditListing user={user} />} />

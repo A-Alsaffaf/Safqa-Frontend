@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { buyNow } from "../../services/listingService";
 
-// Buy button for a fixed-price listing. Calls the buy-now route, then asks the page to reload.
+// Buy button for a fixed-price listing or an auction. Calls the buy-now route, then asks the page to reload.
 function BuyNowBox({ listing, onPurchased }) {
+  // An auction sells at its buy now price, a fixed-price listing at its price
+  const price = listing.type === "Auction" ? listing.buyNowPrice : listing.price;
+
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -38,8 +41,8 @@ function BuyNowBox({ listing, onPurchased }) {
     <div>
       <p>{error}</p>
       <p>{message}</p>
-      <button onClick={handleBuy} disabled={submitting}>
-        {submitting ? "Buying..." : `Buy now for BD ${listing.price}`}
+      <button type="button" className="btn-buy-now" onClick={handleBuy} disabled={submitting}>
+        {submitting ? "Buying..." : `Buy now for BD ${price}`}
       </button>
     </div>
   );

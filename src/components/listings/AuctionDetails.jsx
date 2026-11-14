@@ -1,6 +1,7 @@
 import CountDown from '../common/CountDown'
 import BidForm from './BidForm'
 import BidHistory from './BidHistory'
+import BuyNowBox from './BuyNowBox'
 import ReportButton from './ReportButton'
 import EditButton from './EditButton'
 
@@ -61,14 +62,11 @@ function AuctionDetails({ listing, user, onBidPlaced, onAuctionEnd }) {
     }
   }
 
+  // Buy now is offered while the auction is active, has a buy now price, and no bid has reached it yet
   let buyNowButton = null
-  if (listing.status === 'Active') {
-    if (listing.buyNowPrice) {
-      buyNowButton = (
-        <button type='button' className='btn-buy-now'>
-          Buy now for BD {listing.buyNowPrice}
-        </button>
-      )
+  if (listing.status === 'Active' && listing.buyNowPrice != null) {
+    if (listing.currentBid == null || listing.currentBid < listing.buyNowPrice) {
+      buyNowButton = <BuyNowBox listing={listing} onPurchased={onBidPlaced} />
     }
   }
 
