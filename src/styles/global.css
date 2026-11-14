@@ -1728,18 +1728,73 @@ div:has(> a[href^="/listings/"]):hover {
   box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
-/* Product image */
+/* Product image & Media Container */
+.listing-card-media {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--panel2), var(--panel));
+}
+
+.listing-card-media img,
 div:has(> a[href^="/listings/"]) > img {
   width: 100% !important;
-  height: 190px !important;
+  height: 100% !important;
   object-fit: cover;
   display: block;
   background: linear-gradient(135deg, var(--panel2), var(--panel));
   transition: transform 0.35s ease;
 }
 
+div:has(> a[href^="/listings/"]):hover .listing-card-media img,
 div:has(> a[href^="/listings/"]):hover > img {
-  transform: scale(1.03);
+  transform: scale(1.04);
+}
+
+/* Auction Time Left Overlay Badge (similar to Mazad pill) */
+.auction-time-badge {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(8, 18, 38, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #FFFFFF;
+  padding: 4px 9px;
+  border-radius: 7px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: 2;
+  user-select: none;
+}
+
+.auction-time-badge-left,
+.auction-time-badge-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.auction-time-badge-icon {
+  width: 13px;
+  height: 13px;
+  stroke: #FFFFFF;
+  display: block;
+  flex-shrink: 0;
+}
+
+.auction-time-badge-divider {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 11px;
+  line-height: 1;
 }
 
 /* Title */
