@@ -1,16 +1,21 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from 'react-router'
 
-// Button that opens the report form for a listing. The report model stores the type in lowercase
-// ("auction" or "fixed"), while the listing stores it as "Auction" or "Fixed".
 function ReportButton({ listing }) {
-  const navigate = useNavigate();
-  const targetType = listing.type?.toLowerCase();
-
-  function handleClick() {
-    navigate(`/reports/new?listingId=${listing._id}&targetType=${targetType}`);
+  const navigate = useNavigate()
+  let targetType = ''
+  if (listing && listing.type) {
+    targetType = listing.type.toLowerCase()
   }
 
-  return <button onClick={handleClick}>Report this listing</button>;
+  function handleClick() {
+    navigate(`/reports/new?listingId=${listing._id}&targetType=${targetType}`)
+  }
+
+  return (
+    <button type='button' className='btn-report' onClick={handleClick}>
+      Report
+    </button>
+  )
 }
 
-export default ReportButton;
+export default ReportButton
