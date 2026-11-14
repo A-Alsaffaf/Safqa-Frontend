@@ -14,7 +14,6 @@ import EditListing from "./pages/Listing/EditListing";
 import ListingDetails from "./pages/Listing/ListingDetails";
 import MyListings from "./pages/Listing/MyListings";
 
-
 // Order Imports
 import MyOrders from "./pages/Orders/MyOrders";
 import OrderDetails from "./pages/Orders/OrderDetails";
@@ -70,7 +69,7 @@ function App() {
         <Route path="/orders/:orderId" element={<OrderDetails />} />
 
         {/* Report Routes  */}
-        <Route path="/reports/new" element={<ReportForm />} />
+        <Route path="/listings/:id/reports" element={<ReportForm />} />
         <Route path="/admin/reports" element={<AllReports />} />
         <Route path="/admin/reports/:id" element={<ReportDetails />} />
 
