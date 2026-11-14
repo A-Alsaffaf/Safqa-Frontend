@@ -14,11 +14,9 @@ import EditListing from "./pages/Listing/EditListing";
 import ListingDetails from "./pages/Listing/ListingDetails";
 import MyListings from "./pages/Listing/MyListings";
 
-
-
 // Order Imports
-import MyOrders from './pages/Orders/MyOrders'
-import OrderDetails from './pages/Orders/OrderDetails'
+import MyOrders from "./pages/Orders/MyOrders";
+import OrderDetails from "./pages/Orders/OrderDetails";
 
 
 //Report Imports 
@@ -49,6 +47,7 @@ function App() {
   return (
     <div>
       <Navbar user={user} handleLogout={handleLogout} />
+
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/sign-up" element={<SignupPage />} />
@@ -61,18 +60,18 @@ function App() {
         {/* Listing Routes */}
         <Route path="/listings" element={<AllListings />} />
         <Route path="/listings/new" element={<CreateListing />} />
-        <Route path="/listings/:listingId/edit" element={<EditListing />} />
-        <Route path="/listings/:listingId" element={<ListingDetails />} />
+        <Route path="/listings/:listingId/edit" element={<EditListing user={user} />} />
+        <Route path="/listings/:listingId" element={<ListingDetails user={user} />} />
         <Route path="/listings/my-listings" element={<MyListings />} />
 
         {/* Order Routes */}
         <Route path="/orders" element={<MyOrders />} />
         <Route path="/orders/:orderId" element={<OrderDetails />} />
 
-      {/* Report Routes  */}
-<Route path="/reports/new" element={<ReportForm />} />
-<Route path="/admin/reports" element={<AllReports />} />
-<Route path="/admin/reports/:id" element={<ReportDetails />} />
+        {/* Report Routes  */}
+        <Route path="/reports/new" element={<ReportForm />} />
+        <Route path="/admin/reports" element={<AllReports />} />
+        <Route path="/admin/reports/:id" element={<ReportDetails />} />
 
 
       </Routes>
