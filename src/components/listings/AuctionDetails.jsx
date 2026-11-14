@@ -1,6 +1,7 @@
 import BidForm from "./BidForm";
 import BidHistory from "./BidHistory";
 import ReportButton from "./ReportButton";
+import EditButton from "./EditButton";
 import CountDown from "../common/CountDown";
 
 // e.g. "12 Nov 2026, 9:00 am" in the viewer's local time
@@ -17,7 +18,7 @@ function formatDate(value) {
   });
 }
 
-function AuctionDetails({ listing, onBidPlaced, onAuctionEnd }) {
+function AuctionDetails({ listing, user, onBidPlaced, onAuctionEnd }) {
   const seller =
     typeof listing.seller === "object" && listing.seller !== null
       ? listing.seller.username
@@ -73,6 +74,7 @@ function AuctionDetails({ listing, onBidPlaced, onAuctionEnd }) {
 
       <BidHistory listingId={listing._id} currentBid={listing.currentBid} />
       <button>Add to watchlist</button>
+      <EditButton listing={listing} user={user} />
       <br />
       <ReportButton listing={listing} />
     </div>
