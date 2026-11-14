@@ -2,6 +2,7 @@ import CountDown from '../common/CountDown'
 import BidForm from './BidForm'
 import BidHistory from './BidHistory'
 import ReportButton from './ReportButton'
+import EditButton from './EditButton'
 
 function formatDate(value) {
   if (!value) return 'Not set'
@@ -16,7 +17,7 @@ function formatDate(value) {
   })
 }
 
-function AuctionDetails({ listing, onBidPlaced, onAuctionEnd }) {
+function AuctionDetails({ listing, user, onBidPlaced, onAuctionEnd }) {
   let imagesContent = 'No images'
   if (listing.images) {
     if (listing.images.length > 0) {
@@ -42,59 +43,63 @@ function AuctionDetails({ listing, onBidPlaced, onAuctionEnd }) {
 
   let currentBidderText = 'None'
   if (listing.currentBidder) {
-    currentBidderText = listing.currentBidder
+    if (typeof listing.currentBidder === 'object') {
+      currentBidderText = listing.currentBidder.username
+    } else {
+      currentBidderText = listing.currentBidder
+    }
   }
 
-  let buyNowRow = null
-  if (listing.buyNowPrice) {
-    buyNowRow = <p>Buy now: BD {listing.buyNowPrice}</p>
+  let buyNowButton = null
+  if (listing.status === 'Active') {
+    if (listing.buyNowPrice) {
+      buyNowButton = (
+        <BidForm
+          listingId={listing._id}
+          currentBid={listing.currentBid}
+          startingBid={listing.startingBid}
+          buyNowPrice={listing.buyNowPrice}
+          onBidPlaced={onBidPlaced}
+        />
+      )
+    }
+  }
+
+  let bidFormElement = null
+  if (listing.status === 'Active') {
+    bidFormElement = (
+      <BidForm
+        listingId={listing._id}
+        currentBid={listing.currentBid}
+        startingBid={listing.startingBid}
+        onBidPlaced={onBidPlaced}
+      />
+    )
+  }
+
+  let countdownElement = null
+  if (listing.status === 'Active') {
+    if (listing.endsAt) {
+      countdownElement = (
+        <div className='countdown-hero'>
+          <span className='countdown-label'>AUCTION CLOSES IN</span>
+          <div className='countdown-timer'>
+            <span className='timer-icon'>⏱</span>
+            <CountDown endsAt={listing.endsAt} onEnd={onAuctionEnd} />
+          </div>
+        </div>
+      )
+    }
   }
 
   let soldNotice = null
   if (listing.status === 'Sold') {
-    let winner = 'Unknown'
-    if (listing.winner) {
-      if (typeof listing.winner === 'object') {
-        winner = listing.winner.username
-      } else {
-        winner = listing.winner
-      }
-    }
-    soldNotice = (
-      <div className='status-banner ok'>
-        <span>Sold to {winner} for BD {listing.currentBid}</span>
-      </div>
-    )
+    soldNotice = <div className='status-banner ok'>Auction ended - Sold</div>
   }
 
   let closedNotice = null
   if (listing.status === 'Closed') {
-    closedNotice = (
-      <div className='status-banner muted'>
-        <span>Auction ended with no bids</span>
-      </div>
-    )
-  }
-
-  let isActive = false
-  if (listing.status === 'Active') {
-    isActive = true
-  }
-
-  let bidFormElement = null
-  if (isActive) {
-    bidFormElement = <BidForm listing={listing} onBidPlaced={onBidPlaced} />
-  }
-
-  let buyNowButton = null
-  if (isActive) {
-    if (listing.buyNowPrice) {
-      buyNowButton = (
-        <button type='button' className='btn-buy-now'>
-          Buy now for BD {listing.buyNowPrice}
-        </button>
-      )
-    }
+    closedNotice = <div className='status-banner muted'>Auction closed</div>
   }
 
   return (
@@ -117,7 +122,6 @@ function AuctionDetails({ listing, onBidPlaced, onAuctionEnd }) {
             <p>Status: {listing.status}</p>
             <p>Starting bid: BD {listing.startingBid}</p>
             <p>Current bidder: {currentBidderText}</p>
-            {buyNowRow}
             <p>Starts at: {formatDate(listing.startsAt)}</p>
             <p>Ends at: {formatDate(listing.endsAt)}</p>
             <p>Seller: {seller}</p>
@@ -128,19 +132,12 @@ function AuctionDetails({ listing, onBidPlaced, onAuctionEnd }) {
       </div>
 
       <div className='listing-side-col'>
-        <div className='countdown-hero'>
-          <span className='countdown-label'>AUCTION CLOSES IN</span>
-          <CountDown
-            startsAt={listing.startsAt}
-            endsAt={listing.endsAt}
-            onEnd={onAuctionEnd}
-          />
-        </div>
+        {countdownElement}
 
         <h1 className='listing-title'>{listing.title}</h1>
 
         <div className='current-bid-box'>
-          <span className='bid-label'>Current Bid</span>
+          <span className='bid-label'>CURRENT BID</span>
           <span className='bid-value'>{currentBidText}</span>
           <span className='bid-starting'>Starting: BD {listing.startingBid}</span>
         </div>
@@ -155,6 +152,7 @@ function AuctionDetails({ listing, onBidPlaced, onAuctionEnd }) {
           <button type='button' className='btn-watchlist'>
             Add to watchlist
           </button>
+          <EditButton listing={listing} user={user} />
           <ReportButton listing={listing} />
         </div>
       </div>

@@ -1058,7 +1058,7 @@ button.btn-watchlist:hover,
 .btn-report,
 button.btn-report,
 .listing-action-row .btn-report,
-.listing-action-row button:not(.btn-watchlist) {
+.listing-action-row button:not(.btn-watchlist):not(.btn-edit) {
   flex: 0 0 auto !important;
   width: auto !important;
   min-width: 90px !important;
@@ -1085,17 +1085,56 @@ button.btn-report,
 .btn-report:hover,
 button.btn-report:hover,
 .listing-action-row .btn-report:hover,
-.listing-action-row button:not(.btn-watchlist):hover {
+.listing-action-row button:not(.btn-watchlist):not(.btn-edit):hover {
   transform: translateY(-1px) !important;
   filter: brightness(1.15) !important;
   box-shadow: 0 6px 18px rgba(184, 46, 62, 0.5) !important;
 }
 
 .btn-report::before,
-.listing-action-row button:not(.btn-watchlist)::before {
+.listing-action-row button:not(.btn-watchlist):not(.btn-edit)::before {
   content: "⚑";
   font-size: 13px;
   color: #FFA8B2;
+}
+
+/* Edit Button (Seller only) */
+.btn-edit,
+button.btn-edit,
+.listing-action-row .btn-edit {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-height: 46px !important;
+  height: 46px !important;
+  padding: 0 18px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #1B3D7A, #122C63) !important;
+  border: 1px solid var(--accent) !important;
+  color: var(--accent-hi) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  box-shadow: 0 3px 12px rgba(27, 61, 122, 0.35) !important;
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.2s ease !important;
+}
+
+.btn-edit:hover,
+button.btn-edit:hover,
+.listing-action-row .btn-edit:hover {
+  transform: translateY(-1px) !important;
+  filter: brightness(1.15) !important;
+  border-color: var(--accent-hi) !important;
+}
+
+.btn-edit::before {
+  content: "✎";
+  font-size: 14px;
+  color: var(--accent);
 }
 
 /* Responsive collapse on smaller screens */
@@ -1484,7 +1523,7 @@ div:has(> h1):has(> ul > li > button) > ul > li > button:hover {
    BUY NOW BOX
    ================================================================ */
 /* Generic non-form, non-navbar button styling for BuyNow */
-button:not(.navbar__user):not(.navbar__logout):not([type="submit"]):not(.btn-watchlist):not(.btn-report) {
+button:not(.navbar__user):not(.navbar__logout):not([type="submit"]):not(.btn-watchlist):not(.btn-report):not(.btn-edit) {
   background: linear-gradient(135deg, var(--accent), var(--accent-hi));
   color: var(--ink);
   border: none;
@@ -1498,13 +1537,13 @@ button:not(.navbar__user):not(.navbar__logout):not([type="submit"]):not(.btn-wat
   letter-spacing: 0.01em;
 }
 
-button:not(.navbar__user):not(.navbar__logout):not([type="submit"]):not(.btn-watchlist):not(.btn-report):hover:not(:disabled) {
+button:not(.navbar__user):not(.navbar__logout):not([type="submit"]):not(.btn-watchlist):not(.btn-report):not(.btn-edit):hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md), var(--shadow-glow);
   filter: brightness(1.08);
 }
 
-button:not(.navbar__user):not(.navbar__logout):not([type="submit"]):not(.btn-watchlist):not(.btn-report):active:not(:disabled) {
+button:not(.navbar__user):not(.navbar__logout):not([type="submit"]):not(.btn-watchlist):not(.btn-report):not(.btn-edit):active:not(:disabled) {
   transform: translateY(0);
 }
 

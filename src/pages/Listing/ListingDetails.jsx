@@ -4,7 +4,8 @@ import { getListingById } from "../../services/listingService";
 import FixedPriceDetails from "../../components/listings/FixedPriceDetails";
 import AuctionDetails from "../../components/listings/AuctionDetails";
 
-function ListingDetails() {
+// `user` is the logged-in user passed down from App.jsx (null when logged out)
+function ListingDetails({ user }) {
   const { listingId } = useParams();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -66,13 +67,14 @@ function ListingDetails() {
 
   // The listing type is stored on the document as "Fixed" or "Auction"
   if (listing.type?.toLowerCase() === "fixed") {
-    return <FixedPriceDetails listing={listing} onPurchased={refreshListing} />;
+    return <FixedPriceDetails listing={listing} user={user} onPurchased={refreshListing} />;
   }
 
   if (listing.type?.toLowerCase() === "auction") {
     return (
       <AuctionDetails
         listing={listing}
+        user={user}
         onBidPlaced={refreshListing}
         onAuctionEnd={handleAuctionEnd}
       />

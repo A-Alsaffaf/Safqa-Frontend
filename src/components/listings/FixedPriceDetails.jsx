@@ -1,7 +1,8 @@
 import BuyNowBox from './BuyNowBox'
 import ReportButton from './ReportButton'
+import EditButton from './EditButton'
 
-function FixedPriceDetails({ listing, onPurchased }) {
+function FixedPriceDetails({ listing, user, onPurchased }) {
   let imagesContent = 'No images'
   if (listing.images) {
     if (listing.images.length > 0) {
@@ -68,6 +69,7 @@ function FixedPriceDetails({ listing, onPurchased }) {
           <button type='button' className='btn-watchlist'>
             Add to watchlist
           </button>
+          <EditButton listing={listing} user={user} />
           <ReportButton listing={listing} />
         </div>
       </div>
