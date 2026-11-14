@@ -1,0 +1,1090 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Safqa wireframes v2</title>
+<style>
+:root{
+  --bg:#0B1F4B; --bg-deep:#081633; --panel:#122C63; --panel2:#1B3D7A; --line:#2E4F8F;
+  --text:#F5EFDC; --muted:#B9C3DD; --accent:#E0702A; --accent-hi:#EA8440; --ink:#0B1F4B;
+  --price:#F0A060; --urgent:#7A1E2C; --ok:#2F7D5B; --focus:#FFD27A; --r:10px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg-deep);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i.fill{fill:currentColor}
+
+/* ---------- document chrome ---------- */
+aside{width:228px;flex:none;padding:18px 14px;border-right:1px solid var(--line);background:#0A1A3D;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{font-size:18px;font-weight:700;color:var(--accent)}
+.sub{font-size:12px;color:var(--muted)}
+aside h4{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+.idx{display:block;width:100%;text-align:left;background:none;border:0;color:var(--text);padding:7px 8px;border-radius:6px;font-size:13px;min-height:36px}
+.idx:hover{background:var(--panel)}
+.idx[aria-current="page"]{background:var(--accent);color:var(--ink);font-weight:600}
+main{flex:1;min-width:0;padding:18px 22px 40px;overflow:auto}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-bottom:12px;font-size:13px;color:var(--muted)}
+.toolbar h2{font-size:16px;color:var(--text);font-weight:600;margin-right:auto}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{background:none;border:0;color:var(--muted);padding:0 12px;min-height:40px;font-size:13px}
+.seg button[aria-pressed="true"]{background:var(--panel2);color:var(--text);font-weight:600}
+.demo{display:flex;gap:8px;align-items:center}
+.demo select{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-height:40px;color:var(--text)}
+.notes,details.oq{margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;max-width:1280px}
+.notes h3{font-size:13px;margin-bottom:8px}
+.notes ul,details.oq ol{padding-left:18px;color:var(--muted);font-size:13px;display:grid;gap:5px}
+code{color:var(--text);background:var(--bg);padding:0 4px;border-radius:4px;font-size:12px}
+details.oq summary{cursor:pointer;font-weight:600;min-height:36px;display:flex;align-items:center}
+details.oq{margin-top:14px}
+@media (max-width:900px){body{flex-direction:column}aside{position:static;width:auto;height:auto}}
+
+/* ---------- frame (the app itself) ---------- */
+.frame{container-type:inline-size;position:relative;width:100%;max-width:1280px;height:820px;background:var(--bg);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.frame.m{width:390px;height:844px}
+.skip{position:absolute;left:8px;top:-60px;background:var(--focus);color:var(--ink);padding:8px 12px;border-radius:6px;z-index:30;font-weight:700}
+.skip:focus{top:8px}
+.top{display:flex;align-items:center;gap:12px;padding:8px 14px;min-height:60px;border-bottom:1px solid var(--line);background:var(--bg);flex:none;position:relative;z-index:5}
+.logo{background:none;border:0;color:var(--accent);font-weight:700;font-size:18px;min-height:44px;padding:0 4px}
+.nlinks{display:flex;gap:2px}
+.nlinks button{background:none;border:0;color:var(--muted);padding:0 12px;min-height:44px;border-radius:8px;font-size:14px}
+.nlinks button[aria-current="page"]{color:var(--text);box-shadow:inset 0 -2px 0 var(--accent)}
+.sbox{flex:1;max-width:340px;position:relative;margin-left:auto;min-width:0}
+.sbox input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:0 14px 0 38px;min-height:40px;font-size:14px;color:var(--text)}
+.sbox input::placeholder{color:#8795B8}
+.sbox .i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.icb{background:none;border:0;color:var(--text);min-width:44px;min-height:44px;display:grid;place-items:center;border-radius:50%}
+.icb:hover{background:var(--panel)}
+.screen{flex:1;min-height:0;overflow:auto;position:relative}
+.screen:focus{outline:none}
+.pg{padding:20px;display:flex;flex-direction:column;gap:16px;min-height:100%}
+.pg.center{align-items:center;justify-content:center}
+.tabbar{display:none;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line);background:var(--bg);flex:none;padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabbar button{background:none;border:0;color:var(--muted);min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px}
+.tabbar button[aria-current="page"]{color:var(--accent-hi);font-weight:600}
+.toast{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:var(--text);color:var(--ink);padding:10px 16px;border-radius:8px;font-weight:600;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.4);z-index:20;max-width:calc(100% - 32px)}
+
+/* ---------- primitives ---------- */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.lcard{text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}
+.lcard:hover{border-color:var(--accent)}
+.lcard:active{transform:scale(.99)}
+.ph{background:linear-gradient(135deg,var(--panel2),var(--panel));border:1px dashed var(--line);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--muted);font-size:12px;width:100%;min-height:40px}
+.big{font-size:20px;font-weight:700;line-height:1.25}
+.h2{font-size:15px;font-weight:600}
+.t2{font-size:14px;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.m{color:var(--muted);font-size:12.5px}
+.price{color:var(--price);font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+.price.xl{font-size:28px}
+.row{display:flex;gap:8px;align-items:center}
+.wrap{flex-wrap:wrap}
+.between{justify-content:space-between}
+.col{display:flex;flex-direction:column;gap:12px;min-width:0}
+.grid{display:grid;gap:12px}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.split.wide{grid-template-columns:minmax(0,1.35fr) minmax(280px,1fr)}
+.browse{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px;align-items:start}
+.browse fieldset{display:flex;flex-direction:column;gap:6px}
+.hero{flex-direction:row;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.chip{font-size:13px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;text-decoration:none;min-height:36px;display:inline-flex;align-items:center}
+.chip:hover{border-color:var(--accent)}
+.link{color:var(--accent-hi);font-size:13px;text-decoration:none;font-weight:600;min-height:44px;display:inline-flex;align-items:center;gap:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:9px 16px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid var(--line);background:transparent;color:var(--text);transition:filter .15s,background .15s,transform .15s;white-space:nowrap;text-decoration:none}
+.btn:hover:not(:disabled){filter:brightness(1.12)}
+.btn:active:not(:disabled){transform:scale(.98)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.pri{background:var(--accent);color:var(--ink);border-color:var(--accent)}
+.btn.danger{background:var(--urgent);color:#fff;border-color:var(--urgent)}
+.btn.txt{border:0;color:var(--muted);padding:0 4px}
+.btn.sm{min-height:36px;padding:6px 12px;font-size:13px}
+.btn.block{width:100%}
+.btn[aria-pressed="true"]{background:var(--panel2);border-color:var(--accent)}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:2px 8px;border-radius:6px;background:var(--panel2);color:var(--text);width:max-content}
+.tag .i{width:14px;height:14px}
+.tag.acc{background:var(--accent);color:var(--ink);font-weight:600}
+.tag.ok{background:var(--ok);color:#fff}
+.tag.bad{background:var(--urgent);color:#fff}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field>label,.lbl{font-size:13px;font-weight:600}
+.inp{width:100%;background:var(--bg-deep);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:14px;min-height:44px;color:var(--text)}
+.inp::placeholder{color:#8795B8}
+.inp[aria-invalid="true"]{border-color:#E8707A}
+textarea.inp{resize:vertical;min-height:96px}
+.help{font-size:12.5px;color:var(--muted)}
+.err{color:#FFB4BC;font-size:12.5px;display:flex;gap:6px;align-items:flex-start}
+.okmsg{color:#9BE3BF;display:flex;gap:6px;align-items:center;font-size:13px;font-weight:600}
+.banner{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:8px;font-size:13px;border:1px solid var(--line);background:var(--panel)}
+.banner.bad{background:#3A1520;border-color:var(--urgent)}
+.banner.ok{background:#12372A;border-color:var(--ok)}
+.radio{display:flex;gap:8px;align-items:center;font-size:14px;min-height:40px}
+.radio input{width:20px;height:20px;accent-color:var(--accent);flex:none}
+fieldset{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+legend{padding:0 6px;font-size:13px;font-weight:600}
+.pw{display:flex;gap:8px}
+.pw .inp{flex:1}
+.txt{background:none;border:0;color:#FFB4BC;text-align:left;text-decoration:underline;padding:0;min-height:36px}
+.rw{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+.rw:last-child{border-bottom:0}
+.olist{list-style:none;display:flex;flex-direction:column;gap:6px}
+.orow{width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;color:var(--text);min-height:44px}
+.orow:hover{border-color:var(--accent)}
+.orow[aria-current="true"]{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.empty{align-items:center;text-align:center;padding:32px 16px}
+.steps{list-style:none;display:flex;flex-direction:column;gap:14px}
+.step{display:flex;gap:10px;color:var(--muted)}
+.step b{color:var(--text)}
+.step .dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--line);margin-top:4px;flex:none}
+.step.done .dot{background:var(--ok);border-color:var(--ok)}
+.step.cur .dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px rgba(224,112,42,.25)}
+.step.cur b{color:var(--accent-hi)}
+.gal{display:flex;flex-direction:column;gap:8px}
+.gmain{min-height:260px}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.thumb{width:64px;height:48px;border-radius:6px;background:var(--panel2);border:2px solid transparent;min-width:44px;min-height:44px}
+.thumb[aria-pressed="true"]{border-color:var(--accent)}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--panel2);display:grid;place-items:center;font-weight:700;flex:none}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13px}
+.dl dt{color:var(--muted)}
+.dl dd{margin:0}
+.skel{height:8px;border-radius:4px;background:var(--panel2)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{background:none;border:0;color:var(--muted);padding:10px 12px;min-height:44px;border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(--accent);font-weight:600}
+.auth{width:min(360px,100%)}
+.status-line{font-size:13px}
+
+/* ---------- responsive: the frame adapts to its own width ---------- */
+@container (max-width:720px){
+  .nlinks{display:none}
+  .tabbar{display:grid}
+  .toast{bottom:72px}
+  .split,.split.wide,.browse{grid-template-columns:minmax(0,1fr)}
+  .g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pg{padding:14px}
+  .sbox{max-width:none}
+  .top{gap:8px;padding:8px 10px}
+  .big{font-size:18px}
+}
+@container (max-width:420px){
+  .g3,.g4{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
+</defs></svg>
+
+<aside>
+  <div class="brand">Safqa</div>
+  <div class="sub">Wireframe set · v2</div>
+  <div id="side"></div>
+</aside>
+
+<main>
+  <div class="toolbar">
+    <h2 id="ttl"></h2>
+    <div id="demo"></div>
+    <div class="seg" role="group" aria-label="Preview width">
+      <button type="button" id="dv-d" data-act="dev" data-v="d" aria-pressed="true">Desktop</button>
+      <button type="button" id="dv-m" data-act="dev" data-v="m" aria-pressed="false">Mobile 390</button>
+    </div>
+  </div>
+
+  <div id="frame" class="frame"></div>
+
+  <section class="notes" aria-labelledby="nh">
+    <h3 id="nh">Spec notes · <span id="nt"></span></h3>
+    <ul id="nl"></ul>
+  </section>
+
+  <details class="oq" open>
+    <summary>Open questions for the ERD (apply to every screen)</summary>
+    <ol>
+      <li>Missing entities: Watch (watchlist), Notification (bell icon) and Message (buyer and seller chat).</li>
+      <li>Report needs a <code>reason</code>. Fix the <code>Report.status</code> enum typo "dismessed" to "dismissed" (this file uses "dismissed").</li>
+      <li>Bid stores a single <code>amount</code>. Decide whether max bid or proxy bidding is needed, and where the BD 5.000 step is stored.</li>
+      <li>Listing has both <code>currentBidder</code> and <code>winner</code>. Confirm <code>winner</code> is set only when the auction closes.</li>
+      <li>Order has no payment, delivery, address or tracking fields. Decide what sets <code>paid</code>: a payment webhook or a manual step.</li>
+      <li>Listing has no draft status, so there is no "save draft" in the create flow.</li>
+      <li>User.password is a plain String in the ERD. Store a salted hash and never return it in responses.</li>
+      <li>Arabic and RTL: the market is bilingual. These screens are LTR English only; the next pass needs mirrored layouts and translations.</li>
+      <li>Money: BHD uses three decimals (1 BD = 1000 fils). Every price here shows BD 0.000; confirm the stored type for <code>Number</code> keeps that precision.</li>
+      <li>Not drawn yet: buyer-to-seller cancellations, refunds, admin-only route guard, and ended-auction notifications.</li>
+    </ol>
+  </details>
+</main>
+
+<script>
+/* ================= data (mirrors the ERD) ================= */
+const INC = 5;                       // proposed bid step (BD) — open question
+const CATS = ['Electronics','Furniture','Vehicles','Fashion','Sports','Books'];
+const COND = {new:'New', used:'Used', damaged:'Damaged'};
+const NOW = Date.now();
+const LIST = [
+  {id:'L4', t:'Nintendo Switch OLED, 64GB',           type:'fixed',   cond:'new',     price:210, cat:'Electronics', seller:'yousef.m',     st:'active'},
+  {id:'L2', t:'Canon EOS 700D kit with 18–55mm lens', type:'auction', cond:'used',    price:96,  cat:'Electronics', seller:'noor.designs', st:'active'},
+  {id:'L3', t:'Sony WH-1000XM3 headphones',           type:'auction', cond:'used',    price:72,  cat:'Electronics', seller:'yousef.m',     st:'active'},
+  {id:'L1', t:'Dell Latitude 5490 · 16GB · 512GB',   type:'fixed',   cond:'used',    price:185, cat:'Electronics', seller:'salma_k',      st:'active'},
+  {id:'L5', t:'IKEA Malm desk, white',                type:'fixed',   cond:'used',    price:40,  cat:'Furniture',   seller:'noor.designs', st:'active'},
+  {id:'L6', t:'Mountain bike 27.5-inch',              type:'auction', cond:'used',    price:130, cat:'Sports',      seller:'hassan22',     st:'active'},
+  {id:'L7', t:'Ergonomic office chair',               type:'fixed',   cond:'used',    price:55,  cat:'Furniture',   seller:'noor.designs', st:'active'},
+  {id:'L9', t:'Kids scooter, cracked handle',         type:'fixed',   cond:'damaged', price:15,  cat:'Sports',      seller:'hassan22',     st:'active'},
+  {id:'L8', t:'Lenovo ThinkPad T480',                 type:'fixed',   cond:'used',    price:120, cat:'Electronics', seller:'salma_k',      st:'sold'},
+  {id:'L10',t:'Samsung 55-inch 4K TV',                type:'fixed',   cond:'used',    price:150, cat:'Electronics', seller:'noor.designs', st:'sold'},
+  {id:'L11',t:'Bose SoundLink speaker',               type:'fixed',   cond:'used',    price:45,  cat:'Electronics', seller:'yousef.m',     st:'sold'}
+];
+// Auction state: hist = [bidder (masked unless you), amount, when], newest first
+const AUCS = {
+  L2:{cur:96, n:7, ends:NOW+(30*3600+12*60)*1000, hist:[['@b***7',96,'2h ago'],['@you',90,'5h ago'],['@h***2',85,'1d ago']]},
+  L3:{cur:72, n:4, ends:NOW+20*3600e3,            hist:[['@h***2',72,'40m ago'],['@k***9',68,'3h ago']]},
+  L6:{cur:130,n:1, ends:NOW+3*86400e3,            hist:[['@you',130,'1d ago']]}
+};
+const STEPS = [
+  ['Pending','Order placed. Waiting for payment.'],
+  ['Paid','Payment confirmed. Seller can ship.'],
+  ['Shipped','Handed to courier or meet-up.'],
+  ['Completed','Buyer confirmed receipt.']
+];
+let ORDERS = [
+  {no:'O-2208', lid:'L10', price:150, buyer:'salma_k', seller:'noor.designs', st:2, when:'Wed 11 Nov, 09:14'},
+  {no:'O-2191', lid:'L11', price:45,  buyer:'salma_k', seller:'yousef.m',     st:3, when:'Sat 31 Oct, 17:02'},
+  {no:'O-2215', lid:'L8',  price:120, buyer:'yousef.m', seller:'salma_k',     st:1, when:'Tue 10 Nov, 20:40'}
+];
+let REPORTS = [
+  {no:'R-1042', lid:'L2', reason:'Misleading photos',  by:'hassan22',     st:'open', at:'2h ago'},
+  {no:'R-1041', lid:'L9', reason:'Misleading description', by:'noor.designs', st:'open', at:'5h ago'},
+  {no:'R-1039', lid:'L7', reason:'Wrong category',     by:'yousef.m',     st:'open', at:'1d ago'}
+];
+const FIELD = {title:'f-title',cat:'f-cat',cond:'f-cond',photos:'f-photos',price:'f-price',sbid:'f-sbid',end:'f-end',buy:'f-buy'};
+const NEED = ['create','checkout','orders','sales','account'];
+const TITLE = {home:'Home',browse:'Browse',fixed:'Fixed-price listing',auction:'Auction listing',create:'Create listing',checkout:'Checkout',orders:'Order status (buyer)',sales:'Sales (seller)',login:'Log in / register',account:'My account',admin:'Reports queue'};
+const GROUPS = [
+  ['Storefront',[['home','Home'],['browse','Browse']]],
+  ['Listings',[['fixed','Fixed-price listing'],['auction','Auction listing'],['create','Create listing']]],
+  ['Buying & selling',[['checkout','Checkout'],['orders','Order status (buyer)'],['sales','Sales (seller)']]],
+  ['Account',[['login','Log in / register'],['account','My account']]],
+  ['Admin',[['admin','Reports queue']]]
+];
+
+/* ================= state ================= */
+const DEFAULT_FILT = {type:'all', cond:['new','used','damaged'], cat:'all', pmax:''};
+const S = {
+  page:'home', lid:'L4', user:null, ret:null, dev:'d', q:'', sort:'ending',
+  filt:{...DEFAULT_FILT, cond:[...DEFAULT_FILT.cond]},
+  watch:['L5','L7','L3'], fst:'active', ast:'live', photo:0,
+  bidVal:'', err:'', ok:'', allBids:false,
+  acct:'bids', lmode:'login', lf:{u:'',e:'',p:''}, lerr:[], showpw:false,
+  cf:{title:'Dell Latitude 5490 · 16GB', cat:'', cond:'used', type:'fixed', price:'185', sbid:'60', buy:'', start:'2026-11-13T09:00', end:'2026-11-14T18:00', desc:'', photos:0},
+  errs:[], buyId:'L4', oSel:'O-2208', note:'', rf:'open', rsel:null, rmc:null, toast:'', _nav:false
+};
+
+/* ================= helpers ================= */
+const $ = id => document.getElementById(id);
+const FMT = n => 'BD ' + Number(n).toFixed(3);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const cap = s => s[0].toUpperCase() + s.slice(1);
+const I = (n, c='') => `<svg class="i ${c}" aria-hidden="true" focusable="false"><use href="#i-${n}"/></svg>`;
+const B = (label, o={}) => `<button type="button" class="btn ${o.v||''} ${o.block?'block':''} ${o.sm?'sm':''}" ${o.attrs||''}>${o.icon?I(o.icon):''}${label?`<span>${label}</span>`:''}</button>`;
+const TAG = (txt, k='', ic='') => `<span class="tag ${k}">${ic?I(ic):''}${txt}</span>`;
+const STAT = {
+  active: TAG('Active','ok','check'),
+  sold:   TAG('Sold','','check'),
+  removed:TAG('Removed','bad','alert'),
+  closed: TAG('Closed','','clock')
+};
+const PH = (text, h='100%') => `<div class="ph" style="height:${h}" aria-hidden="true">${I('image')}<span>${text}</span></div>`;
+const priceOf = l => (l.type==='auction' && AUCS[l.id]) ? AUCS[l.id].cur : l.price;
+const opt = (v, l, sel) => `<option value="${v}" ${sel===v?'selected':''}>${l}</option>`;
+const fmtEnd = ms => new Date(ms).toLocaleString('en-GB',{timeZone:'Asia/Bahrain',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false});
+function cdText(ms){
+  if (ms <= 0) return 'Ended';
+  const s = Math.floor(ms/1000), d = Math.floor(s/86400), h = Math.floor(s%86400/3600), m = Math.floor(s%3600/60), sec = s%60;
+  const p = n => String(n).padStart(2,'0');
+  return 'Ends in ' + (d ? `${d}d ${p(h)}h ${p(m)}m` : `${p(h)}h ${p(m)}m ${p(sec)}s`);
+}
+
+function lcard(l){
+  const au = l.type==='auction', A = AUCS[l.id];
+  return `<a class="card lcard" href="#${l.type}" data-act="go" data-to="${l.type}" data-lid="${l.id}" aria-label="${esc(l.t)}, ${au?'current bid':'price'} ${FMT(priceOf(l))}">
+    ${PH('Photo','84px')}
+    <div class="t2">${l.t}</div>
+    <div class="row between"><span class="m">${au?'Current bid':'Price'}</span><span class="price">${FMT(priceOf(l))}</span></div>
+    <div class="row wrap">${TAG(au?'Auction':'Fixed', au?'acc':'')}${TAG(COND[l.cond])}${au?`<span class="tag" data-cd="${A.ends}">${cdText(A.ends-Date.now())}</span>`:''}</div>
+  </a>`;
+}
+function gal(n, label){
+  return `<div class="gal">
+    <div class="ph gmain" role="img" aria-label="Photo ${S.photo+1} of ${n} for ${esc(label)}">${I('image')}<span>Photo ${S.photo+1} of ${n}</span></div>
+    <div class="thumbs" role="group" aria-label="Photos">${Array.from({length:n},(_,i)=>`<button type="button" id="th-${i}" class="thumb" data-act="gal" data-i="${i}" aria-label="Show photo ${i+1} of ${n}" aria-pressed="${i===S.photo}"></button>`).join('')}</div>
+  </div>`;
+}
+function browseItems(){
+  const f = S.filt, q = S.q.trim().toLowerCase(), max = parseFloat(f.pmax);
+  let r = LIST.filter(l => l.st==='active'
+    && (f.type==='all' || l.type===f.type)
+    && f.cond.includes(l.cond)
+    && (f.cat==='all' || l.cat===f.cat)
+    && (!q || l.t.toLowerCase().includes(q))
+    && (isNaN(max) || priceOf(l) <= max));
+  const key = l => l.type==='auction' ? AUCS[l.id].ends : Number.MAX_SAFE_INTEGER;
+  if (S.sort==='price') r.sort((a,b) => priceOf(a)-priceOf(b));
+  else if (S.sort==='ending') r.sort((a,b) => key(a)-key(b));
+  else if (S.sort==='new') r = r.slice().reverse();
+  return r;
+}
+
+/* ================= screens ================= */
+const P = {};
+
+P.home = () => {
+  const au = LIST.filter(l => l.type==='auction' && l.st==='active');
+  const fx = LIST.filter(l => l.type==='fixed' && l.st==='active').slice(0,4);
+  return `<div class="pg">
+    <section class="card hero" aria-labelledby="h-home">
+      <div class="col" style="gap:4px"><h1 id="h-home" class="big">Fixed deals &amp; live auctions</h1><p class="m">Used goods, sold in Bahrain. All prices in BD.</p></div>
+      ${B('Browse all listings',{v:'pri',icon:'grid',attrs:'data-act="go" data-to="browse" data-reset="1"'})}
+    </section>
+    <nav aria-label="Categories" class="row wrap">${CATS.map(c=>`<a class="chip" href="#browse" data-act="go" data-to="browse" data-cat="${c}">${c}</a>`).join('')}</nav>
+    <div class="row between"><h2 class="h2">Ending soon</h2><a class="link" href="#browse" data-act="go" data-to="browse" data-type="auction">View all auctions ${I('chevron')}</a></div>
+    <div class="grid g3">${au.map(lcard).join('')}</div>
+    <div class="row between"><h2 class="h2">Fixed price picks</h2><a class="link" href="#browse" data-act="go" data-to="browse" data-type="fixed">View all ${I('chevron')}</a></div>
+    <div class="grid g4">${fx.map(lcard).join('')}</div>
+  </div>`;
+};
+
+P.browse = () => {
+  const f = S.filt, items = browseItems(), q = S.q.trim();
+  const radio = (val, label) => `<label class="radio"><input type="radio" id="type-${val}" name="type" value="${val}" data-chg="type" ${f.type===val?'checked':''}> ${label}</label>`;
+  const cb = (val, label) => `<label class="radio"><input type="checkbox" id="cond-${val}" value="${val}" data-chg="cond" ${f.cond.includes(val)?'checked':''}> ${label}</label>`;
+  const cat = val => `<label class="radio"><input type="radio" id="cat-${val}" name="cat" value="${val}" data-chg="cat" ${f.cat===val?'checked':''}> ${val==='all'?'All categories':val}</label>`;
+  return `<div class="pg">
+    <div class="row between wrap"><h1 class="big">${q?`Results for “${esc(q)}”`:'Browse listings'}</h1><span class="m" aria-live="polite">${items.length} listing${items.length===1?'':'s'}</span></div>
+    <div class="browse">
+      <fieldset aria-label="Filters">
+        <legend>Filters</legend>
+        <div class="field"><span class="lbl">Listing type</span>${radio('all','All')}${radio('fixed','Fixed price')}${radio('auction','Auction')}</div>
+        <div class="field"><span class="lbl">Condition</span>${cb('new','New')}${cb('used','Used')}${cb('damaged','Damaged')}</div>
+        <div class="field"><span class="lbl">Category</span>${cat('all')}${CATS.map(cat).join('')}</div>
+        <div class="field"><label for="pmax">Max price (BD)</label><input id="pmax" class="inp" inputmode="decimal" value="${esc(f.pmax)}" data-chg="pmax" placeholder="e.g. 100"></div>
+        ${B('Clear all filters',{sm:1,attrs:'id="clear-btn" data-act="clear"'})}
+      </fieldset>
+      <div class="col">
+        <div class="row between wrap">
+          <label class="row" for="sort"><span class="m">Sort by</span>
+            <select id="sort" class="inp" data-chg="sort" style="width:auto;min-height:40px">
+              ${opt('ending','Ending soon',S.sort)}${opt('price','Price: low to high',S.sort)}${opt('new','Recently listed',S.sort)}
+            </select></label>
+        </div>
+        ${items.length
+          ? `<div class="grid g3">${items.map(lcard).join('')}</div>`
+          : `<div class="card empty">${I('search')}<h2 class="h2">No listings match</h2><p class="m">Remove a filter or try a broader search term.</p>${B('Clear all filters',{v:'pri',attrs:'data-act="clear"'})}</div>`}
+        <nav aria-label="Pagination" class="row" style="justify-content:center">
+          ${B('',{sm:1,icon:'chevron',attrs:'disabled aria-label="Previous page" style="transform:scaleX(-1)"'})}
+          ${[1,2,3].map(n=>`<button type="button" class="btn sm ${n===1?'pri':''}" ${n===1?'aria-current="page"':''} aria-label="Page ${n}">${n}</button>`).join('')}
+          ${B('',{sm:1,icon:'chevron',attrs:'aria-label="Next page"'})}
+        </nav>
+      </div>
+    </div>
+  </div>`;
+};
+
+P.fixed = () => {
+  const l = LIST.find(x => x.id===S.lid && x.type==='fixed') || LIST.find(x => x.type==='fixed');
+  const st = S.fst, owner = !!S.user && l.seller===S.user, watched = S.watch.includes(l.id);
+  const banner = st==='sold'
+    ? `<div class="banner bad" role="status">${I('check')}<span>This item has sold. Buy now is unavailable.</span></div>`
+    : st==='removed'
+    ? `<div class="banner bad" role="status">${I('alert')}<span>This listing was removed. It no longer appears in Browse or search.</span></div>` : '';
+  const cta = owner
+    ? `${B('Edit listing',{block:1,icon:'edit'})}<a class="btn block" href="#sales" data-act="go" data-to="sales">View sales</a>`
+    : st==='active'
+      ? B(`Buy now · ${FMT(l.price)}`,{v:'pri',block:1,attrs:`data-act="buy" data-lid="${l.id}"`})
+      : B(st==='sold'?'Sold':'Unavailable',{block:1,attrs:'disabled'});
+  return `<div class="pg"><div class="split wide">
+    <div class="col">
+      ${banner}
+      ${gal(3, l.t)}
+      <div class="card"><h2 class="h2">Description</h2><p class="m">Seller description, plain text, up to 1,000 characters.</p><div class="skel" style="width:90%"></div><div class="skel" style="width:75%"></div><div class="skel" style="width:55%"></div></div>
+      <div class="card"><h2 class="h2">Details</h2>
+        <dl class="dl"><dt>Condition</dt><dd>${COND[l.cond]}</dd><dt>Category</dt><dd>${l.cat}</dd><dt>Status</dt><dd>${STAT[st]}</dd><dt>Listing ID</dt><dd>${l.id}</dd></dl>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="row wrap">${TAG('Fixed price','acc')}${TAG(COND[l.cond])}</div>
+        <h1 class="t2" style="font-size:18px">${l.t}</h1>
+        <div class="m">Price</div>
+        <div class="price xl">${FMT(l.price)}</div>
+        ${cta}
+        ${B(watched?'Watching':'Add to watchlist',{block:1,icon:watched?'check':'heart',attrs:`data-act="watch" data-id="${l.id}" id="w-${l.id}" aria-pressed="${watched}"`})}
+      </div>
+      <div class="card">
+        <div class="row between">
+          <div class="row"><span class="avatar" aria-hidden="true">${l.seller[0].toUpperCase()}</span><div><div>@${l.seller}</div><div class="m">${I('star','fill')} 4.8 · 32 sales</div></div></div>
+          ${B('Message',{sm:1,icon:'message'})}
+        </div>
+      </div>
+      ${B('Report listing',{sm:1,icon:'flag',attrs:'data-act="report"'})}
+    </div>
+  </div></div>`;
+};
+
+P.auction = () => {
+  const l = LIST.find(x => x.id===S.lid && x.type==='auction') || LIST.find(x => x.type==='auction');
+  const A = AUCS[l.id], top = A.hist[0], mine = !!top && top[0]==='@you';
+  const ended = S.ast==='ended' || A.ends<=Date.now();
+  const min = A.n ? +(A.cur+INC).toFixed(3) : A.cur;
+  const shown = S.allBids ? A.hist : A.hist.slice(0,3);
+  const owner = !!S.user && l.seller===S.user;
+  const watched = S.watch.includes(l.id);
+  const errMsg = S.err ? `<p id="bid-err" class="err">${I('alert')}<span>${S.err}</span></p>` : '';
+  const bidPanel = ended
+    ? (mine
+        ? `<div class="banner ok">${I('check')}<span>You won this auction at ${FMT(A.cur)}.</span></div>${B('Go to checkout',{v:'pri',block:1,attrs:`data-act="buy" data-lid="${l.id}"`})}`
+        : `<div class="banner"><span>Auction ended${top?` at ${FMT(A.cur)} with ${top[0]} as the top bidder`:' with no bids'}.</span></div>`)
+    : `<div class="field">
+         <label for="bid-in">Your bid (BD)</label>
+         <input id="bid-in" class="inp" inputmode="decimal" autocomplete="off" data-in="bid" value="${esc(S.bidVal)}" placeholder="${min.toFixed(3)}"
+           aria-describedby="bid-help${S.err?' bid-err':''}" ${S.err?'aria-invalid="true"':''}>
+         <p id="bid-help" class="help">Minimum ${FMT(min)}. After the first bid, bids step up by BD ${INC.toFixed(3)} (proposed).</p>
+         ${errMsg}
+       </div>
+       <div class="row wrap" role="group" aria-label="Add to current bid">${[5,10,25].map(n=>B('+'+n,{sm:1,attrs:`data-act="bidq" data-n="${n}" aria-label="Add BD ${n} to current bid"`})).join('')}</div>
+       ${B(S.user?'Place bid':'Log in to bid',{v:'pri',block:1,attrs:'data-act="bid"'})}`;
+  return `<div class="pg"><div class="split wide">
+    <div class="col">
+      ${gal(4, l.t)}
+      <div class="card"><h2 class="h2">Description</h2><div class="skel" style="width:90%"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:55%"></div></div>
+      <div class="card">
+        <div class="row between"><h2 class="h2">Bid history</h2><span class="m">${A.n} bid${A.n===1?'':'s'}</span></div>
+        ${shown.length ? shown.map(h=>`<div class="rw"><span class="m">${h[0]}</span><span>${FMT(h[1])} · ${h[2]}</span></div>`).join('') : '<p class="m">No bids yet.</p>'}
+        ${A.hist.length>3 ? B(S.allBids?'Show latest 3':`Show all ${A.hist.length} listed`,{sm:1,attrs:'data-act="allbids"'}) : ''}
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="row wrap">${TAG('Auction','acc')}${TAG(COND[l.cond])}${ended?TAG('Ended','','clock'):TAG('Live','ok','clock')}</div>
+        <h1 class="t2" style="font-size:18px">${l.t}</h1>
+        <div class="row wrap" style="gap:24px">
+          <div><div class="m">Current bid</div><div class="price xl">${FMT(A.cur)}</div></div>
+          <div><div class="m">Bids</div><div class="big">${A.n}</div></div>
+        </div>
+        <div class="row wrap between">
+          <span class="m">${ended?'Ended':'Ends'} ${fmtEnd(A.ends)} (Bahrain time)</span>
+          ${ended?'':`<span class="tag" data-cd="${A.ends}">${cdText(A.ends-Date.now())}</span>`}
+        </div>
+        ${!ended && mine ? `<p class="okmsg">${I('check')} You're the highest bidder.</p>` : ''}
+        <p id="bid-ok" class="okmsg" role="status" aria-live="polite">${S.ok}</p>
+        ${owner ? '<p class="m">This is your auction. Bidders see the bid form here.</p>' : bidPanel}
+        <div class="row wrap">
+          ${B(watched?'Watching':'Add to watchlist',{icon:watched?'check':'heart',attrs:`data-act="watch" data-id="${l.id}" id="w-${l.id}" aria-pressed="${watched}"`})}
+          ${B('Message seller',{icon:'message'})}
+        </div>
+      </div>
+      <div class="card row between"><span>Seller <b>@${l.seller}</b></span><span class="m">${I('star','fill')} 4.9</span></div>
+    </div>
+  </div></div>`;
+};
+
+P.create = () => {
+  const c = S.cf, E = S.errs, has = k => E.find(x => x[0]===k);
+  const er = k => has(k) ? `<p class="err" id="e-${k}">${I('alert')}<span>${has(k)[1]}</span></p>` : '';
+  const ai = k => has(k) ? 'aria-invalid="true"' : '';
+  const sum = E.length
+    ? `<div id="err-sum" class="banner bad" role="alert" tabindex="-1"><div class="col" style="gap:4px"><b>Fix ${E.length} ${E.length>1?'issues':'issue'} before publishing</b><ul style="padding-left:18px">${E.map(x=>`<li><button type="button" class="txt" data-act="focus" data-id="${FIELD[x[0]]}">${x[1]}</button></li>`).join('')}</ul></div></div>`
+    : '';
+  const previewPrice = c.type==='fixed' ? (+c.price||0) : (+c.sbid||0);
+  return `<div class="pg">
+    <div class="row between wrap"><h1 class="big">Create listing</h1><span class="m">Required fields are marked in the errors list on publish.</span></div>
+    ${sum}
+    <div class="split wide">
+      <div class="col">
+        <div class="field"><label for="f-title">Title</label>
+          <input id="f-title" class="inp" maxlength="80" value="${esc(c.title)}" data-in="cf" data-k="title" ${ai('title')} aria-describedby="h-title${has('title')?' e-title':''}">
+          <p id="h-title" class="help">3–80 characters. Include brand and model.</p>${er('title')}</div>
+        <div class="field"><label for="f-cat">Category</label>
+          <select id="f-cat" class="inp" data-chg="cf" data-k="cat" ${ai('cat')}>
+            <option value="">Choose a category</option>${CATS.map(x=>`<option value="${x}" ${c.cat===x?'selected':''}>${x}</option>`).join('')}
+          </select>${er('cat')}</div>
+        <fieldset id="f-cond" tabindex="-1" ${ai('cond')}>
+          <legend>Condition</legend>
+          ${['new','used','damaged'].map(v=>`<label class="radio"><input type="radio" name="cond" value="${v}" ${c.cond===v?'checked':''} data-chg="ccond"> ${COND[v]}</label>`).join('')}
+          <p class="help">Damaged items can be listed and show a Damaged tag.</p>${er('cond')}
+        </fieldset>
+        <div class="field"><label for="f-desc">Description <span class="m" id="desc-count">${c.desc.length}/1000</span></label>
+          <textarea id="f-desc" class="inp" rows="4" maxlength="1000" data-in="cf" data-k="desc">${esc(c.desc)}</textarea></div>
+        <div class="field">
+          <div class="row between"><span class="lbl">Photos</span><span class="m">${c.photos} of 8 added</span></div>
+          <div class="row wrap">
+            <button type="button" id="f-photos" class="btn sm" data-act="addp" ${c.photos>=8?'disabled':''} ${ai('photos')}>${I('plus')}<span>Add photo</span></button>
+            ${c.photos ? B('Remove last',{sm:1,icon:'trash',attrs:'id="rmp" data-act="rmp"'}) : ''}
+          </div>
+          <p class="help">1–8 photos. The first photo is the cover.</p>${er('photos')}
+        </div>
+      </div>
+      <div class="col">
+        <fieldset>
+          <legend>Listing type</legend>
+          <label class="radio"><input type="radio" name="ltype" value="fixed" ${c.type==='fixed'?'checked':''} data-chg="ltype"> Fixed price</label>
+          <label class="radio"><input type="radio" name="ltype" value="auction" ${c.type==='auction'?'checked':''} data-chg="ltype"> Auction</label>
+        </fieldset>
+        ${c.type==='fixed'
+          ? `<div class="field"><label for="f-price">Price (BD)</label>
+               <input id="f-price" class="inp" inputmode="decimal" value="${esc(c.price)}" data-in="cf" data-k="price" ${ai('price')} aria-describedby="h-price${has('price')?' e-price':''}">
+               <p id="h-price" class="help">Up to three decimals (fils).</p>${er('price')}</div>`
+          : `<div class="field"><label for="f-sbid">Starting bid (BD)</label>
+               <input id="f-sbid" class="inp" inputmode="decimal" value="${esc(c.sbid)}" data-in="cf" data-k="sbid" ${ai('sbid')}>${er('sbid')}</div>
+             <div class="field"><label for="f-start">Starts at</label>
+               <input id="f-start" type="datetime-local" class="inp" value="${c.start}" data-in="cf" data-k="start"></div>
+             <div class="field"><label for="f-end">Ends at</label>
+               <input id="f-end" type="datetime-local" class="inp" value="${c.end}" data-in="cf" data-k="end" ${ai('end')}>${er('end')}</div>
+             <div class="field"><label for="f-buy">Buy-now price (optional, BD)</label>
+               <input id="f-buy" class="inp" inputmode="decimal" value="${esc(c.buy)}" data-in="cf" data-k="buy" ${ai('buy')} aria-describedby="h-buy${has('buy')?' e-buy':''}">
+               <p id="h-buy" class="help">Must be higher than the starting bid.</p>${er('buy')}</div>`}
+        <div class="card">
+          <span class="lbl">Preview</span>
+          ${PH('Listing photo','96px')}
+          <div class="t2">${esc(c.title)||'Untitled'}</div>
+          <div class="row between"><span class="m">${c.type==='fixed'?'Price':'Starting bid'}</span><span class="price">${FMT(previewPrice)}</span></div>
+        </div>
+        ${B('Publish listing',{v:'pri',block:1,attrs:'data-act="publish"'})}
+      </div>
+    </div>
+  </div>`;
+};
+
+P.checkout = () => {
+  const l = LIST.find(x => x.id===S.buyId) || LIST.find(x => x.id==='L4');
+  return `<div class="pg"><div class="split wide">
+    <div class="col">
+      <h1 class="big">Checkout</h1>
+      <div class="card row">
+        <div style="width:80px;flex:none">${PH('Photo','64px')}</div>
+        <div class="col" style="gap:2px"><div class="t2">${l.t}</div><div class="m">Sold by @${l.seller} · ${COND[l.cond]}</div></div>
+      </div>
+      <fieldset>
+        <legend>Delivery</legend>
+        <label class="radio"><input type="radio" name="dlv" checked> Meet-up with seller</label>
+        <label class="radio"><input type="radio" name="dlv" disabled> Courier delivery <span class="m">(address form and fees not in ERD yet)</span></label>
+      </fieldset>
+      <fieldset>
+        <legend>Payment</legend>
+        <label class="radio"><input type="radio" name="pay" checked> Card</label>
+        <label class="radio"><input type="radio" name="pay"> BenefitPay</label>
+        <p class="help">Provider to confirm. Payment is shown on the order screen after placing it.</p>
+      </fieldset>
+    </div>
+    <div class="col">
+      <div class="card">
+        <h2 class="h2">Summary</h2>
+        <div class="rw"><span class="m">Item</span><span>${FMT(priceOf(l))}</span></div>
+        <div class="rw"><span class="m">Total</span><span class="price xl">${FMT(priceOf(l))}</span></div>
+        ${B('Place order',{v:'pri',block:1,attrs:`data-act="place" data-lid="${l.id}"`})}
+        <p class="help">The order is created as Pending until payment is confirmed.</p>
+      </div>
+    </div>
+  </div></div>`;
+};
+
+function ordersPanel(role){
+  const list = ORDERS.filter(o => role==='buyer' ? o.buyer===S.user : o.seller===S.user);
+  if (!list.length) return `<div class="card empty">${I('box')}<h2 class="h2">No ${role==='buyer'?'purchases':'sales'} yet</h2><p class="m">${role==='buyer'?'Orders you place appear here.':'Orders for your listings appear here.'}</p>${B(role==='buyer'?'Browse listings':'Create a listing',{v:'pri',attrs:`data-act="go" data-to="${role==='buyer'?'browse':'create'}"`})}</div>`;
+  const o = list.find(x => x.no===S.oSel) || list[0];
+  const l = LIST.find(x => x.id===o.lid);
+  const cp = role==='buyer' ? `Seller @${o.seller}` : `Buyer @${o.buyer}`;
+  const act = role==='buyer'
+    ? (o.st===0 ? B(`Pay ${FMT(o.price)}`,{v:'pri',block:1,attrs:`data-act="pay" data-no="${o.no}"`})
+      : o.st===2 ? B('Confirm receipt',{v:'pri',block:1,attrs:`data-act="confirm" data-no="${o.no}"`})
+      : `<p class="m">${o.st===1?'Waiting for the seller to ship.':'Order completed.'}</p>`)
+    : (o.st===1
+      ? `<div class="field"><label for="note">Handover note (optional)</label><input id="note" class="inp" data-in="note" value="${esc(S.note)}" placeholder="Meet-up time and place"></div>${B('Mark as shipped',{v:'pri',block:1,icon:'truck',attrs:`data-act="ship" data-no="${o.no}"`})}`
+      : `<p class="m">${o.st===0?'Waiting for the buyer to pay.':o.st===2?'Waiting for the buyer to confirm receipt.':'Order completed.'}</p>`);
+  return `<div class="split wide">
+    <div class="col">
+      <h2 class="h2">${role==='buyer'?'Purchases':'Sales'}</h2>
+      <ul class="olist" role="list">${list.map(x=>`<li><button type="button" id="osel-${x.no}" class="orow" data-act="osel" data-no="${x.no}" ${x===o?'aria-current="true"':''}><span class="t2">${LIST.find(y=>y.id===x.lid).t}</span><span class="m">#${x.no} · ${STEPS[x.st][0]} · ${FMT(x.price)}</span></button></li>`).join('')}</ul>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="row between wrap"><span class="h2">#${o.no}</span>${TAG(STEPS[o.st][0], o.st===3?'ok':'acc')}</div>
+        <div class="t2">${l.t}</div>
+        <div class="rw"><span class="m">${cp}</span><span>${o.when}</span></div>
+        <div class="rw"><span class="m">Final price</span><span class="price">${FMT(o.price)}</span></div>
+      </div>
+      <div class="card">
+        <h2 class="h2">Progress</h2>
+        <ol class="steps">${STEPS.map(([n,d],i)=>`<li class="step ${i<o.st?'done':''} ${i===o.st?'cur':''}" ${i===o.st?'aria-current="step"':''}><span class="dot" aria-hidden="true"></span><div><b>${n}</b><div class="m">${d}</div></div></li>`).join('')}</ol>
+      </div>
+      <div class="card"><h2 class="h2">Next step</h2>${act}</div>
+    </div>
+  </div>`;
+}
+P.orders = () => `<div class="pg"><h1 class="big">Order status</h1>${ordersPanel('buyer')}</div>`;
+P.sales  = () => `<div class="pg"><h1 class="big">Sales</h1>${ordersPanel('seller')}</div>`;
+
+P.login = () => {
+  const reg = S.lmode==='register', E = S.lerr, has = k => E.find(x => x[0]===k);
+  const ai = k => has(k) ? 'aria-invalid="true"' : '';
+  const er = k => has(k) ? `<p class="err" id="e-${k}">${I('alert')}<span>${has(k)[1]}</span></p>` : '';
+  const sum = E.length
+    ? `<div id="err-sum" class="banner bad" role="alert" tabindex="-1"><div class="col" style="gap:4px"><b>Fix ${E.length} ${E.length>1?'issues':'issue'} to continue</b><ul style="padding-left:18px">${E.map(x=>`<li><button type="button" class="txt" data-act="focus" data-id="${x[0]}">${x[1]}</button></li>`).join('')}</ul></div></div>`
+    : '';
+  return `<div class="pg center"><div class="card auth">
+    <h1 class="h2" style="font-size:18px">${reg ? 'Create your account' : 'Log in to Safqa'}</h1>
+    <div class="seg" role="group" aria-label="Log in or register" style="align-self:flex-start">
+      <button type="button" data-act="lmode" data-v="login" aria-pressed="${!reg}">Log in</button>
+      <button type="button" data-act="lmode" data-v="register" aria-pressed="${reg}">Register</button>
+    </div>
+    ${sum}
+    <div class="field"><label for="f-u">${reg?'Username':'Username or email'}</label>
+      <input id="f-u" class="inp" autocomplete="username" data-in="lf" data-k="u" value="${esc(S.lf.u)}" ${ai('f-u')}>${er('f-u')}</div>
+    ${reg ? `<div class="field"><label for="f-e">Email</label><input id="f-e" type="email" class="inp" autocomplete="email" data-in="lf" data-k="e" value="${esc(S.lf.e)}" ${ai('f-e')}>${er('f-e')}</div>` : ''}
+    <div class="field"><label for="f-p">Password</label>
+      <div class="pw">
+        <input id="f-p" class="inp" type="${S.showpw?'text':'password'}" autocomplete="${reg?'new-password':'current-password'}" data-in="lf" data-k="p" value="${esc(S.lf.p)}" placeholder="${reg?'At least 8 characters':'Your password'}" ${reg?'aria-describedby="h-p"':''} ${ai('f-p')}>
+        ${B(S.showpw?'Hide':'Show',{sm:1,attrs:`data-act="showpw" aria-pressed="${S.showpw}" aria-label="${S.showpw?'Hide':'Show'} password"`})}
+      </div>
+      ${reg?'<p id="h-p" class="help">Minimum 8 characters.</p>':''}${er('f-p')}</div>
+    ${B(reg?'Create account':'Log in',{v:'pri',block:1,attrs:'data-act="login"'})}
+    ${reg ? '' : B('Forgot password?',{v:'txt',block:1,attrs:'data-act="forgot"'})}
+  </div></div>`;
+};
+
+P.account = () => {
+  const T = S.acct;
+  const tabs = [['bids','My bids'],['watch','Watchlist'],['listings','My listings']];
+  let body = '';
+  if (T==='bids') {
+    const mine = LIST.filter(l => l.type==='auction' && AUCS[l.id].hist.some(h => h[0]==='@you'));
+    body = `<div class="card">${mine.length ? mine.map(l => {
+      const A = AUCS[l.id], my = A.hist.find(h => h[0]==='@you')[1], win = A.hist[0][0]==='@you';
+      return `<a class="rw" href="#auction" data-act="go" data-to="auction" data-lid="${l.id}" style="text-decoration:none">
+        <div><div class="t2">${l.t}</div><div class="m">Your bid ${FMT(my)} · Current ${FMT(A.cur)}</div></div>
+        ${win ? TAG('Winning','ok','check') : TAG('Outbid','bad','alert')}</a>`;
+    }).join('') : '<p class="m">No bids yet.</p>'}</div>`;
+  }
+  if (T==='watch') {
+    const rows = S.watch.map(id => LIST.find(x => x.id===id)).filter(Boolean);
+    body = `<div class="card">${rows.length ? rows.map(l => `<div class="rw">
+        <a href="#${l.type}" data-act="go" data-to="${l.type}" data-lid="${l.id}" class="t2" style="text-decoration:none;max-width:60%">${l.t}</a>
+        <div class="row"><span class="price">${FMT(priceOf(l))}</span>
+          ${B('',{sm:1,icon:'trash',attrs:`data-act="watch" data-id="${l.id}" id="w-${l.id}" aria-label="Remove ${esc(l.t)} from watchlist" aria-pressed="true"`})}
+        </div></div>`).join('') : '<p class="m">Your watchlist is empty.</p>'}</div>`;
+  }
+  if (T==='listings') {
+    const mine = LIST.filter(l => l.seller===S.user);
+    body = `<div class="card">${mine.map(l => `<div class="rw">
+        <div><div class="t2">${l.t}</div><div class="m">${l.type==='auction'?'Auction':'Fixed price'} · ${FMT(priceOf(l))}</div></div>
+        <div class="row">${STAT[l.st]}${B('Edit',{sm:1,attrs:`${l.st==='sold'?'disabled':''} aria-label="Edit ${esc(l.t)}"`})}</div>
+      </div>`).join('') || '<p class="m">You have no listings yet.</p>'}</div>`;
+  }
+  return `<div class="pg">
+    <div class="row between wrap"><div><h1 class="big">@${esc(S.user)}</h1><p class="m">My account</p></div>${B('Log out',{icon:'logout',attrs:'data-act="logout"'})}</div>
+    <div class="tabs" role="tablist" aria-label="Account sections">
+      ${tabs.map(([k,l]) => `<button type="button" role="tab" id="tab-${k}" aria-selected="${T===k}" aria-controls="acct-panel" tabindex="${T===k?0:-1}" data-act="acct" data-v="${k}">${l}</button>`).join('')}
+    </div>
+    <div id="acct-panel" role="tabpanel" aria-labelledby="tab-${T}">${body}</div>
+  </div>`;
+};
+
+P.admin = () => {
+  const f = S.rf;
+  const count = k => k==='all' ? REPORTS.length : REPORTS.filter(r => r.st===k).length;
+  const list = REPORTS.filter(r => f==='all' || r.st===f);
+  const r = REPORTS.find(x => x.no===S.rsel) || list[0];
+  let detail = '<div class="card empty"><p class="m">Queue is empty for this filter.</p></div>';
+  if (r) {
+    const l = LIST.find(x => x.id===r.lid);
+    detail = `<div class="card">
+      <div class="row between wrap"><span class="h2">${r.no}</span>${TAG(cap(r.st), r.st==='open'?'acc':r.st==='reviewed'?'ok':'')}</div>
+      <div class="rw"><span class="m">Reason</span><span>${r.reason}</span></div>
+      <div class="rw"><span class="m">Reported by</span><span>@${r.by} · ${r.at}</span></div>
+      <div class="rw"><span class="m">Target</span><span>${l.type==='auction'?'Auction':'Fixed price'} · ${STAT[l.st]}</span></div>
+      <div class="card" style="background:var(--bg)">
+        <div class="t2">${l.t}</div>
+        <div class="m">Seller @${l.seller} · ${FMT(priceOf(l))}</div>
+        ${B('Open listing',{sm:1,attrs:`data-act="go" data-to="${l.type}" data-lid="${l.id}"`})}
+      </div>
+      ${r.st!=='open' ? '<p class="m">This report is closed.</p>' : `
+        <div class="row wrap">
+          ${B('Mark reviewed',{v:'pri',attrs:`data-act="rrev" data-no="${r.no}"`})}
+          ${B('Dismiss report',{attrs:`data-act="rdis" data-no="${r.no}"`})}
+        </div>
+        ${S.rmc===r.no
+          ? `<div class="banner bad" role="alert"><span>Remove this listing? It disappears from Browse and search.</span></div>
+             <div class="row">${B('Confirm remove',{v:'danger',attrs:`data-act="rmok" data-no="${r.no}" id="rmok"`})}${B('Cancel',{attrs:'data-act="rmcancel"'})}</div>`
+          : B('Remove listing',{v:'danger',icon:'trash',attrs:`data-act="rm" data-no="${r.no}" id="rm-btn"`})}`}
+    </div>`;
+  }
+  return `<div class="pg">
+    <div class="row between wrap"><h1 class="big">Reports queue</h1><span class="tag acc">Admin only</span></div>
+    <div class="split wide">
+      <div class="col">
+        <div class="seg" role="group" aria-label="Filter by status" style="align-self:flex-start">
+          ${['open','reviewed','dismissed','all'].map(k=>`<button type="button" id="rf-${k}" aria-pressed="${f===k}" data-act="rf" data-v="${k}">${cap(k)} (${count(k)})</button>`).join('')}
+        </div>
+        <ul class="olist" role="list">${list.map(x=>`<li><button type="button" id="rsel-${x.no}" class="orow" data-act="rsel" data-no="${x.no}" ${r===x?'aria-current="true"':''}><span class="t2">${x.no} · ${x.reason}</span><span class="m">${LIST.find(y=>y.id===x.lid).t} · @${x.by} · ${x.at}</span></button></li>`).join('')}</ul>
+      </div>
+      <div class="col">${detail}</div>
+    </div>
+  </div>`;
+};
+
+P.default = () => '';
+const PAGES = P;
+
+/* ================= actions ================= */
+function go(p){
+  if (NEED.includes(p) && !S.user){ S.ret = p; p = 'login'; }
+  if (p !== S.page){ S.photo=0; S.err=''; S.ok=''; S.toast=''; S.allBids=false; S.rmc=null; S._nav=true; }
+  S.page = p;
+  try { history.replaceState(null, '', '#' + p); } catch (_) { /* some file:// contexts block history updates */ }
+  render();
+}
+function placeBid(){
+  if (!S.user){ S.ret = S.page; return go('login'); }
+  const A = AUCS[S.lid] || AUCS.L2;
+  const min = A.n ? +(A.cur+INC).toFixed(3) : A.cur;
+  const v = parseFloat(String(S.bidVal).replace(',', '.'));
+  S.ok = '';
+  if (!S.bidVal.trim() || isNaN(v)) S.err = 'Enter your bid in BD, for example ' + min.toFixed(3) + '.';
+  else if (v < min) S.err = 'Your bid must be at least ' + FMT(min) + '.';
+  else {
+    A.cur = +v.toFixed(3); A.n++; A.hist.unshift(['@you', A.cur, 'just now']);
+    S.err = ''; S.bidVal = ''; S.ok = 'Bid placed at ' + FMT(A.cur) + '. You are the highest bidder.';
+  }
+  render(S.err ? 'bid-in' : null);
+}
+function doLogin(){
+  const reg = S.lmode==='register', e = [];
+  if (!S.lf.u.trim()) e.push(['f-u', reg ? 'Enter a username.' : 'Enter your username or email.']);
+  if (reg && !/^\S+@\S+\.\S+$/.test(S.lf.e)) e.push(['f-e', 'Enter a valid email address.']);
+  if (S.lf.p.length < (reg ? 8 : 1)) e.push(['f-p', reg ? 'Password must be at least 8 characters.' : 'Enter your password.']);
+  S.lerr = e;
+  if (e.length){ render('err-sum'); return; }
+  S.user = S.lf.u.trim().replace(/^@/,'');
+  S.lf.p = ''; S.lerr = [];
+  const next = S.ret || 'account'; S.ret = null;
+  S.toast = 'Signed in as @' + S.user;
+  go(next);
+}
+function publish(){
+  const c = S.cf, e = [];
+  if (c.title.trim().length < 3) e.push(['title','Title needs at least 3 characters.']);
+  if (!c.cat) e.push(['cat','Choose a category.']);
+  if (!c.cond) e.push(['cond','Choose a condition.']);
+  if (!(c.photos >= 1)) e.push(['photos','Add at least one photo.']);
+  if (c.type==='fixed') {
+    if (!(+c.price > 0)) e.push(['price','Price must be more than BD 0.000.']);
+  } else {
+    if (!(+c.sbid > 0)) e.push(['sbid','Starting bid must be more than zero.']);
+    const s = Date.parse(c.start), en = Date.parse(c.end);
+    if (isNaN(s) || isNaN(en)) e.push(['end','Set both a start and an end time.']);
+    else if (en <= s) e.push(['end','End time must be after the start time.']);
+    if (c.buy && +c.buy <= +c.sbid) e.push(['buy','Buy-now must be higher than the starting bid.']);
+  }
+  S.errs = e;
+  if (e.length){ render('err-sum'); return; }
+  S.errs = [];
+  S.toast = 'Listing submitted.';
+  go('browse');
+}
+function placeOrder(lid){
+  const l = LIST.find(x => x.id===lid);
+  if (l.seller===S.user){ S.toast = "You can't buy your own listing."; render(); return; }
+  const no = 'O-' + (2300 + ORDERS.length);
+  ORDERS.unshift({no, lid, price:priceOf(l), buyer:S.user, seller:l.seller, st:0, when:'Just now'});
+  S.oSel = no; S.toast = 'Order placed. Pay to confirm it.';
+  go('orders');
+}
+function advance(no, from, to, msg){
+  const o = ORDERS.find(x => x.no===no);
+  if (o && o.st===from){ o.st = to; S.toast = msg; }
+  render();
+}
+function setRep(no, st){
+  const r = REPORTS.find(x => x.no===no);
+  if (r){ r.st = st; S.rmc = null; S.toast = 'Report ' + st; }
+  render();
+}
+
+const ACT = {
+  go: d => {
+    if (d.reset){ S.filt = {...DEFAULT_FILT, cond:[...DEFAULT_FILT.cond]}; S.q = ''; }
+    if (d.cat){ S.filt.cat = d.cat; S.filt.type = 'all'; }
+    if (d.type) S.filt.type = d.type;
+    if (d.lid) S.lid = d.lid;
+    go(d.to);
+  },
+  dev: d => { S.dev = d.v; render(); },
+  skipto: () => { $('screen').focus(); },
+  focus: d => { const el = $(d.id); if (el) el.focus(); },
+  watch: d => {
+    if (!S.user){ S.ret = S.page; return go('login'); }
+    const on = S.watch.includes(d.id);
+    S.watch = on ? S.watch.filter(x => x!==d.id) : [...S.watch, d.id];
+    S.toast = on ? 'Removed from watchlist' : 'Added to watchlist';
+    render('w-' + d.id);
+  },
+  report: () => {
+    if (!S.user){ S.ret = S.page; return go('login'); }
+    S.toast = 'Report submitted. Thanks for helping keep Safqa safe.'; render();
+  },
+  bidq: d => {
+    const A = AUCS[S.lid] || AUCS.L2, v = (A.cur + +d.n).toFixed(3);
+    S.bidVal = v; const el = $('bid-in'); if (el){ el.value = v; el.focus(); }
+  },
+  bid: () => placeBid(),
+  allbids: () => { S.allBids = !S.allBids; render(); },
+  buy: d => {
+    const l = LIST.find(x => x.id===d.lid); if (!l) return;
+    S.buyId = l.id; go('checkout');
+  },
+  place: d => placeOrder(d.lid),
+  pay: d => advance(d.no, 0, 1, 'Payment confirmed. The seller can ship now.'),
+  ship: d => advance(d.no, 1, 2, 'Marked as shipped.'),
+  confirm: d => advance(d.no, 2, 3, 'Receipt confirmed. Order completed.'),
+  osel: d => { S.oSel = d.no; render('osel-' + d.no); },
+  gal: d => { S.photo = +d.i; render('th-' + d.i); },
+  addp: () => { S.cf.photos = Math.min(8, S.cf.photos + 1); S.errs = S.errs.filter(x => x[0]!=='photos'); render('f-photos'); },
+  rmp: () => { S.cf.photos = Math.max(0, S.cf.photos - 1); render('f-photos'); },
+  publish: () => publish(),
+  login: () => doLogin(),
+  lmode: d => { S.lmode = d.v; S.lerr = []; render(); },
+  showpw: () => { S.showpw = !S.showpw; render('f-p'); },
+  forgot: () => { S.toast = 'Password reset is not in the ERD yet.'; render(); },
+  logout: () => { S.user = null; S.toast = 'Logged out'; go('home'); },
+  acct: d => { S.acct = d.v; render('tab-' + d.v); },
+  clear: () => { S.filt = {...DEFAULT_FILT, cond:[...DEFAULT_FILT.cond]}; S.q = ''; render('type-all'); },
+  rf: d => { S.rf = d.v; S.rsel = null; S.rmc = null; render('rf-' + d.v); },
+  rsel: d => { S.rsel = d.no; S.rmc = null; render('rsel-' + d.no); },
+  rrev: d => setRep(d.no, 'reviewed'),
+  rdis: d => setRep(d.no, 'dismissed'),
+  rm: d => { S.rmc = d.no; render('rmok'); },
+  rmcancel: () => { S.rmc = null; render('rm-btn'); },
+  rmok: d => {
+    const r = REPORTS.find(x => x.no===d.no), l = LIST.find(x => x.id===r.lid);
+    l.st = 'removed'; r.st = 'reviewed'; S.rmc = null; S.toast = 'Listing removed from Browse';
+    render();
+  }
+};
+const CHG = {
+  type:  t => { S.filt.type = t.value; render(t.id); },
+  cond:  t => { const s = new Set(S.filt.cond); t.checked ? s.add(t.value) : s.delete(t.value); S.filt.cond = [...s]; render(t.id); },
+  cat:   t => { S.filt.cat = t.value; render(t.id); },
+  pmax:  t => { S.filt.pmax = t.value; render(t.id); },
+  sort:  t => { S.sort = t.value; render(t.id); },
+  fst:   t => { S.fst = t.value; render(t.id); },
+  ast:   t => { S.ast = t.value; render(t.id); },
+  cf:    t => { S.cf[t.dataset.k] = t.value; S.errs = S.errs.filter(x => x[0]!==t.dataset.k); if (t.dataset.k==='cat') render(t.id); },
+  ltype: t => { S.cf.type = t.value; S.errs = []; render(t.id); },
+  ccond: t => { S.cf.cond = t.value; render(t.id); }
+};
+
+/* ================= render ================= */
+function sideHTML(){
+  return GROUPS.map(([h, items]) => `<h4>${h}</h4>` + items.map(([id,l]) =>
+    `<button type="button" class="idx" data-act="go" data-to="${id}" ${S.page===id?'aria-current="page"':''}>${l}</button>`).join('')).join('');
+}
+function frameHTML(){
+  const cur = S.page;
+  const nl = [['home','Home'],['browse','Browse'],['create','Sell']].map(([id,l]) =>
+    `<button type="button" data-act="go" data-to="${id}" ${cur===id?'aria-current="page"':''}>${l}</button>`).join('');
+  const acctTo = S.user ? 'account' : 'login';
+  const tabs = [['home','Home','home'],['browse','Browse','grid'],['create','Sell','plus'],['orders','Orders','box'],[acctTo, S.user?'Account':'Log in','user']]
+    .map(([id,l,ic]) => `<button type="button" data-act="go" data-to="${id}" ${cur===id?'aria-current="page"':''}>${I(ic)}<span>${l}</span></button>`).join('');
+  return `<a href="#screen" class="skip" data-act="skipto">Skip to content</a>
+    <header class="top">
+      <button type="button" class="logo" data-act="go" data-to="home" aria-label="Safqa home">Safqa</button>
+      <nav class="nlinks" aria-label="Main">${nl}</nav>
+      <form id="sform" class="sbox" role="search">
+        <label class="sr" for="q">Search listings</label>
+        ${I('search')}
+        <input id="q" type="search" data-in="q" value="${esc(S.q)}" placeholder="Search laptops, furniture, cars…" autocomplete="off">
+      </form>
+      <button type="button" class="icb" aria-label="Notifications">${I('bell')}</button>
+      ${S.user ? B('@'+esc(S.user),{sm:1,attrs:'data-act="go" data-to="account"'}) : B('Log in',{v:'pri',sm:1,attrs:'data-act="go" data-to="login"'})}
+    </header>
+    <div id="screen" class="screen" tabindex="-1">${P[cur] ? P[cur]() : ''}</div>
+    <nav class="tabbar" aria-label="Main, mobile">${tabs}</nav>
+    ${S.toast ? `<div class="toast" role="status" aria-live="polite">${esc(S.toast)}</div>` : ''}`;
+}
+function demoHTML(){
+  if (S.page==='fixed') return `<label class="demo">Demo state <select id="fst" data-chg="fst">${opt('active','Active',S.fst)}${opt('sold','Sold',S.fst)}${opt('removed','Removed',S.fst)}</select></label>`;
+  if (S.page==='auction') return `<label class="demo">Demo state <select id="ast" data-chg="ast">${opt('live','Live',S.ast)}${opt('ended','Ended',S.ast)}</select></label>`;
+  return '';
+}
+function render(focus){
+  const scr = $('screen');
+  const y = scr && !S._nav ? scr.scrollTop : 0;
+  S._nav = false;
+  $('frame').className = 'frame' + (S.dev==='m' ? ' m' : '');
+  $('frame').innerHTML = frameHTML();
+  $('screen').scrollTop = y;
+  $('side').innerHTML = sideHTML();
+  $('ttl').textContent = TITLE[S.page];
+  $('nt').textContent = TITLE[S.page];
+  $('demo').innerHTML = demoHTML();
+  $('nl').innerHTML = (NOTES[S.page] || []).map(x => `<li>${x}</li>`).join('');
+  $('dv-d').setAttribute('aria-pressed', S.dev==='d');
+  $('dv-m').setAttribute('aria-pressed', S.dev==='m');
+  if (focus){ const el = $(focus); if (el) el.focus(); }
+}
+
+const NOTES = {
+  home:[
+    `Auction cards show <code>Listing.currentBid</code>. Fixed cards show <code>Listing.price</code>. The labels differ on purpose.`,
+    `Category chips open Browse pre-filtered by <code>Category</code>.`,
+    `"Ending soon" is active auctions sorted by <code>endsAt</code>.`,
+    `The hero is one line, so listings start above the fold at 390px.`
+  ],
+  browse:[
+    `Filters map to <code>type</code>, <code>condition</code> (new / used / damaged), <code>category</code>, and <code>status = active</code> only.`,
+    `Max price compares <code>price</code> (fixed) with <code>currentBid</code> (auction). Confirm that is the intent.`,
+    `Search matches the title only. Full-text search over the description is a later decision.`,
+    `The empty state offers Clear all filters instead of a dead end.`,
+    `On mobile, filters stack above results. Move them into a sheet if the list grows.`
+  ],
+  fixed:[
+    `Buy now creates an <code>Order</code> with <code>finalPrice = Listing.price</code> and status <code>pending</code>.`,
+    `Status comes from <code>Listing.status</code> (active / sold / removed). The top switch is demo-only.`,
+    `If the viewer is the seller, Buy is replaced by Edit listing (owner view).`,
+    `Watchlist needs a Watch entity (not in ERD) and requires login.`,
+    `Report listing writes a <code>Report</code> with <code>targetType = fixed</code> and <code>targetId</code>.`
+  ],
+  auction:[
+    `Minimum bid is current bid + BD 5.000 once bids exist. With no bids it is the starting bid. The BD 5 step is a proposal.`,
+    `<code>Bid.amount</code> is one value. Max bid and proxy bidding are not modelled, so the copy says "Your bid".`,
+    `The countdown runs from <code>Listing.endsAt</code> in Bahrain time (UTC+3). At zero the bid form becomes the result.`,
+    `<code>Listing.winner</code> is set on close. <code>currentBidder</code> is the live top bid. The winner goes to checkout.`,
+    `Bidder names are masked (@b***7) so usernames are not shown publicly.`
+  ],
+  create:[
+    `Category is a select from the <code>Category</code> collection. It was free text before.`,
+    `Condition uses the ERD enum: new / used / damaged.`,
+    `Buy-now shows for auctions only (<code>buyNowPrice</code>). Fixed listings use <code>price</code>.`,
+    `Photos go into <code>images [String]</code>, up to 8. The cap of 8 is a UI rule to confirm.`,
+    `Validation runs on Publish. Errors are listed at the top and focus moves there.`,
+    `There is no "save draft" because <code>Listing.status</code> has no draft value.`
+  ],
+  checkout:[
+    `Delivery and payment are placeholders. The ERD has no delivery, address or payment fields.`,
+    `Sellers cannot buy their own listing. The screen blocks it with a message.`,
+    `The order is created as <code>pending</code>. Payment moves it to <code>paid</code>.`
+  ],
+  orders:[
+    `The timeline is <code>Order.status</code>: pending → paid → shipped → completed.`,
+    `The buyer pays (pending) and confirms receipt (shipped → completed).`,
+    `Sellers cannot mark an order completed.`
+  ],
+  sales:[
+    `The seller moves paid → shipped. The handover note has no field in the ERD. Tracking would need one.`,
+    `Waiting states say who has to act next, so nobody is left without a cue.`
+  ],
+  login:[
+    `Log in accepts a username or email. Register collects a username, email, and a password of at least 8 characters.`,
+    `Passwords must be stored hashed. The ERD says plain <code>String</code>.`,
+    `Guard: a logged-out user who taps a protected action returns to that page after login.`,
+    `Forgot password is a placeholder. The flow is not in the ERD.`
+  ],
+  account:[
+    `My bids is derived from <code>Bid</code> where the bidder is you. It shows Winning when you hold the top bid.`,
+    `Watchlist needs its own entity. Remove is a labelled icon button.`,
+    `My listings shows every status of <code>Listing.seller</code> = you.`,
+    `Tabs follow the ARIA tabs pattern. Arrow keys move between tabs.`
+  ],
+  admin:[
+    `ERD typo: <code>Report.status</code> says "dismessed". This file uses "dismissed". Fix the ERD.`,
+    `<code>Report</code> has no reason field, but the queue shows one. Add a reason enum or text.`,
+    `Remove listing sets <code>Listing.status = removed</code> behind a confirm step.`,
+    `Admin access is <code>User.role = admin</code>. The route guard is not drawn.`
+  ]
+};
+
+/* ================= wiring ================= */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-act]');
+  if (!t) return;
+  if (t.tagName==='A') e.preventDefault();
+  const fn = ACT[t.dataset.act];
+  if (fn) fn(t.dataset, t);
+});
+document.addEventListener('change', e => {
+  const t = e.target, k = t.dataset.chg;
+  if (k && CHG[k]) CHG[k](t);
+});
+document.addEventListener('input', e => {
+  const t = e.target, k = t.dataset.in;
+  if (!k) return;
+  if (k==='bid') S.bidVal = t.value;
+  else if (k==='cf'){
+    S.cf[t.dataset.k] = t.value;
+    if (t.dataset.k==='desc'){ const c = $('desc-count'); if (c) c.textContent = t.value.length + '/1000'; }
+  }
+  else if (k==='lf') S.lf[t.dataset.k] = t.value;
+  else if (k==='q') S.q = t.value;
+  else if (k==='note') S.note = t.value;
+});
+document.addEventListener('submit', e => {
+  e.preventDefault();
+  if (e.target.id==='sform'){ S.filt.type = 'all'; go('browse'); }
+});
+document.addEventListener('keydown', e => {
+  if (!['ArrowLeft','ArrowRight'].includes(e.key)) return;
+  const t = e.target;
+  if (!t.getAttribute || t.getAttribute('role')!=='tab') return;
+  const tabs = [...t.parentElement.querySelectorAll('[role="tab"]')];
+  const n = tabs[(tabs.indexOf(t) + (e.key==='ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+  n.focus(); n.click();
+});
+window.addEventListener('hashchange', () => {
+  const h = location.hash.slice(1);
+  if (P[h] && h!==S.page){ S._nav = true; go(h); }
+});
+
+// live countdowns (text only, so focus and input are not disturbed)
+setInterval(() => {
+  document.querySelectorAll('[data-cd]').forEach(el => {
+    const ms = +el.dataset.cd - Date.now();
+    el.textContent = cdText(ms);
+    el.classList.toggle('bad', ms > 0 && ms < 3600000);
+  });
+}, 1000);
+
+const h0 = location.hash.slice(1);
+if (P[h0]) S.page = h0;
+render();
+</script>
+</body>
+</html>
