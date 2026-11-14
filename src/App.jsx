@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import Navbar from "./components/Navbar";
@@ -15,13 +14,19 @@ import EditListing from "./pages/Listing/EditListing";
 import ListingDetails from "./pages/Listing/ListingDetails";
 import MyListings from "./pages/Listing/MyListings";
 
-// Report Imports
-import ReportForm from "./pages/Report/ReportForm";
-import ReportDetails from "./pages/Report/ReportDetails";
-
 // Order Imports
 import MyOrders from "./pages/Orders/MyOrders";
 import OrderDetails from "./pages/Orders/OrderDetails";
+
+
+//Report Imports 
+import ReportForm from './pages/Report/ReportForm'
+import AllReports from "./pages/Report/AllReports";
+import ReportDetails from './pages/Report/ReportDetails'
+
+
+
+
 
 function App() {
   function getUserFromToken() {
@@ -59,13 +64,15 @@ function App() {
         <Route path="/listings/:listingId" element={<ListingDetails user={user} />} />
         <Route path="/listings/my-listings" element={<MyListings />} />
 
-        {/* Report Routes */}
-        <Route path="/reports/new" element={<ReportForm />} />
-        <Route path="/admin/reports/:id" element={<ReportDetails />} />
-
         {/* Order Routes */}
         <Route path="/orders" element={<MyOrders />} />
         <Route path="/orders/:orderId" element={<OrderDetails />} />
+
+        {/* Report Routes  */}
+        <Route path="/reports/new" element={<ReportForm />} />
+        <Route path="/admin/reports" element={<AllReports />} />
+        <Route path="/admin/reports/:id" element={<ReportDetails />} />
+
 
       </Routes>
     </div>
