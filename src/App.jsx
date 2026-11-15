@@ -14,6 +14,11 @@ import EditListing from "./pages/Listing/EditListing";
 import ListingDetails from "./pages/Listing/ListingDetails";
 import MyListings from "./pages/Listing/MyListings";
 
+// Account Imports
+import AccountPage from "./pages/Account/AccountPage";
+import AccountWatchlist from "./pages/Account/AccountWatchlist";
+import AccountBids from "./pages/Account/AccountBids";
+
 // Order Imports
 import MyOrders from "./pages/Orders/MyOrders";
 import OrderDetails from "./pages/Orders/OrderDetails";
@@ -63,6 +68,28 @@ function App() {
         <Route path="/listings/:listingId/edit" element={<EditListing user={user} />} />
         <Route path="/listings/:listingId" element={<ListingDetails user={user} />} />
         <Route path="/listings/my-listings" element={<MyListings />} />
+
+        {/* Account Routes (logged-in users only) */}
+        <Route
+          path="/account"
+          element={user ? <AccountPage user={user} /> : <Navigate to="/sign-in" />}
+        />
+        <Route
+          path="/account/orders"
+          element={user ? <MyOrders /> : <Navigate to="/sign-in" />}
+        />
+        <Route
+          path="/account/listings"
+          element={user ? <MyListings /> : <Navigate to="/sign-in" />}
+        />
+        <Route
+          path="/account/watchlist"
+          element={user ? <AccountWatchlist /> : <Navigate to="/sign-in" />}
+        />
+        <Route
+          path="/account/bids"
+          element={user ? <AccountBids /> : <Navigate to="/sign-in" />}
+        />
 
         {/* Order Routes */}
         <Route path="/orders" element={<MyOrders />} />
