@@ -49,9 +49,9 @@ function Navbar({ user = null, handleLogout }) {
 
         {Boolean(user) && (
           <>
-            <button type='button' className='navbar__user'>
+            <NavLink to='/account' className='navbar__user'>
               {user.username}
-            </button>
+            </NavLink>
             <button
               type='button'
               className='navbar__logout'
