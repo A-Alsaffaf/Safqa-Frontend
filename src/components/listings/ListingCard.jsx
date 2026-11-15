@@ -133,6 +133,25 @@ function ListingCard({ listing }) {
     }
   }
 
+  let soldBadge = null
+  if (listing.status === 'Sold' || listing.isSold) {
+    let soldText = 'SOLD'
+    if (listing.secondsRemaining != null) {
+      soldText = 'SOLD • ' + listing.secondsRemaining + 's'
+    }
+    soldBadge = (
+      <div className='listing-sold-badge'>
+        <span className='listing-sold-dot'></span>
+        <span>{soldText}</span>
+      </div>
+    )
+  }
+
+  let cardClass = 'listing-card'
+  if (listing.status === 'Sold' || listing.isSold) {
+    cardClass = 'listing-card is-sold'
+  }
+
   function handleCardClick() {
     navigate('/listings/' + listing._id)
   }
@@ -145,7 +164,7 @@ function ListingCard({ listing }) {
 
   return (
     <div
-      className='listing-card'
+      className={cardClass}
       onClick={handleCardClick}
       onKeyDown={handleKeyDown}
       role='button'
@@ -154,6 +173,7 @@ function ListingCard({ listing }) {
       <div className='listing-card-media'>
         {imageElement}
         {auctionBadge}
+        {soldBadge}
       </div>
       <h3>{listing.title}</h3>
       <p>Type: {listing.type}</p>

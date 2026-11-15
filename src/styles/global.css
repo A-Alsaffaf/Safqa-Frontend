@@ -2094,6 +2094,47 @@ div:has(> a[href^="/listings/"]):hover > img {
   line-height: 1;
 }
 
+.listing-sold-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(185, 28, 28, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(254, 202, 202, 0.35);
+  color: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  z-index: 2;
+  user-select: none;
+}
+
+.listing-sold-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: inline-block;
+  opacity: 0.9;
+}
+
+.listing-card.is-sold {
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.listing-card.is-sold:hover {
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
 /* Title */
 .listing-card > h3,
 div:has(> a[href^="/listings/"]) > h3 {
