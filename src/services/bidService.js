@@ -9,3 +9,8 @@ export async function placeBid(listingId, amount) {
     const response = await api.post(`/listings/${listingId}/bids`, { amount })
     return response.data
 }
+
+export async function getMyBids() {
+    const response = await api.get('/bids/my-bids')
+    return response.data
+}
