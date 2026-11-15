@@ -103,7 +103,7 @@ function ListingCard({ listing }) {
   }
 
   return (
-    <div>
+    <div className='listing-card'>
       <div className='listing-card-media'>
         {imageElement}
         {auctionBadge}
