@@ -4,6 +4,7 @@ import BidHistory from './BidHistory'
 import BuyNowBox from './BuyNowBox'
 import ReportButton from './ReportButton'
 import EditButton from './EditButton'
+import ImageGallery from './ImageGallery'
 
 function formatDate(value) {
   if (!value) return 'Not set'
@@ -20,15 +21,6 @@ function formatDate(value) {
 
 function AuctionDetails({ listing, user, onBidPlaced, onAuctionEnd }) {
   if (!listing) return null
-
-  let imagesContent = 'No images'
-  if (listing.images) {
-    if (listing.images.length > 0) {
-      imagesContent = listing.images.map((src, i) => (
-        <img key={i} src={src} alt={`${listing.title} ${i + 1}`} width='120' />
-      ))
-    }
-  }
 
   let seller = 'Unknown'
   if (listing.seller) {
@@ -119,9 +111,7 @@ function AuctionDetails({ listing, user, onBidPlaced, onAuctionEnd }) {
   return (
     <div className='listing-layout'>
       <div className='listing-main-col'>
-        <div className='listing-gallery'>
-          {imagesContent}
-        </div>
+        <ImageGallery images={listing.images} title={listing.title} />
 
         <div className='listing-desc-card'>
           <h3>Description</h3>
