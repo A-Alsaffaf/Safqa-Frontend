@@ -39,3 +39,10 @@ export async function buyNow(listingId) {
     const response = await api.post(`/listings/${listingId}/buy-now`)
     return response.data
 }
+
+export async function uploadImages(files) {
+    const formData = new FormData()
+    files.forEach((file) => formData.append('images', file))
+    const response = await api.post('/listings/upload', formData)
+    return response.data
+}
