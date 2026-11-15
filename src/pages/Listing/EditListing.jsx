@@ -213,12 +213,21 @@ function EditListing({ user }) {
 
         <p>Current images:</p>
         {formData.images.length === 0 ? <p>No images</p> : null}
-        {formData.images.map((url) => (
-          <div key={url}>
-            <img src={url} alt="" width="80" />
-            <button type="button" onClick={() => handleRemoveImage(url)}>Remove</button>
-          </div>
-        ))}
+        <div className="image-picker__grid">
+          {formData.images.map((url) => (
+            <div key={url} className="image-picker__item">
+              <img src={url} alt="" />
+              <button
+                type="button"
+                className="image-picker__remove"
+                aria-label="Remove image"
+                onClick={() => handleRemoveImage(url)}
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
 
         <ImagePicker
           files={newFiles}

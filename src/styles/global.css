@@ -2402,3 +2402,133 @@ div:has(> a[href^="/listings/"]):nth-child(6) { animation-delay: 0.25s; }
     flex: 1;
   }
 }
+
+
+/* ==========================================================================
+   IMAGE PICKER (Create / Edit Listing)
+   ========================================================================== */
+.image-picker {
+  margin: 12px 0;
+}
+
+.image-picker__drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px;
+  border: 1.5px dashed var(--line);
+  border-radius: var(--r);
+  background: var(--panel);
+  color: var(--text-mid);
+  text-align: center;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.image-picker__drop--active {
+  border-color: var(--accent);
+  background: var(--panel2);
+}
+
+.image-picker__drop--disabled {
+  opacity: 0.5;
+}
+
+/* pointer-events: none stops dragleave from firing when the cursor crosses the text */
+.image-picker__title,
+.image-picker__hint {
+  pointer-events: none;
+}
+
+.image-picker__title {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.image-picker__hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* The real input stays in the DOM but hidden; the Choose files button opens it */
+.image-picker__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* !important: the global generic button rule would otherwise override these */
+.image-picker__choose {
+  padding: 8px 16px !important;
+  border: 1px solid var(--accent) !important;
+  border-radius: var(--r) !important;
+  background: transparent !important;
+  color: var(--text) !important;
+  cursor: pointer;
+  transform: none !important;
+}
+
+.image-picker__choose:hover:not(:disabled) {
+  background: var(--panel2) !important;
+  border-color: var(--accent-hi) !important;
+}
+
+.image-picker__choose:disabled {
+  cursor: not-allowed;
+}
+
+.image-picker__choose:focus-visible,
+.image-picker__remove:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.image-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.image-picker__item {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r);
+  background: var(--panel2);
+}
+
+.image-picker__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-picker__remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  border: none !important;
+  border-radius: 50% !important;
+  background: rgba(0, 0, 0, 0.65) !important;
+  color: #fff !important;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transform: none !important;
+}
+
+.image-picker__remove:hover {
+  background: var(--wine) !important;
+}
