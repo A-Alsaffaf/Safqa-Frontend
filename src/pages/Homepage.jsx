@@ -28,18 +28,21 @@ function Homepage() {
         const promises = auctionItems.map((item) => {
           return getBidsByListing(item._id)
             .then((bids) => {
-              let count = 0
+              const people = new Set()
               if (bids && bids.length) {
-                count = bids.length
+                bids.forEach((b) => {
+                  if (b.bidder) {
+                    const id = b.bidder._id || b.bidder
+                    if (id) {
+                      people.add(String(id))
+                    }
+                  }
+                })
               }
-              return { id: item._id, count: count }
+              return { id: item._id, count: people.size }
             })
             .catch(() => {
-              let fallbackCount = 0
-              if (item.currentBid != null) {
-                fallbackCount = 1
-              }
-              return { id: item._id, count: fallbackCount }
+              return { id: item._id, count: 0 }
             })
         })
 
@@ -81,10 +84,8 @@ function Homepage() {
       let count = 0
       if (bidCounts[l._id] != null) {
         count = bidCounts[l._id]
-      } else if (l.currentBid != null) {
-        count = 1
       }
-      return { ...l, bidCount: count }
+      return { ...l, bidCount: count, bidderCount: count }
     }
     return l
   })
