@@ -84,7 +84,7 @@ function App() {
         >
           <Route path="/account/listings" element={<MyListings />} />
           <Route path="/account/watchlist" element={<AccountWatchlist />} />
-          <Route path="/account/bids" element={<AccountBids />} />
+          <Route path="/account/bids" element={<AccountBids user={user} />} />
           <Route path="/account/orders" element={<MyOrders />} />
         </Route>
 
