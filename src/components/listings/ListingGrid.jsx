@@ -6,7 +6,7 @@ function ListingGrid({ listings }) {
   }
 
   return (
-    <div>
+    <div className='listings-grid'>
       {listings.map((listing) => (
         <ListingCard key={listing._id} listing={listing} />
       ))}
