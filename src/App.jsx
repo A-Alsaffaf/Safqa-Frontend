@@ -89,7 +89,8 @@ function App() {
         </Route>
 
         {/* Order Routes */}
-        <Route path="/orders" element={<MyOrders />} />
+        {/* The orders list lives in the account tabs, so /orders (for example the "Back to Orders" link) goes there */}
+        <Route path="/orders" element={<Navigate to="/account/orders" replace />} />
         <Route path="/orders/:orderId" element={<OrderDetails />} />
 
         {/* Report Routes  */}
