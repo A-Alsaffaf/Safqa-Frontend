@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { signUp } from "../services/authService";
+import AuthCard from "../components/AuthCard";
+import PasswordInput from "../components/PasswordInput";
 
 function Signup() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     username: "",
+    email: "",
     password: "",
     passwordConf: "",
   });
   const [ submitting, setSubmitting ] = useState(false)
 
-  const { username, password, passwordConf } = formData;
+  const { username, email, password, passwordConf } = formData;
 
   function handleChange(event){
     setError("");
@@ -28,59 +31,73 @@ function Signup() {
       await signUp(formData);
       navigate('/sign-in')
     } catch (err) {
-      setError(err.response.data.message);
+      setError(err?.response?.data?.message || "Unable to sign up. Please try again.");
       setSubmitting(false)
     }
   }
 
   function isFormInvalid(){
-    return !(username && password && password === passwordConf);
+    return !(username && email && password && password === passwordConf);
   };
 
+  const passwordsMismatch = Boolean(passwordConf) && password !== passwordConf;
+
   return (
-    <main>
-      <h1>Sign Up</h1>
-      <p className="error">{error}</p>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
+    <AuthCard title="Create your Safqa account" error={error}>
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <div className="auth-field">
+          <label htmlFor="username">Username</label>
           <input
             type="text"
             id="username"
-            value={username}
             name="username"
+            value={username}
             onChange={handleChange}
+            autoComplete="username"
             required
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+
+        <div className="auth-field">
+          <label htmlFor="email">Email</label>
           <input
-            type="password"
-            id="password"
-            value={password}
-            name="password"
+            type="email"
+            id="email"
+            name="email"
+            value={email}
             onChange={handleChange}
+            autoComplete="email"
             required
           />
         </div>
-        <div>
-          <label htmlFor="confirm">Confirm Password:</label>
-          <input
-            type="password"
-            id="confirm"
-            value={passwordConf}
-            name="passwordConf"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <button disabled={isFormInvalid() || submitting}>{submitting ? 'Signing up...' : 'Sign Up'}</button>
-          <button onClick={() => navigate("/")}>Cancel</button>
-        </div>
+
+        <PasswordInput
+          id="password"
+          name="password"
+          label="Password"
+          value={password}
+          onChange={handleChange}
+          autoComplete="new-password"
+          placeholder="At least 6 characters"
+        />
+
+        <PasswordInput
+          id="confirm"
+          name="passwordConf"
+          label="Confirm password"
+          value={passwordConf}
+          onChange={handleChange}
+          autoComplete="new-password"
+        />
+        {passwordsMismatch ? (
+          <p className="auth-field__hint">Passwords do not match.</p>
+        ) : null}
+
+        <button type="submit" className="auth-form__submit" disabled={isFormInvalid() || submitting}>
+          {submitting ? "Creating account..." : "Create account"}
+        </button>
       </form>
-    </main>
+    </AuthCard>
   );
 }
 export default Signup;
