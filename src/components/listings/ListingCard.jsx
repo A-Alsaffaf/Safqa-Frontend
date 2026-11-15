@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { useNavigate } from 'react-router'
 
 function formatAuctionTime(endsAt, now) {
   if (!endsAt) return ''
@@ -23,6 +23,7 @@ function formatAuctionTime(endsAt, now) {
 }
 
 function ListingCard({ listing }) {
+  const navigate = useNavigate()
   const [now, setNow] = useState(Date.now())
 
   useEffect(() => {
@@ -102,8 +103,24 @@ function ListingCard({ listing }) {
     }
   }
 
+  function handleCardClick() {
+    navigate('/listings/' + listing._id)
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      navigate('/listings/' + listing._id)
+    }
+  }
+
   return (
-    <div className='listing-card'>
+    <div
+      className='listing-card'
+      onClick={handleCardClick}
+      onKeyDown={handleKeyDown}
+      role='button'
+      tabIndex={0}
+    >
       <div className='listing-card-media'>
         {imageElement}
         {auctionBadge}
@@ -112,7 +129,6 @@ function ListingCard({ listing }) {
       <p>Type: {listing.type}</p>
       <p>Condition: {listing.condition}</p>
       <p>{priceLabel}: BD {priceValue}</p>
-      <Link to={`/listings/${listing._id}`}>View Details</Link>
     </div>
   )
 }
