@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { getListingById, getListingEnums, updateListing } from "../../services/listingService";
 import { getCategories } from "../../services/categoryService";
+import { getListingById, getListingEnums, updateListing, uploadImages } from "../../services/listingService";
+import ImagePicker from "../../components/listings/ImagePicker";
 
+const MAX_IMAGES = 5;
 const MAX_CATEGORIES = 5;
 
 // Turns a stored date into the "YYYY-MM-DDTHH:mm" text a datetime-local input needs (local time)
@@ -27,6 +29,8 @@ function EditListing({ user }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
+  const [newFiles, setNewFiles] = useState([]);
+
 
   useEffect(() => {
     let cancelled = false;
@@ -43,6 +47,7 @@ function EditListing({ user }) {
             condition: data.condition ?? "",
             category: data.category ?? [],
             price: data.price ?? "",
+            images: data.images ?? [],
             buyNowPrice: data.buyNowPrice ?? "",
             startingBid: data.startingBid ?? "",
             startsAt: toInputValue(data.startsAt),
@@ -111,6 +116,10 @@ function EditListing({ user }) {
     setFormData({ ...formData, category: selected });
   }
 
+  function handleRemoveImage(url) {
+    setFormData({ ...formData, images: formData.images.filter((image) => image !== url) });
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -128,6 +137,11 @@ function EditListing({ user }) {
 
     try {
       setSaving(true);
+      let uploaded = [];
+      if (newFiles.length > 0) {
+        uploaded = await uploadImages(newFiles);
+      }
+      changes.images = [...formData.images, ...uploaded];
       await updateListing(listingId, changes);
       navigate(`/listings/${listingId}`);
     } catch (err) {
@@ -196,6 +210,33 @@ function EditListing({ user }) {
             <br />
           </>
         )}
+
+        <p>Current images:</p>
+        {formData.images.length === 0 ? <p>No images</p> : null}
+        <div className="image-picker__grid">
+          {formData.images.map((url) => (
+            <div key={url} className="image-picker__item">
+              <img src={url} alt="" />
+              <button
+                type="button"
+                className="image-picker__remove"
+                aria-label="Remove image"
+                onClick={() => handleRemoveImage(url)}
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <ImagePicker
+          files={newFiles}
+          onChange={setNewFiles}
+          maxFiles={MAX_IMAGES - formData.images.length}
+          onError={setError}
+        />
+        <br />
+
 
         <button disabled={saving}>{saving ? "Saving..." : "Save changes"}</button>
         <button type="button" onClick={() => navigate(`/listings/${listingId}`)}>Cancel</button>

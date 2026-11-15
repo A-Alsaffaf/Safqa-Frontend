@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from "react-router";
-import {createListing, getListingEnums} from "../../services/listingService"
 import {getCategories} from "../../services/categoryService"
+import {createListing, getListingEnums, uploadImages} from "../../services/listingService"
+import ImagePicker from "../../components/listings/ImagePicker"
 
+const MAX_IMAGES = 5
 const MAX_CATEGORIES = 5
 
 // The fields that only belong to one listing type
@@ -19,6 +21,7 @@ function CreateListing() {
   const [error, setError] = useState("");
   const [enums, setEnums] = useState({ type: [], condition: [] });
   const [categories, setCategories] = useState([]);
+  const [files, setFiles] = useState([]);
 
   useEffect(() => {
     getListingEnums()
@@ -95,6 +98,9 @@ function CreateListing() {
       }
 
       try {
+        if (files.length > 0) {
+          newListing.images = await uploadImages(files)
+        }
         await createListing(newListing);
         navigate('/listings')
       } catch (err) {
@@ -167,6 +173,9 @@ function CreateListing() {
             <br />
           </>
         )}
+
+        <ImagePicker files={files} onChange={setFiles} maxFiles={MAX_IMAGES} onError={setError} />
+        <br />
 
         <button>Submit Form</button>
       </form>
