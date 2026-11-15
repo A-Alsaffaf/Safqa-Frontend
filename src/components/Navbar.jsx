@@ -33,11 +33,6 @@ function Navbar({ user = null, handleLogout }) {
           <NavLink to='/listings/new' end className={linkClass}>
             Sell
           </NavLink>
-          {Boolean(user) && (
-            <NavLink to='/orders' className={linkClass}>
-              My Orders
-            </NavLink>
-          )}
         </nav>
 
         <input

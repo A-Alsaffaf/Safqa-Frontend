@@ -15,7 +15,7 @@ import ListingDetails from "./pages/Listing/ListingDetails";
 import MyListings from "./pages/Listing/MyListings";
 
 // Account Imports
-import AccountPage from "./pages/Account/AccountPage";
+import AccountLayout from "./pages/Account/AccountLayout";
 import AccountWatchlist from "./pages/Account/AccountWatchlist";
 import AccountBids from "./pages/Account/AccountBids";
 
@@ -70,29 +70,27 @@ function App() {
         <Route path="/listings/my-listings" element={<MyListings />} />
 
         {/* Account Routes (logged-in users only) */}
+        {/* /account has no page of its own: it opens the first tab */}
+        <Route path="/account" element={<Navigate to="/account/listings" replace />} />
+        {/* The tab pages share the account header and tab bar */}
         <Route
-          path="/account"
-          element={user ? <AccountPage user={user} /> : <Navigate to="/sign-in" />}
-        />
-        <Route
-          path="/account/orders"
-          element={user ? <MyOrders /> : <Navigate to="/sign-in" />}
-        />
-        <Route
-          path="/account/listings"
-          element={user ? <MyListings /> : <Navigate to="/sign-in" />}
-        />
-        <Route
-          path="/account/watchlist"
-          element={user ? <AccountWatchlist /> : <Navigate to="/sign-in" />}
-        />
-        <Route
-          path="/account/bids"
-          element={user ? <AccountBids /> : <Navigate to="/sign-in" />}
-        />
+          element={
+            user ? (
+              <AccountLayout user={user} handleLogout={handleLogout} />
+            ) : (
+              <Navigate to="/sign-in" />
+            )
+          }
+        >
+          <Route path="/account/listings" element={<MyListings />} />
+          <Route path="/account/watchlist" element={<AccountWatchlist />} />
+          <Route path="/account/bids" element={<AccountBids />} />
+          <Route path="/account/orders" element={<MyOrders />} />
+        </Route>
 
         {/* Order Routes */}
-        <Route path="/orders" element={<MyOrders />} />
+        {/* The orders list lives in the account tabs, so /orders (for example the "Back to Orders" link) goes there */}
+        <Route path="/orders" element={<Navigate to="/account/orders" replace />} />
         <Route path="/orders/:orderId" element={<OrderDetails />} />
 
         {/* Report Routes  */}
