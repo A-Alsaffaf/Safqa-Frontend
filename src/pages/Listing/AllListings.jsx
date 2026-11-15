@@ -24,10 +24,19 @@ function AllListings() {
   const [typeFilter, setTypeFilter] = useState('All types')
   const [categoryFilter, setCategoryFilter] = useState('All categories')
   const [isOpen, setIsOpen] = useState(false)
+  const [currentTime, setCurrentTime] = useState(Date.now())
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(Date.now())
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   useEffect(() => {
     getListings()
       .then((data) => {
+        if (!data) return
         setListings(data)
       })
       .catch((err) => {
@@ -37,6 +46,18 @@ function AllListings() {
       .finally(() => {
         setLoading(false)
       })
+  }, [])
+
+  useEffect(() => {
+    const pollTimer = setInterval(() => {
+      getListings()
+        .then((data) => {
+          if (!data) return
+          setListings(data)
+        })
+        .catch(() => {})
+    }, 2000)
+    return () => clearInterval(pollTimer)
   }, [])
 
   function toggleDrawer() {
@@ -55,7 +76,47 @@ function AllListings() {
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
 
-  let filtered = listings
+  const unexpiredListings = listings.filter((item) => {
+    if (item.status === 'Closed' || item.status === 'Removed') {
+      return false
+    }
+    if (item.status === 'Sold' || item.status === 'sold') {
+      if (!item.updatedAt) {
+        return false
+      }
+      const soldTime = new Date(item.updatedAt).getTime()
+      if (Number.isNaN(soldTime)) {
+        return false
+      }
+      const elapsed = currentTime - soldTime
+      if (elapsed >= 10000) {
+        return false
+      }
+    }
+    return true
+  })
+
+  const enrichedListings = unexpiredListings.map((item) => {
+    if (item.status === 'Sold' || item.status === 'sold') {
+      let remaining = 10
+      if (item.updatedAt) {
+        const soldTime = new Date(item.updatedAt).getTime()
+        if (!Number.isNaN(soldTime)) {
+          const elapsed = currentTime - soldTime
+          const positiveElapsed = Math.max(0, elapsed)
+          remaining = Math.max(0, Math.ceil((10000 - positiveElapsed) / 1000))
+        }
+      }
+      return {
+        ...item,
+        isSold: true,
+        secondsRemaining: remaining
+      }
+    }
+    return item
+  })
+
+  let filtered = enrichedListings
   if (typeFilter !== 'All types') {
     filtered = filtered.filter((l) => l.type === typeFilter)
   }
