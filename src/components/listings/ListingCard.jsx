@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
+import { getBidsByListing } from '../../services/bidService'
 
 function formatAuctionTime(endsAt, now) {
   if (!endsAt) return ''
@@ -25,6 +26,7 @@ function formatAuctionTime(endsAt, now) {
 function ListingCard({ listing }) {
   const navigate = useNavigate()
   const [now, setNow] = useState(Date.now())
+  const [biddersCount, setBiddersCount] = useState(0)
 
   useEffect(() => {
     if (listing.type !== 'Auction') return
@@ -33,6 +35,38 @@ function ListingCard({ listing }) {
     }, 1000)
     return () => clearInterval(timer)
   }, [listing.type])
+
+  useEffect(() => {
+    if (listing.type !== 'Auction') return
+    if (!listing._id) return
+    if (listing.bidderCount != null) {
+      setBiddersCount(listing.bidderCount)
+      return
+    }
+
+    let active = true
+
+    getBidsByListing(listing._id)
+      .then((bids) => {
+        if (!active) return
+        if (!bids) return
+        const people = new Set()
+        bids.forEach((b) => {
+          if (b.bidder) {
+            const bidderId = b.bidder._id || b.bidder
+            if (bidderId) {
+              people.add(String(bidderId))
+            }
+          }
+        })
+        setBiddersCount(people.size)
+      })
+      .catch(() => {})
+
+    return () => {
+      active = false
+    }
+  }, [listing._id, listing.type, listing.bidderCount])
 
   let imageUrl = ''
   if (listing.images && listing.images.length > 0) {
@@ -52,13 +86,9 @@ function ListingCard({ listing }) {
     imageElement = <img src={imageUrl} alt={listing.title} />
   }
 
-  let bidsCount = 0
-  if (listing.bidCount != null) {
-    bidsCount = listing.bidCount
-  } else if (listing.bids && listing.bids.length) {
-    bidsCount = listing.bids.length
-  } else if (listing.currentBid != null) {
-    bidsCount = 1
+  let peopleCount = biddersCount
+  if (listing.bidderCount != null) {
+    peopleCount = listing.bidderCount
   }
 
   let auctionBadge = null
@@ -96,7 +126,7 @@ function ListingCard({ listing }) {
               <path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2' />
               <circle cx='9' cy='7' r='4' />
             </svg>
-            <span>{bidsCount}</span>
+            <span>{peopleCount}</span>
           </span>
         </div>
       )
