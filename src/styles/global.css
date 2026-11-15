@@ -3073,3 +3073,454 @@ div:has(> a[href^="/listings/"]):nth-child(6) { animation-delay: 0.25s; }
 .account-urgency--red {
   color: #ff6b6b;
 }
+/* ================================================================
+   REPORTS — CSS-only styling for the existing Report page markup.
+   Direct-child selectors keep these rules out of other page forms.
+   ================================================================ */
+#root > div > div:has(> form > input[name="reason"]),
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) {
+  max-width: 800px;
+  width: calc(100% - 48px);
+  margin-block: 40px 64px;
+  padding: 36px;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  border-radius: 18px;
+  background: radial-gradient(ellipse at top right, var(--accent-glow), transparent 55%),
+    linear-gradient(150deg, var(--panel), var(--bg));
+  box-shadow: var(--shadow-lg);
+}
+
+#root > div > div:has(> form > input[name="reason"]) > h1,
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > h1,
+#root > div > div:has(> div > a[href^="/admin/reports/"]) > h1 {
+  font-size: clamp(26px, 4vw, 34px);
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+
+#root > div > div:has(> form > input[name="reason"]) > h1 {
+  margin-bottom: 14px;
+}
+
+#root > div > div:has(> form > input[name="reason"]) > p {
+  display: inline-block;
+  max-width: 100%;
+  padding: 6px 12px;
+  margin-bottom: 28px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-deep);
+  color: var(--text-mid);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+#root form:has(> input[name="reason"]) {
+  max-width: none;
+  margin: 0;
+  padding: 26px 0 0;
+  gap: 10px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#root form:has(> input[name="reason"]) > label {
+  margin-top: 14px;
+  color: var(--text);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+#root form:has(> input[name="reason"]) > label:first-child {
+  margin-top: 0;
+}
+
+#root form:has(> input[name="reason"]) > :is(input, textarea) {
+  padding: 14px 16px;
+  border-radius: 10px;
+  font: inherit;
+  background: var(--bg-deep);
+}
+
+#root form:has(> input[name="reason"]) > textarea {
+  min-height: 180px;
+  line-height: 1.7;
+}
+
+#root form:has(> input[name="reason"]) > :is(input, textarea):hover {
+  border-color: var(--muted);
+}
+
+#root form:has(> input[name="reason"]) > :is(input, textarea):focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+#root form:has(> input[name="reason"]) > button {
+  align-self: stretch;
+  min-height: 48px;
+  margin-top: 18px;
+}
+
+#root form:has(> input[name="reason"]) > p:empty {
+  display: none;
+}
+
+#root form:has(> input[name="reason"]) > p:not(:empty) {
+  margin: 8px 0 0;
+  padding: 14px 16px;
+  border: 1px solid var(--ok);
+  border-radius: 10px;
+  background: rgba(47, 125, 91, 0.16);
+  color: #A9E5C6;
+  overflow-wrap: anywhere;
+}
+
+/* Admin queue: a responsive card grid using the existing detail links. */
+#root > div > div:has(> div > a[href^="/admin/reports/"]) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  padding-bottom: 64px;
+}
+
+#root > div > div:has(> div > a[href^="/admin/reports/"]) > h1 {
+  grid-column: 1 / -1;
+  margin-bottom: 6px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+#root div:has(> a[href^="/admin/reports/"]) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(145deg, var(--panel), var(--bg));
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#root div:has(> a[href^="/admin/reports/"]):hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+
+#root div:has(> a[href^="/admin/reports/"]) > :is(h3, p, a) {
+  grid-column: 1 / -1;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+#root div:has(> a[href^="/admin/reports/"]) > h3 {
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 19px;
+  line-height: 1.5;
+}
+
+#root div:has(> a[href^="/admin/reports/"]) > p:last-of-type {
+  justify-self: start;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-deep);
+  font-size: 12px;
+}
+
+#root div:has(> a[href^="/admin/reports/"]) > a {
+  margin-top: 8px;
+  padding: 11px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel2);
+  color: var(--text);
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#root div:has(> a[href^="/admin/reports/"]) > a:hover {
+  border-color: var(--accent);
+  color: var(--price);
+}
+
+#root div:has(> a[href^="/admin/reports/"]) > button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+#root div:has(> a[href^="/admin/reports/"]) > button:last-child {
+  border: 1px solid #B34B5B;
+  background: rgba(122, 30, 44, 0.22);
+  color: #FFB4BC;
+}
+
+/* ReportDetails renders two heading groups without section wrappers. */
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 960px;
+  padding: 40px;
+  background:
+    radial-gradient(ellipse at top right, rgba(224, 112, 42, 0.1), transparent 45%),
+    linear-gradient(155deg, var(--panel), var(--bg) 65%);
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > h1 {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 0 8px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.2;
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > h1::before {
+  content: "";
+  flex: 0 0 40px;
+  height: 44px;
+  background: linear-gradient(145deg, var(--accent-hi), var(--accent));
+  clip-path: polygon(50% 0, 94% 16%, 90% 63%, 76% 82%, 50% 100%, 24% 82%, 10% 63%, 6% 16%);
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > h2 {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0 2px;
+  padding: 0;
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* Decorative section markers add hierarchy without duplicating page text. */
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > h2::before {
+  content: "";
+  width: 5px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > h2:nth-of-type(2) {
+  margin-top: 24px;
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > p {
+  min-width: 0;
+  margin: 0;
+  padding: 18px 20px;
+  border: 1px solid var(--line-soft);
+  border-radius: 10px;
+  background: rgba(8, 22, 51, 0.5);
+  color: var(--text-mid);
+  font-size: 14px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Paragraph positions follow ReportDetails: report fields, then listing fields. */
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > p:nth-of-type(-n + 3),
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > p:nth-of-type(6),
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > p:last-of-type {
+  grid-column: 1 / -1;
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > p:first-of-type {
+  border-color: var(--line);
+  background: rgba(27, 61, 122, 0.5);
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > p:nth-of-type(2),
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > p:nth-of-type(6) {
+  min-height: 104px;
+  padding-block: 22px;
+  line-height: 1.9;
+}
+
+/* A neutral badge works for every status; CSS cannot inspect its text value. */
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > p:nth-of-type(3) {
+  justify-self: start;
+  max-width: 100%;
+  padding: 7px 14px;
+  border-color: var(--line);
+  border-radius: 999px;
+  background: var(--panel2);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > p:nth-of-type(8) {
+  border-color: rgba(224, 112, 42, 0.4);
+  background: var(--accent-glow);
+  color: var(--price);
+  font-size: 17px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The action buttons are direct children, following the seller information.
+   Keep their DOM order and support an absent Delete Listing action. */
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > p:last-of-type {
+  margin-bottom: 20px;
+  padding-bottom: 22px;
+  border-bottom-color: var(--line);
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 50px;
+  margin: 0;
+  padding: 13px 20px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.18s ease, border-color 0.18s ease,
+    box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button:first-of-type {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+  color: var(--on-accent);
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button:nth-of-type(2) {
+  border-color: var(--line);
+  background: var(--panel2);
+  color: var(--text);
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button:nth-of-type(n + 3) {
+  margin-top: 8px;
+  border-color: rgba(214, 66, 83, 0.5);
+  background: rgba(122, 30, 44, 0.16);
+  color: #FFB4BC;
+  box-shadow: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--accent-hi);
+  box-shadow: var(--shadow-md);
+  filter: none;
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button:nth-of-type(n + 3):hover:not(:disabled) {
+  border-color: #D64253;
+  background: var(--urgent);
+  color: #FFF0F2;
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+#root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button {
+    transition: none;
+  }
+
+  #root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+@media (max-width: 639px) {
+  #root > div > div:has(> h1 + h2):has(> h2 ~ h2) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  #root > div > div:has(> h1 + h2):has(> h2 ~ h2) > h1 {
+    gap: 12px;
+  }
+
+  #root > div > div:has(> h1 + h2):has(> h2 ~ h2) > h1::before {
+    flex-basis: 30px;
+    height: 34px;
+  }
+
+  #root > div > div:has(> h1 + h2):has(> h2 ~ h2) > button:nth-of-type(n + 4) {
+    margin-top: 0;
+  }
+
+  #root > div > div:has(> h1 + h2):has(> h2 ~ h2) > p {
+    padding: 15px 16px;
+  }
+}
+
+#root form:has(> input[name="reason"]) > button:focus-visible,
+#root div:has(> a[href^="/admin/reports/"]) > :is(a, button):focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+@media (max-width: 639px) {
+  #root > div > div:has(> form > input[name="reason"]),
+  #root > div > div:has(> h1 + h2):has(> h2 ~ h2) {
+    width: calc(100% - 28px);
+    margin-block: 24px 40px;
+    padding: 22px 18px;
+  }
+
+  #root > div > div:has(> div > a[href^="/admin/reports/"]) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding-inline: 14px;
+  }
+
+  #root div:has(> a[href^="/admin/reports/"]) {
+    padding: 20px;
+  }
+
+  #root form:has(> input[name="reason"]) > :is(input, textarea) {
+    font-size: 16px;
+  }
+}
