@@ -1711,7 +1711,8 @@ div:has(> div > a[href^="/listings/"]) {
 }
 
 /* Individual Listing Card */
-div:has(> a[href^="/listings/"]) {
+.listing-card,
+div:has(> a[href^="/listings/"]):not(.home-welcome-buttons):not(.home-welcome-banner) {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -1723,7 +1724,8 @@ div:has(> a[href^="/listings/"]) {
   transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
-div:has(> a[href^="/listings/"]):hover {
+.listing-card:hover,
+div:has(> a[href^="/listings/"]):not(.home-welcome-buttons):not(.home-welcome-banner):hover {
   border-color: var(--accent);
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg), var(--shadow-glow);
@@ -1832,7 +1834,8 @@ div:has(> a[href^="/listings/"]) > p:nth-of-type(3) {
 }
 
 /* View Details button */
-div:has(> a[href^="/listings/"]) > a[href^="/listings/"] {
+.listing-card > a[href^="/listings/"],
+div:has(> a[href^="/listings/"]):not(.home-welcome-buttons):not(.home-welcome-banner) > a[href^="/listings/"] {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1847,102 +1850,17 @@ div:has(> a[href^="/listings/"]) > a[href^="/listings/"] {
   margin-top: auto;
 }
 
-div:has(> a[href^="/listings/"]) > a[href^="/listings/"]:hover {
+.listing-card > a[href^="/listings/"]:hover,
+div:has(> a[href^="/listings/"]):not(.home-welcome-buttons):not(.home-welcome-banner) > a[href^="/listings/"]:hover {
   filter: brightness(1.12);
 }
 
 /* ================================================================
-   LISTING DETAILS PAGE
+   LEGACY LISTING DETAILS (SCOPED ONLY)
    ================================================================ */
-/* Container: <div> with <h1>, <img>, many <p>, links to /listings and /reports */
-div:has(> a[href="/listings"]) {
+.legacy-details {
   max-width: 800px;
   margin-bottom: 64px;
-}
-
-div:has(> a[href="/listings"]) > h1 {
-  font-size: 30px;
-  font-weight: 800;
-  margin-bottom: 20px;
-}
-
-div:has(> a[href="/listings"]) > img {
-  width: 100% !important;
-  max-width: 520px !important;
-  height: auto !important;
-  border-radius: var(--r);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-md);
-  margin-bottom: 24px;
-  display: block;
-}
-
-div:has(> a[href="/listings"]) > p {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--line-soft);
-  font-size: 15px;
-}
-
-div:has(> a[href="/listings"]) > p:last-of-type {
-  border-bottom: none;
-}
-
-/* Category list */
-div:has(> a[href="/listings"]) > ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-div:has(> a[href="/listings"]) > ul > li {
-  background: var(--panel2);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 5px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-mid);
-}
-
-/* Back to Listings + Report links */
-div:has(> a[href="/listings"]) > a[href="/listings"] {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--accent-hi);
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  margin-top: 24px;
-  margin-right: 20px;
-  padding: 10px 0;
-  transition: color 0.2s ease;
-}
-
-div:has(> a[href="/listings"]) > 
-
-div:has(> a[href="/listings"]) > 
-
-div:has(> a[href="/listings"]) > a[href^="/reports/"] {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  color: var(--muted);
-  font-size: 13px;
-  text-decoration: none;
-  padding: 10px 14px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  margin-top: 24px;
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
-
-div:has(> a[href="/listings"]) > a[href^="/reports/"]:hover {
-  border-color: var(--urgent);
-  color: #FFB4BC;
 }
 
 /* ================================================================
@@ -2073,23 +1991,192 @@ button:disabled {
 }
 
 /* ================================================================
-   HOMEPAGE --- Simple hero styling
+   HOMEPAGE --- Clean Marketplace & Live Auctions
    ================================================================ */
-div:has(> h1:only-child) {
+.home-page-wrapper {
+  max-width: 1200px;
+  margin: 0 auto 80px auto;
+  padding: 0 24px;
+}
+
+.home-feedback-state {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 64px);
+  min-height: 400px;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 600;
 }
 
-div:has(> h1:only-child) > h1 {
-  font-size: 48px;
+/* Welcoming Banner (Clean & Focused) */
+.home-welcome-banner {
+  background: linear-gradient(135deg, rgba(14, 33, 77, 0.85), rgba(8, 18, 38, 0.95));
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 44px 32px;
+  margin: 20px 0 44px 0;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.home-welcome-heading {
+  font-size: 40px;
   font-weight: 800;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--accent), var(--accent-hi), var(--price));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #FFFFFF;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.02em;
+}
+
+.home-welcome-logo {
+  color: var(--accent);
+  font-weight: 900;
+  font-size: 46px;
+  padding: 0 4px;
+}
+
+.home-welcome-text {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0 auto 24px auto;
+  max-width: 580px;
+  line-height: 1.5;
+}
+
+.home-welcome-buttons {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 16px !important;
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.home-btn-explore {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hi)) !important;
+  color: #0B1F4B !important;
+  font-weight: 800 !important;
+  font-size: 14.5px !important;
+  padding: 12px 28px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 18px rgba(224, 112, 42, 0.35) !important;
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease !important;
+  margin: 0 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.home-btn-explore:hover {
+  transform: translateY(-2px) !important;
+  filter: brightness(1.08) !important;
+  box-shadow: 0 6px 24px rgba(224, 112, 42, 0.45) !important;
+}
+
+.home-btn-sell {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(27, 61, 122, 0.45) !important;
+  border: 1px solid var(--line) !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  font-size: 14.5px !important;
+  padding: 12px 26px !important;
+  border-radius: 10px !important;
+  text-decoration: none !important;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease !important;
+  margin: 0 !important;
+}
+
+.home-btn-sell:hover {
+  background: rgba(224, 112, 42, 0.2) !important;
+  border-color: var(--accent) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 3 Main Product Fields */
+.home-field-section {
+  margin-top: 48px;
+}
+
+.home-field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.home-field-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.home-field-link {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--accent-hi);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.home-field-link:hover {
+  color: #FFFFFF;
+  transform: translateX(2px);
+}
+
+/* Responsive Cards Grid */
+.home-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.home-empty-section {
+  background: var(--panel);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.home-empty-section p {
+  margin: 0;
+}
+
+@media (max-width: 520px) {
+  .home-welcome-banner {
+    padding: 32px 20px;
+  }
+  .home-welcome-heading {
+    font-size: 30px;
+  }
+  .home-welcome-logo {
+    font-size: 34px;
+  }
+  .home-welcome-buttons {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
 }
 
 /* ================================================================
