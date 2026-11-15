@@ -1,3 +1,4 @@
+
 import api from './api'
 
 export async function createReport(listingId, formData) {
@@ -17,5 +18,14 @@ export async function getReportById(id) {
 
 export async function updateReportStatus(id, status) {
     const response = await api.put(`/admin/reports/${id}`, { status })
+    return response.data
+}
+
+export async function deleteReport(id) {
+    const response = await api.delete(`/admin/reports/${id}`)
+    return response.data
+}
+export async function deleteListing(id) {
+    const response = await api.delete(`/admin/listings/${id}`)
     return response.data
 }
