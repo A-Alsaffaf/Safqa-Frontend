@@ -2195,3 +2195,210 @@ div:has(> a[href^="/listings/"]):nth-child(6) { animation-delay: 0.25s; }
     scroll-behavior: auto !important;
   }
 }
+
+/* ================================================================
+   ACCOUNT PAGES (header, tabs, My listings rows)
+   ================================================================ */
+.account {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 28px 48px;
+}
+
+.account-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.account-header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.account-header p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-mid);
+}
+
+.account-logout {
+  display: inline-flex !important;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px !important;
+  background: transparent !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 10px !important;
+  color: var(--text) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.account-logout:hover {
+  transform: none !important;
+  border-color: var(--accent) !important;
+  background: rgba(27, 61, 122, 0.5) !important;
+}
+
+.account-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.account-tab {
+  padding: 10px 12px;
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  color: var(--text-mid);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.account-tab:hover {
+  color: var(--text);
+}
+
+.account-tab--active {
+  border-bottom-color: var(--accent);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.account-panel {
+  margin: 0;
+  padding: 14px 16px;
+  list-style: none;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+
+.account-panel > p {
+  margin: 0;
+}
+
+.account-panel > p a {
+  color: var(--accent-hi);
+}
+
+.account-error {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--wine);
+  border-radius: 8px;
+  background: rgba(122, 30, 44, 0.25);
+  color: #F2B8C0;
+}
+
+.account-list {
+  padding: 4px 16px;
+}
+
+.account-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.account-row:last-child {
+  border-bottom: none;
+}
+
+.account-row__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.account-row__title {
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.account-row__title a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.account-row__title a:hover {
+  color: var(--accent-hi);
+}
+
+.account-row__meta {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.account-row__price {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.account-row__actions {
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+}
+
+.account-icon-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 8px !important;
+  color: var(--text-mid) !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.account-icon-btn:hover:not(:disabled) {
+  transform: none !important;
+  border-color: var(--accent) !important;
+  color: var(--text) !important;
+}
+
+.account-icon-btn:focus-visible,
+.account-tab:focus-visible,
+.account-logout:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .account {
+    padding: 16px;
+  }
+
+  .account-row {
+    flex-wrap: wrap;
+  }
+
+  .account-row__main {
+    flex-basis: 100%;
+  }
+
+  .account-row__price {
+    flex: 1;
+  }
+}
