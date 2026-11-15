@@ -1,36 +1,143 @@
 
-import React from 'react'
 import { useState, useEffect } from 'react'
-import { getReportById } from '../../services/reportService'
-import { useParams } from 'react-router'
+import { useParams, useNavigate } from 'react-router'
+import {
+    getReportById,
+    updateReportStatus,
+    deleteReport,
+    deleteListing
+} from '../../services/reportService'
 
 function ReportDetails() {
 
     const [report, setReport] = useState(null)
+    const [error, setError] = useState('')
+    const [actionError, setActionError] = useState('')
+    const [loading, setLoading] = useState(true)
+    const [busy, setBusy] = useState(false)
     const { id } = useParams()
+    const navigate = useNavigate()
 
     async function getReport() {
-
-        const report = await getReportById(id)
-
-        setReport(report)
+        setError('')
+        setLoading(true)
+        try {
+            const data = await getReportById(id)
+            setReport(data)
+        } catch (err) {
+            setReport(null)
+            setError(err.response?.data?.message || err.response?.data?.error || err.response?.data?.err || 'Could not load report')
+        } finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
         getReport()
-    }, [])
+    }, [id])
+
+    async function handleUpdateStatus(status) {
+        if (busy) return
+        setActionError('')
+        setBusy(true)
+        try {
+            await updateReportStatus(id, status)
+            const data = await getReportById(id)
+            setReport(data)
+        } catch (err) {
+            setActionError(err.response?.data?.message || err.response?.data?.error || err.response?.data?.err || 'Could not update or refresh report. Please reload before trying again.')
+        } finally {
+            setBusy(false)
+        }
+    }
+    
+
+    async function handleDelete() {
+        if (busy) return
+        if (window.confirm('Are you sure you want to delete this report?')) {
+            setActionError('')
+            setBusy(true)
+            try {
+                await deleteReport(id)
+                navigate('/admin/reports')
+            } catch (err) {
+                setActionError(err.response?.data?.message || err.response?.data?.error || err.response?.data?.err || 'Could not delete report')
+            } finally {
+                setBusy(false)
+            }
+        }
+    }
+
+    async function handleDeleteListing() {
+        if (busy || !report.targetId || report.targetId.status === 'Removed') return
+        if (window.confirm('Are you sure you want to delete this listing?')) {
+            setActionError('')
+            setBusy(true)
+            try {
+                await deleteListing(report.targetId._id)
+                setReport(current => ({
+                    ...current,
+                    targetId: { ...current.targetId, status: 'Removed' }
+                }))
+            } catch (err) {
+                setActionError(err.response?.data?.message || err.response?.data?.error || err.response?.data?.err || 'Could not remove listing')
+            } finally {
+                setBusy(false)
+            }
+        }
+    }
 
     return (
         <div>
             <h1>Report Details</h1>
 
-            {report ? <>
-                <h2>Reason: {report.reason}</h2>
-                <p>Description: {report.description}</p>
-                <p>Target: {report.targetId?._id}</p>
-                <p>Status: {report.status}</p>
-            </> : <p>Loading....</p>}
+            {report ? (
+                <>
+                    <h2>Report Information</h2>
+                    <p>Reason: {report.reason}</p>
+                    <p>Report Description: {report.description}</p>
+                    <p>Status: {report.status}</p>
 
+                    <h2>Listing Details</h2>
+                    <p>Listing Type: {report.targetType}</p>
+                    <p>Title: {report.targetId?.title}</p>
+                    <p>Description: {report.targetId?.description}</p>
+                    <p>Condition: {report.targetId?.condition}</p>
+                    <p>
+                        {report.targetType === 'Auction' ? 'Current / Starting Bid: ' : 'Price: '}
+                        {report.targetType === 'Auction'
+                            ? (report.targetId?.currentBid ?? report.targetId?.startingBid ?? 'Not available')
+                            : (report.targetId?.price ?? 'Not available')}
+                    </p>
+                    <p>Seller Name: {report.targetId?.seller?.username}</p>
+
+                    <button disabled={busy} onClick={() => handleUpdateStatus('reviewed')}>
+                        Review
+                    </button>
+
+                    <button disabled={busy} onClick={() => handleUpdateStatus('dismissed')}>
+                        Dismiss
+                    </button>
+
+                    <button disabled={busy} onClick={handleDelete}>
+                        Delete Report
+                    </button>
+
+                    {report.targetId && (
+                        <button
+                            onClick={handleDeleteListing}
+                            disabled={busy || report.targetId.status === 'Removed'}
+                        >
+                            {report.targetId.status === 'Removed'
+                                ? 'Listing Removed'
+                                : 'Delete Listing'}
+                        </button>
+                    )}
+                </>
+            ) : (
+                loading ? <p>Loading...</p> : <div role="alert">{error || 'Report not found'}</div>
+            )}
+            {actionError && <div role="alert">{actionError}</div>}
         </div>
     )
 }
