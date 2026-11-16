@@ -22,15 +22,16 @@ function ReportDetails() {
     async function getReport() {
         setError('')
         setLoading(true)
+
         try {
             const data = await getReportById(id)
             setReport(data)
         } catch (err) {
             setReport(null)
             setError(err.response?.data?.message || err.response?.data?.error || err.response?.data?.err || 'Could not load report')
-        } finally {
-            setLoading(false)
         }
+
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -41,39 +42,43 @@ function ReportDetails() {
         if (busy) return
         setActionError('')
         setBusy(true)
+
         try {
             await updateReportStatus(id, status)
             const data = await getReportById(id)
             setReport(data)
         } catch (err) {
             setActionError(err.response?.data?.message || err.response?.data?.error || err.response?.data?.err || 'Could not update or refresh report. Please reload before trying again.')
-        } finally {
-            setBusy(false)
         }
+
+        setBusy(false)
     }
-    
 
     async function handleDelete() {
         if (busy) return
+
         if (window.confirm('Are you sure you want to delete this report?')) {
             setActionError('')
             setBusy(true)
+
             try {
                 await deleteReport(id)
                 navigate('/admin/reports')
             } catch (err) {
                 setActionError(err.response?.data?.message || err.response?.data?.error || err.response?.data?.err || 'Could not delete report')
-            } finally {
-                setBusy(false)
             }
+
+            setBusy(false)
         }
     }
 
     async function handleDeleteListing() {
-        if (busy || !report.targetId || report.targetId.status === 'Removed') return
+        if (busy || !report?.targetId || report.targetId.status === 'Removed') return
+
         if (window.confirm('Are you sure you want to delete this listing?')) {
             setActionError('')
             setBusy(true)
+
             try {
                 await deleteListing(report.targetId._id)
                 setReport(current => ({
@@ -82,9 +87,9 @@ function ReportDetails() {
                 }))
             } catch (err) {
                 setActionError(err.response?.data?.message || err.response?.data?.error || err.response?.data?.err || 'Could not remove listing')
-            } finally {
-                setBusy(false)
             }
+
+            setBusy(false)
         }
     }
 
@@ -107,6 +112,7 @@ function ReportDetails() {
                             title={report.targetId?.title || 'Reported listing'}
                         />
                     </div>
+
                     <p>Listing Type: {report.targetType}</p>
                     <p>Title: {report.targetId?.title}</p>
                     <p>Description: {report.targetId?.description}</p>
@@ -145,6 +151,7 @@ function ReportDetails() {
             ) : (
                 loading ? <p>Loading...</p> : <div role="alert">{error || 'Report not found'}</div>
             )}
+
             {actionError && <div role="alert">{actionError}</div>}
         </div>
     )
