@@ -43,7 +43,11 @@ function Signup() {
   const passwordsMismatch = Boolean(passwordConf) && password !== passwordConf;
 
   return (
-    <AuthCard title="Create your Safqa account" error={error}>
+    <AuthCard
+      title="Create your account"
+      subtitle="Join Safqa to buy, sell and bid."
+      error={error}
+    >
       <form className="auth-form" onSubmit={handleSubmit}>
         <div className="auth-field">
           <label htmlFor="username">Username</label>
@@ -54,6 +58,7 @@ function Signup() {
             value={username}
             onChange={handleChange}
             autoComplete="username"
+            placeholder="e.g. salma_k"
             required
           />
         </div>
@@ -67,6 +72,7 @@ function Signup() {
             value={email}
             onChange={handleChange}
             autoComplete="email"
+            placeholder="you@example.com"
             required
           />
         </div>
@@ -78,8 +84,10 @@ function Signup() {
           value={password}
           onChange={handleChange}
           autoComplete="new-password"
-          placeholder="At least 6 characters"
+          placeholder="Create a password"
         />
+        {/* The backend rejects passwords shorter than 6 characters */}
+        <p className="auth-field__help">Minimum 6 characters.</p>
 
         <PasswordInput
           id="confirm"
@@ -88,6 +96,7 @@ function Signup() {
           value={passwordConf}
           onChange={handleChange}
           autoComplete="new-password"
+          placeholder="Repeat the password"
         />
         {passwordsMismatch ? (
           <p className="auth-field__hint">Passwords do not match.</p>

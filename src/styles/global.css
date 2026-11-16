@@ -474,52 +474,124 @@ main > form > div:last-child > button:nth-child(2):hover {
    AUTH CARD --- Log in / Register (AuthCard, PasswordInput)
    Scoped under .auth-card so the generic `form` rules do not leak in.
    ================================================================ */
-.auth-page {
-  padding-top: 24px;
+/* The page fills the viewport in two columns: brand panel (left) and form (right).
+   The #root selector is needed to beat the app shell rule that caps every page at 1200px. */
+#root > div > main.auth-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  align-items: stretch;
+  justify-content: normal;
+  max-width: none;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Left: brand panel */
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 28px 32px;
+  background: var(--bg-deep);
+  border-right: 1px solid var(--line);
+}
+
+.auth-brand__wordmark {
+  align-self: flex-start;
+  color: var(--accent);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.auth-brand__logo {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.auth-brand__logo svg {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+}
+
+.auth-brand__line {
+  margin: 0;
+  color: var(--text-mid);
+  font-size: 13px;
+}
+
+/* Right: the form card, centred */
+.auth-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 32px 24px;
 }
 
 .auth-card {
-  width: min(360px, 100%);
+  width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 14px;
+  gap: 18px;
+  padding: 28px;
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: var(--r);
+  border-radius: 14px;
   box-shadow: var(--shadow-md);
 }
 
 .auth-card__title {
   margin: 0;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
   color: var(--text);
 }
 
-/* Log in / Register segmented toggle */
+.auth-card__subtitle {
+  margin: 4px 0 0;
+  color: var(--text-mid);
+  font-size: 14px;
+}
+
+/* Log in / Register switch */
 .auth-tabs {
-  display: inline-flex;
-  align-self: flex-start;
-  padding: 2px;
-  gap: 2px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: var(--bg-deep);
 }
 
 .auth-tabs__tab {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 14px;
-  border-radius: 8px;
   color: var(--text-mid);
-  font-size: 13.5px;
+  font-size: 14.5px;
   font-weight: 500;
   text-decoration: none;
   transition: background 0.2s ease, color 0.2s ease;
+}
+
+.auth-tabs__tab + .auth-tabs__tab {
+  border-left: 1px solid var(--line);
 }
 
 .auth-tabs__tab:hover {
@@ -542,10 +614,19 @@ main > form > div:last-child > button:nth-child(2):hover {
   font-size: 13.5px;
 }
 
+/* Reset the generic `form` panel look: the card is the panel here */
 .auth-card .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
 }
 
 .auth-card .auth-field {
@@ -565,25 +646,27 @@ main > form > div:last-child > button:nth-child(2):hover {
 
 .auth-card .auth-field input {
   width: 100%;
-  min-height: 44px;
+  min-height: 48px;
   padding: 0 14px;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--bg-deep);
   color: var(--text);
-  font-size: 15px;
+  font-family: inherit;
+  font-size: 16px;
 }
 
 .auth-card .auth-field input::placeholder {
-  color: var(--muted);
+  color: #8795B8;
   opacity: 1;
 }
 
 .auth-card .auth-field input:focus-visible,
 .auth-card .auth-field input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
-  outline: none;
+  border-color: var(--line);
+  box-shadow: none;
+  outline: 3px solid var(--focus);
+  outline-offset: 1px;
 }
 
 .auth-card .auth-field__row {
@@ -596,50 +679,61 @@ main > form > div:last-child > button:nth-child(2):hover {
   min-width: 0;
 }
 
+/* !important: the generic `button:not(...)` rule further down would turn this orange */
 .auth-card .auth-field__toggle {
   flex: none;
-  min-width: 60px;
-  min-height: 44px;
+  min-width: 68px;
+  min-height: 48px;
   margin: 0;
-  padding: 0 14px;
+  padding: 0 14px !important;
   align-self: auto;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--panel2);
-  color: var(--text);
-  font-size: 13.5px;
+  border: 1px solid var(--line) !important;
+  border-radius: 8px !important;
+  background: var(--bg-deep) !important;
+  color: var(--text) !important;
+  font-family: inherit;
+  font-size: 14px !important;
   font-weight: 700;
-  box-shadow: none;
+  box-shadow: none !important;
   letter-spacing: 0;
   cursor: pointer;
 }
 
 .auth-card .auth-field__toggle:hover {
-  transform: none;
-  box-shadow: none;
-  border-color: var(--accent);
-  filter: none;
+  transform: none !important;
+  border-color: var(--accent) !important;
+  filter: none !important;
 }
 
+/* Muted helper text under a field (for example the password rule) */
+.auth-card .auth-field__help {
+  margin: -10px 0 0;
+  font-size: 12.5px;
+  color: var(--text-mid);
+}
+
+/* Validation message under a field */
 .auth-card .auth-field__hint {
-  margin: -6px 0 0;
+  margin: -10px 0 0;
   font-size: 12.5px;
   color: #FFB4BC;
 }
 
 .auth-card .auth-form__submit {
   width: 100%;
-  min-height: 44px;
-  margin: 0;
+  min-height: 48px;
+  margin: 4px 0 0;
   padding: 0 16px;
   align-self: stretch;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+  border-radius: 8px;
+  background: var(--accent);
   color: var(--ink);
+  font-family: inherit;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0;
+  box-shadow: none;
   cursor: pointer;
 }
 
@@ -654,11 +748,59 @@ main > form > div:last-child > button:nth-child(2):hover {
   filter: none;
 }
 
+.auth-card .auth-form__link {
+  align-self: center;
+  margin-top: 4px;
+  color: var(--accent-hi);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.auth-brand__wordmark:focus-visible,
 .auth-tabs__tab:focus-visible,
 .auth-card .auth-field__toggle:focus-visible,
-.auth-card .auth-form__submit:focus-visible {
-  outline: 2px solid var(--focus);
+.auth-card .auth-form__submit:focus-visible,
+.auth-card .auth-form__link:focus-visible {
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
+}
+
+/* The tabs clip their corners, so their focus ring is drawn inside */
+.auth-tabs__tab:focus-visible {
+  outline-offset: -3px;
+}
+
+/* Narrow screens: logo panel first, form below */
+@media (max-width: 800px) {
+  #root > div > main.auth-page {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+  }
+
+  .auth-brand {
+    padding: 20px 20px 16px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .auth-brand__logo svg {
+    max-width: 300px;
+  }
+
+  .auth-brand__line {
+    text-align: center;
+  }
+
+  .auth-side {
+    align-items: flex-start;
+    padding: 24px 16px 40px;
+  }
+
+  .auth-card {
+    padding: 22px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,99 @@
+/* Animated Safqa handshake logo. Converted from the original safqa-handshake-tagline.svg design file:
+   classes and keyframes are prefixed with "sq-" so they cannot clash with app styles. */
+.sq-logo {
+  --orange: #E0702A;
+  --navy: #081633;
+  --loop: 7s;      /* whole cycle; every keyframe % scales with it */
+  --gap: 190px;    /* how far out each hand starts */
+  --tilt: 12deg;   /* how much flatter the hands are held while apart */
+}
+.sq-ink    { fill: var(--orange); }
+.sq-fill   { fill: var(--navy); }
+.sq-line   { fill: var(--navy); stroke: var(--orange); stroke-width: 24; stroke-linejoin: round; stroke-linecap: round; }
+.sq-nofill { fill: none; }
+.sq-butt   { stroke-linecap: butt; }
+.sq-spark  { fill: none; stroke: var(--orange); stroke-width: 18; stroke-linecap: round;
+          stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; }
+
+.sq-reach-l, .sq-reach-r, .sq-thumb, .sq-close, .sq-open, .sq-grip, .sq-pump, .sq-spark, .sq-line1, .sq-line2 {
+  animation-duration: var(--loop); animation-iteration-count: infinite;
+}
+.sq-reach-l { transform-origin: 250px 450px; animation-name: sq-reach-l; }
+.sq-reach-r { transform-origin: 790px 450px; animation-name: sq-reach-r; }
+.sq-thumb   { transform-origin: 100px -96px; animation-name: sq-thumb; }
+.sq-close   { animation-name: sq-close; }
+.sq-open    { animation-name: sq-open; }
+.sq-grip    { animation-name: sq-grip; opacity: 0; }
+.sq-pump    { transform-origin: 512px 520px; animation-name: sq-pump; }
+.sq-spark   { animation-name: sq-spark; }
+/* :where() keeps this as weak as the original `text` rule, so .sq-line1 / .sq-line2 can still override the opacity */
+:where(.sq-logo) text { font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+           text-anchor: middle; opacity: 0; }
+.sq-line1   { animation-name: sq-line1; font-size: 76px; font-weight: 700; fill: #FFFFFF; letter-spacing: -1px; }
+.sq-line1 tspan { fill: var(--orange); }
+.sq-line2   { animation-name: sq-line2; font-size: 42px; font-weight: 500; fill: #C4CFDD; }
+
+/* 1. two whole hands reach in (320-1080 ms) ... 6. and pull back (6060-6680 ms) */
+@keyframes sq-reach-l {
+  0%, 4.57%    { transform: translate(calc(var(--gap) * -1), 0) rotate(calc(var(--tilt) * -1));
+              animation-timing-function: cubic-bezier(.6, 0, .2, 1); }
+  15.43%, 86.57% { transform: none; animation-timing-function: cubic-bezier(.5, 0, .3, 1); }
+  95.43%, 100% { transform: translate(calc(var(--gap) * -1), 0) rotate(calc(var(--tilt) * -1)); }
+}
+@keyframes sq-reach-r {
+  0%, 4.57%    { transform: translate(var(--gap), 0) rotate(var(--tilt));
+              animation-timing-function: cubic-bezier(.6, 0, .2, 1); }
+  15.43%, 86.57% { transform: none; animation-timing-function: cubic-bezier(.5, 0, .3, 1); }
+  95.43%, 100% { transform: translate(var(--gap), 0) rotate(var(--tilt)); }
+}
+/* thumbs fold down over the other hand just before the grip closes */
+@keyframes sq-thumb {
+  0%, 10.86%   { transform: none; animation-timing-function: cubic-bezier(.5, 0, .5, 1); }
+  15.43%, 86.57% { transform: rotate(30deg); animation-timing-function: cubic-bezier(.5, 0, .5, 1); }
+  91.43%, 100% { transform: none; }
+}
+/* fingers wrap: each hand shortens toward its wrist as the grip forms */
+@keyframes sq-close {
+  0%, 9.71%    { transform: none; animation-timing-function: cubic-bezier(.5, 0, .4, 1); }
+  15.43%, 86.57% { transform: scaleX(.64); animation-timing-function: cubic-bezier(.4, 0, .4, 1); }
+  92.57%, 100%  { transform: none; }
+}
+/* 2. the grip closes: open hands hand over to the clasped logo in 60 ms */
+@keyframes sq-open { 0%, 15.43% { opacity: 1; } 16.29%, 85.71% { opacity: 0; } 86.57%, 100% { opacity: 1; } }
+@keyframes sq-grip { 0%, 15.43% { opacity: 0; } 16.29%, 85.71% { opacity: 1; } 86.57%, 100% { opacity: 0; } }
+
+/* 3. lock + pump (1080-2160 ms): down-up-down-up, each smaller, then still */
+@keyframes sq-pump {
+  0%, 15.43%   { transform: none;                                        animation-timing-function: cubic-bezier(.3, 0, .4, 1); }
+  17.14%       { transform: translateY(15px)  rotate(-2deg) scale(1.04); animation-timing-function: cubic-bezier(.37, 0, .63, 1); }
+  20%       { transform: translateY(-17px) rotate(2.2deg);            animation-timing-function: cubic-bezier(.37, 0, .63, 1); }
+  22.86%       { transform: translateY(11px)  rotate(-1.5deg);           animation-timing-function: cubic-bezier(.37, 0, .63, 1); }
+  25.71%       { transform: translateY(-8px)  rotate(1deg);              animation-timing-function: cubic-bezier(.37, 0, .63, 1); }
+  28.29%     { transform: translateY(4px)   rotate(-.4deg);            animation-timing-function: cubic-bezier(.37, 0, .63, 1); }
+  30.86%, 100% { transform: none; }
+}
+/* three ticks flick out at the moment of contact */
+@keyframes sq-spark {
+  0%, 15.43%   { stroke-dashoffset: 1;  opacity: 0; transform: translateY(14px); }
+  16%       { stroke-dashoffset: 1;  opacity: 1; animation-timing-function: cubic-bezier(.2, .8, .3, 1); }
+  19.43%       { stroke-dashoffset: 0;  opacity: 1; transform: none; }
+  22.29%, 100% { stroke-dashoffset: -1; opacity: 0; transform: translateY(-10px); }
+}
+/* 4. "With Safqa" rises in once the shake has settled (2300-2900 ms) */
+@keyframes sq-line1 {
+  0%, 32.86%   { opacity: 0; transform: translateY(22px); animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+  41.43%, 80% { opacity: 1; transform: none; animation-timing-function: ease-in; }
+  85.71%, 100% { opacity: 0; transform: none; }
+}
+/* 5. a beat later, the promise follows (3700-4400 ms) */
+@keyframes sq-line2 {
+  0%, 52.86%   { opacity: 0; transform: translateY(18px); animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+  62.86%, 80% { opacity: 1; transform: none; animation-timing-function: ease-in; }
+  85.71%, 100% { opacity: 0; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sq-reach-l, .sq-reach-r, .sq-thumb, .sq-close, .sq-pump, .sq-spark { animation: none; }
+  .sq-line1, .sq-line2 { animation: none; opacity: 1; }
+  .sq-open { animation: none; opacity: 0; }
+  .sq-grip { animation: none; opacity: 1; }
+}

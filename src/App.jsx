@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes, useLocation } from "react-router";
 import Navbar from "./components/Navbar";
 import SignupPage from "./pages/SignupPage";
 import Homepage from "./pages/Homepage";
@@ -44,6 +44,8 @@ function App() {
   }
 
   const [user, setUser] = useState(getUserFromToken());
+  const { pathname } = useLocation();
+  const onAuthPage = pathname === "/sign-in" || pathname === "/sign-up";
 
   function handleLogout() {
     logout();
@@ -52,7 +54,8 @@ function App() {
 
   return (
     <div>
-      <Navbar user={user} handleLogout={handleLogout} />
+      {/* The log in and register pages have their own full-page layout, without the main navigation */}
+      {!onAuthPage && <Navbar user={user} handleLogout={handleLogout} />}
 
       <Routes>
         <Route path="/" element={<Homepage />} />

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import { signIn } from '../services/authService';
 import AuthCard from '../components/AuthCard';
@@ -27,7 +27,7 @@ const SignInForm = ({ setUser }) => {
       const signedInUser = await signIn(formData);
 
       setUser(signedInUser);
-      navigate('/dashboard');
+      navigate('/');
     } catch (err) {
       setError(err?.response?.data?.message || 'Unable to sign in. Please try again.');
       setSubmitting(false);
@@ -35,7 +35,11 @@ const SignInForm = ({ setUser }) => {
   };
 
   return (
-    <AuthCard title='Log in to Safqa' error={error}>
+    <AuthCard
+      title='Log in to Safqa'
+      subtitle='Welcome back. Your bids and orders are waiting.'
+      error={error}
+    >
       <form className='auth-form' onSubmit={handleSubmit}>
         <div className='auth-field'>
           <label htmlFor='username'>Username</label>
@@ -46,6 +50,7 @@ const SignInForm = ({ setUser }) => {
             value={formData.username}
             onChange={handleChange}
             autoComplete='username'
+            placeholder='e.g. salma_k'
             required
           />
         </div>
@@ -63,6 +68,11 @@ const SignInForm = ({ setUser }) => {
         <button type='submit' className='auth-form__submit' disabled={submitting}>
           {submitting ? 'Logging in...' : 'Log in'}
         </button>
+
+        {/* Placeholder: there is no password reset flow yet, so this stays on the log in page */}
+        <Link to='/sign-in' className='auth-form__link'>
+          Forgot password?
+        </Link>
       </form>
     </AuthCard>
   );
