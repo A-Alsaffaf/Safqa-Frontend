@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from 'react-router'
 
-// Shared frame for the account tabs (My bids, Watchlist, My listings): header, log out and the tab bar.
+// Shared frame for the account tabs (My bids, Watchlist, My listings, My orders, and Reports and Categories for admins): header, log out and the tab bar.
 function AccountLayout({ user, handleLogout }) {
   const tabClass = ({ isActive }) => {
     if (isActive) {
@@ -34,6 +34,17 @@ function AccountLayout({ user, handleLogout }) {
         <NavLink to='/account/orders' className={tabClass}>
           My orders
         </NavLink>
+        {/* Admin only: the backend checks the role as well, this just hides the tabs */}
+        {user.role === 'Admin' && (
+          <>
+            <NavLink to='/account/reports' className={tabClass}>
+              Reports
+            </NavLink>
+            <NavLink to='/account/categories' className={tabClass}>
+              Categories
+            </NavLink>
+          </>
+        )}
       </nav>
 
       <Outlet />

@@ -18,6 +18,7 @@ import MyListings from "./pages/Listing/MyListings";
 import AccountLayout from "./pages/Account/AccountLayout";
 import AccountWatchlist from "./pages/Account/AccountWatchlist";
 import AccountBids from "./pages/Account/AccountBids";
+import AccountCategories from "./pages/Account/AccountCategories";
 
 // Order Imports
 import MyOrders from "./pages/Orders/MyOrders";
@@ -86,6 +87,25 @@ function App() {
           <Route path="/account/watchlist" element={<AccountWatchlist />} />
           <Route path="/account/bids" element={<AccountBids user={user} />} />
           <Route path="/account/orders" element={<MyOrders />} />
+          {/* Admin tabs: anyone else is sent back to the first tab */}
+          <Route
+            path="/account/reports"
+            element={
+              user?.role === "Admin" ? (
+                <div className="account-reports">
+                  <AllReports />
+                </div>
+              ) : (
+                <Navigate to="/account/listings" replace />
+              )
+            }
+          />
+          <Route
+            path="/account/categories"
+            element={
+              user?.role === "Admin" ? <AccountCategories /> : <Navigate to="/account/listings" replace />
+            }
+          />
         </Route>
 
         {/* Order Routes */}
@@ -95,7 +115,8 @@ function App() {
 
         {/* Report Routes  */}
         <Route path="/listings/:id/reports" element={<ReportForm />} />
-        <Route path="/admin/reports" element={<AllReports />} />
+        {/* The reports list lives in the account tabs, so /admin/reports (for example after deleting a report) goes there */}
+        <Route path="/admin/reports" element={<Navigate to="/account/reports" replace />} />
         <Route path="/admin/reports/:id" element={<ReportDetails />} />
 
 

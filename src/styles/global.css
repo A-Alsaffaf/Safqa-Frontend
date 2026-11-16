@@ -3979,3 +3979,109 @@ button.btn-watchlist.btn-watchlist--on,
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
+
+
+/* ==========================================================================
+   ADMIN TABS (Reports, Categories)
+   ========================================================================== */
+/* The existing reports page, shown inside the account tabs: hide its own title (the tab is the title)
+   and lay the report cards out in a grid */
+.account-reports > div > h1 {
+  display: none;
+}
+
+.account-reports > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.account-reports > div > :not(div) {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 760px) {
+  .account-reports > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Categories: add form on top, rename form inside a row */
+.account-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 14px 16px;
+}
+
+.account-form--inline {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.account-form__label {
+  flex-shrink: 0;
+  color: var(--text-mid);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.account-form input[type="text"] {
+  flex: 1;
+  min-width: 0;
+}
+
+.account-btn {
+  min-height: 36px;
+  padding: 0 14px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  color: var(--text-mid) !important;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.account-btn:hover:not(:disabled) {
+  border-color: var(--accent) !important;
+  color: var(--text) !important;
+}
+
+.account-btn--primary {
+  border-color: var(--accent) !important;
+  color: var(--accent-hi) !important;
+}
+
+.account-btn--danger {
+  border-color: var(--urgent) !important;
+  color: var(--urgent) !important;
+}
+
+.account-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.account-btn:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.account-empty {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@media (max-width: 560px) {
+  .account-form {
+    flex-wrap: wrap;
+  }
+
+  .account-form input[type="text"] {
+    flex-basis: 100%;
+  }
+}
