@@ -36,7 +36,12 @@ function BidForm({ listing, onBidPlaced }) {
       if (onBidPlaced) await onBidPlaced();
     } catch (err) {
       console.log(err);
-      setError(err.response?.data?.message || err.message);
+      // 401 means there is no valid login (logged out, or the token expired)
+      if (err.response?.status === 401) {
+        setError("You need to log in to place a bid.");
+      } else {
+        setError(err.response?.data?.message || err.message);
+      }
     } finally {
       setSubmitting(false);
     }
