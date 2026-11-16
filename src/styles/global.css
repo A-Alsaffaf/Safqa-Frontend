@@ -4227,3 +4227,61 @@ button.btn-watchlist.btn-watchlist--on,
     flex-basis: 100%;
   }
 }
+/* Report listing photos: cover in the queue, full image in the detail gallery. */
+#root .report-card-photo {
+  grid-column: 1 / -1;
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  border-radius: 10px;
+  background: var(--bg-deep);
+  color: var(--muted);
+}
+
+#root .report-card-photo > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+}
+
+#root .report-photo-count {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 5px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(8, 22, 51, 0.92);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+#root .report-listing-gallery {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin-bottom: 8px;
+}
+
+#root .report-listing-gallery .gallery__main {
+  aspect-ratio: 16 / 10;
+  max-height: 460px;
+  background: var(--bg-deep);
+}
+
+#root .report-listing-gallery .gallery__main img {
+  object-fit: contain;
+}
+
+#root .report-listing-gallery .listing-gallery {
+  display: grid;
+  place-items: center;
+  aspect-ratio: auto;
+  min-height: 160px;
+  color: var(--muted);
+}

@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router'
 import { getAllReports } from '../../services/reportService'
+import ImageGallery from '../../components/listings/ImageGallery'
 
 function AllReports() {
 
@@ -9,19 +10,20 @@ function AllReports() {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(true)
 
-    async function loadReports() {
-        setError('')
-        setLoading(true)
-        try {
-            const data = await getAllReports()
-            setReports(data)
-        } catch (err) {
-            setError(err.response?.data?.message || err.response?.data?.error || err.response?.data?.err || 'Could not load reports')
-        } finally {
-            setLoading(false)
-        }
+
+async function loadReports() {
+    setError('')
+    setLoading(true)
+
+    try {
+        const data = await getAllReports()
+        setReports(data)
+    } catch (err) {
+        setError('Could not load reports')
     }
 
+    setLoading(false)
+}
     useEffect(() => {
         loadReports()
     }, [])
@@ -35,6 +37,15 @@ function AllReports() {
 
             {reports.map((report) => (
                 <div key={report._id}>
+
+                    <div className="report-listing-gallery">
+                        <ImageGallery
+                            images={report.targetId?.images}
+                            title={report.targetId?.title || 'Reported listing'}
+                        />
+                    </div>
+
+
                     <h3>Reason: {report.reason}</h3>
                     <p>Reporter: {report.reporter?.username}</p>
                     <p>Status: {report.status}</p>
