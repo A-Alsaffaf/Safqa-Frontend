@@ -56,15 +56,11 @@ function Navbar({ user = null, handleLogout }) {
             </button>
           </>
         )}
+        {/* Logged out: one button. The log in page has the Register switch for new users */}
         {!user && (
-          <>
-            <NavLink to='/sign-up' className='navbar__signup'>
-              Sign up
-            </NavLink>
-            <NavLink to='/sign-in' className='navbar__login'>
-              Log in
-            </NavLink>
-          </>
+          <NavLink to='/sign-in' className='navbar__login'>
+            Log in
+          </NavLink>
         )}
       </div>
     </header>

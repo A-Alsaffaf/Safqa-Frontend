@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router";
 import Navbar from "./components/Navbar";
 import SignupPage from "./pages/SignupPage";
 import Homepage from "./pages/Homepage";
@@ -44,11 +44,14 @@ function App() {
   }
 
   const [user, setUser] = useState(getUserFromToken());
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const onAuthPage = pathname === "/sign-in" || pathname === "/sign-up";
 
+  // Logging out always lands on the homepage, whichever page the user was on
   function handleLogout() {
     logout();
+    navigate("/");
     setUser(null);
   }
 
