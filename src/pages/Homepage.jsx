@@ -98,7 +98,14 @@ function Homepage() {
     return end > now
   })
 
+  const TWO_HOURS_MS = 2 * 60 * 60 * 1000
+
   const endingSoon = [...activeAuctions]
+    .filter((l) => {
+      const end = new Date(l.endsAt).getTime()
+      const diff = end - now
+      return diff > 0 && diff <= TWO_HOURS_MS
+    })
     .sort((a, b) => {
       const endA = new Date(a.endsAt).getTime()
       const endB = new Date(b.endsAt).getTime()
