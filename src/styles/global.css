@@ -3933,3 +3933,49 @@ form.listing-form {
 @media (prefers-reduced-motion: reduce) {
   .listing-form .lf-toggle__option span { transition: none; }
 }
+
+
+/* ==========================================================================
+   WATCHLIST: details page button (watching state) and the Remove button on the account tab
+   ========================================================================== */
+/* Watching: the green fill turns into an outline so "Remove" reads as the quieter action */
+.btn-watchlist.btn-watchlist--on,
+button.btn-watchlist.btn-watchlist--on,
+.listing-action-row .btn-watchlist.btn-watchlist--on {
+  background: transparent !important;
+  border: 1px solid #3DA377 !important;
+  color: #A3E4C6 !important;
+  box-shadow: none !important;
+}
+
+.btn-watchlist:disabled {
+  opacity: 0.6 !important;
+  cursor: wait !important;
+}
+
+.watchlist-error {
+  color: var(--urgent);
+  font-size: 12.5px;
+}
+
+.account-row__remove {
+  min-height: 36px;
+  padding: 0 14px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  color: var(--text-mid) !important;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.account-row__remove:hover {
+  border-color: var(--urgent) !important;
+  color: var(--urgent) !important;
+}
+
+.account-row__remove:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}

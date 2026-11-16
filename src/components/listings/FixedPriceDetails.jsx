@@ -2,6 +2,7 @@ import BuyNowBox from './BuyNowBox'
 import ReportButton from './ReportButton'
 import EditButton from './EditButton'
 import ImageGallery from './ImageGallery'
+import WatchlistButton from './WatchlistButton'
 
 function FixedPriceDetails({ listing, user, onPurchased }) {
   if (!listing) return null
@@ -58,9 +59,7 @@ function FixedPriceDetails({ listing, user, onPurchased }) {
         <BuyNowBox listing={listing} onPurchased={onPurchased} />
 
         <div className='listing-action-row'>
-          <button type='button' className='btn-watchlist'>
-            Add to watchlist
-          </button>
+          <WatchlistButton listing={listing} user={user} />
           <EditButton listing={listing} user={user} />
           <ReportButton listing={listing} />
         </div>
