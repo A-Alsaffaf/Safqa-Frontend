@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router'
+import ImageGallery from '../../components/listings/ImageGallery'
 import {
     getReportById,
     updateReportStatus,
@@ -99,6 +100,13 @@ function ReportDetails() {
                     <p>Status: {report.status}</p>
 
                     <h2>Listing Details</h2>
+                    <div className="report-listing-gallery">
+                        <ImageGallery
+                            key={id}
+                            images={report.targetId?.images}
+                            title={report.targetId?.title || 'Reported listing'}
+                        />
+                    </div>
                     <p>Listing Type: {report.targetType}</p>
                     <p>Title: {report.targetId?.title}</p>
                     <p>Description: {report.targetId?.description}</p>
